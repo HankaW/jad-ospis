@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/norbert/Dev/C#/jadlospis/jadlospis/jadlospis.csproj": {}
+    "C:\\Users\\wojci\\Desktop\\studia\\jadlospis\\jadlospis\\jadlospis\\jadlospis.csproj": {}
   },
   "projects": {
-    "/home/norbert/Dev/C#/jadlospis/jadlospis/jadlospis.csproj": {
+    "C:\\Users\\wojci\\Desktop\\studia\\jadlospis\\jadlospis\\jadlospis\\jadlospis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/norbert/Dev/C#/jadlospis/jadlospis/jadlospis.csproj",
+        "projectUniqueName": "C:\\Users\\wojci\\Desktop\\studia\\jadlospis\\jadlospis\\jadlospis\\jadlospis.csproj",
         "projectName": "jadlospis",
-        "projectPath": "/home/norbert/Dev/C#/jadlospis/jadlospis/jadlospis.csproj",
-        "packagesPath": "/home/norbert/.nuget/packages/",
-        "outputPath": "/home/norbert/Dev/C#/jadlospis/jadlospis/obj/",
+        "projectPath": "C:\\Users\\wojci\\Desktop\\studia\\jadlospis\\jadlospis\\jadlospis\\jadlospis.csproj",
+        "packagesPath": "C:\\Users\\wojci\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wojci\\Desktop\\studia\\jadlospis\\jadlospis\\jadlospis\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/norbert/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\wojci\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -79,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.110/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
