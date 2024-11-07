@@ -15,12 +15,12 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = jadlospis
-build_property.ProjectDir = C:\Users\wojci\Desktop\studia\jadlospis\jadlospis\jadlospis\
+build_property.ProjectDir = /home/norbert/Dev/C#/jadlospis/jadlospis/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[C:/Users/wojci/Desktop/studia/jadlospis/jadlospis/jadlospis/App.axaml]
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/wojci/Desktop/studia/jadlospis/jadlospis/jadlospis/Views/MainWindow.axaml]
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
