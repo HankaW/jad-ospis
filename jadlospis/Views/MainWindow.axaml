@@ -22,7 +22,7 @@
 
     <SplitView 
         IsPaneOpen="{Binding IsPaneOpen}"
-        OpenPaneLength="200"
+        OpenPaneLength="150"
         CompactPaneLength="40"
         DisplayMode="CompactInline"
         Background="#009b72"
@@ -53,7 +53,7 @@
                             <Border
                                 CornerRadius="0,10,10,0"
                                 Background="#f0faf3"
-                                Margin="0,-5"
+                                Margin="0,-5, 0,-7"
                                 >
                                 <StackPanel Spacing="17" Orientation="Horizontal" Margin="3,0, 0, 0">
                                     <PathIcon Data="{Binding ListItemIcon}"/>

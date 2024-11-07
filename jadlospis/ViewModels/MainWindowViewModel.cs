@@ -10,6 +10,7 @@ namespace jadlospis.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
+    
     [ObservableProperty]
     private bool _isPaneOpen = true;
 
