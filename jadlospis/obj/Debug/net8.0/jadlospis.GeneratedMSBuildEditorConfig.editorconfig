@@ -22,5 +22,17 @@ build_property.EnableGeneratedComInterfaceComImportInterop =
 [/home/norbert/Dev/C\#/jadlospis/jadlospis/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/Assets/Icons.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/HomePageView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/JadlospisPageView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/ProduktPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

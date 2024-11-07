@@ -7,7 +7,12 @@
         x:Class="jadlospis.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="jadlospis">
+        Title="Jadłospis"
+        Width="1280"
+        Height="720"
+        WindowStartupLocation="CenterScreen"
+        RequestedThemeVariant="Light"
+        >
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,6 +20,59 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <SplitView 
+        IsPaneOpen="{Binding IsPaneOpen}"
+        OpenPaneLength="200"
+        CompactPaneLength="40"
+        DisplayMode="CompactInline"
+        Background="#009b72"
+        PaneBackground="#009b72"
+        >
+        
+        <SplitView.Pane>
+            <StackPanel>
+                <Button 
+                    Command="{Binding TrigerPane}"
+                    Margin="5"
+                    >
+                     <PathIcon Data="{StaticResource LineHorizontal3Regular}"/> 
+                </Button>
+                <ListBox
+                    ItemsSource="{Binding Items}"
+                    SelectedItem="{Binding SelectedListItem}"
+                    Margin="-12,2,0,0"
+                    Foreground="Black"
+                    FontSize="18"
+                    FontFamily="Roboto"
+                    FontWeight="Bold"
+                    FontStyle="Normal"
+                    Background="Transparent"
+                    >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:ListItemTemplate}">
+                            <Border
+                                CornerRadius="0,10,10,0"
+                                Background="#f0faf3"
+                                Margin="0,-5"
+                                >
+                                <StackPanel Spacing="17" Orientation="Horizontal" Margin="3,0, 0, 0">
+                                    <PathIcon Data="{Binding ListItemIcon}"/>
+                                    <TextBlock Text="{Binding Label}"></TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Border 
+                CornerRadius="10, 0, 0 , 10"
+                Background="#f0faf3"
+                >
+                    <TransitioningContentControl Content="{Binding CurrentPage}" />
+            </Border>
+        </SplitView.Content>
+    </SplitView>
 
 </Window>
