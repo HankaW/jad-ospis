@@ -14,7 +14,7 @@
         <StackPanel>
             <Image Source="{Binding ImageBitmap}"/>
             <TextBlock Text="{Binding Name}"/>
-            <Border Background="#f0faf3">
+            <Border Background="#e8fff0">
                 <StackPanel>
                     <!-- Dodanie nowych TextBlocków dla wartości odżywczych -->
                     <TextBlock Text="Węglowodany: {Binding Carbohydrates100g}g"/>
