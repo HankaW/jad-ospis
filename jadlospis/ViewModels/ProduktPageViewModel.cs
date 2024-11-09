@@ -1,4 +1,7 @@
 using System;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace jadlospis.ViewModels;
@@ -10,6 +13,7 @@ public partial class ProduktPageViewModel : ViewModelBase
 
     [ObservableProperty] private ProduktViewModel produkt1 = p1;
     
-   
+    
+    
 
 }

@@ -14,10 +14,25 @@ public partial class ProduktViewModel : ViewModelBase
     private string _image = string.Empty;
     
     [ObservableProperty]
-    private float _gram = 0f;
+    private float _gram = 100f;
     
     [ObservableProperty]
     private float _kcal = 0f;
+    
+    [ObservableProperty]
+    private float _carbs = 0f;
+    
+    [ObservableProperty]
+    private float fat = 0f;
+    
+    [ObservableProperty]
+    private float protein = 0f;
+    
+    [ObservableProperty]
+    private float solt = 0f;
+    
+    
+    
 
     // Use a nullable Bitmap to represent the loaded image
     public Bitmap? ImageBitmap { get; private set; }
