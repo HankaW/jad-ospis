@@ -36,3 +36,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/ProduktPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/ProduktView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

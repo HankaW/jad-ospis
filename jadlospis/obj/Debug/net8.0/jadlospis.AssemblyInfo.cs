@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("jadlospis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+039e292012b74a5d3ec8695dbe61933170373fb3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ec9e8b1610945724244766ee99391b970a2d624")]
 [assembly: System.Reflection.AssemblyProductAttribute("jadlospis")]
 [assembly: System.Reflection.AssemblyTitleAttribute("jadlospis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

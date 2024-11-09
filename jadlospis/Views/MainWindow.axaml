@@ -23,7 +23,7 @@
     <SplitView 
         IsPaneOpen="{Binding IsPaneOpen}"
         OpenPaneLength="150"
-        CompactPaneLength="40"
+        CompactPaneLength="50"
         DisplayMode="CompactInline"
         Background="#009b72"
         PaneBackground="#009b72"
@@ -31,11 +31,15 @@
         
         <SplitView.Pane>
             <StackPanel>
-                <Button 
+                <Button
+                    Background="Transparent"
                     Command="{Binding TrigerPane}"
-                    Margin="5"
+                    Margin="5,5,5,15"
                     >
-                     <PathIcon Data="{StaticResource LineHorizontal3Regular}"/> 
+                     <PathIcon 
+                         Foreground="White"
+                         
+                         Data="{StaticResource LineHorizontal3Regular}"/> 
                 </Button>
                 <ListBox
                     ItemsSource="{Binding Items}"
@@ -54,8 +58,9 @@
                                 CornerRadius="0,10,10,0"
                                 Background="#f0faf3"
                                 Margin="0,-5, 0,-7"
+                                Padding="6"
                                 >
-                                <StackPanel Spacing="17" Orientation="Horizontal" Margin="3,0, 0, 0">
+                                <StackPanel Spacing="20" Orientation="Horizontal" Margin="3,0, 0, 0">
                                     <PathIcon Data="{Binding ListItemIcon}"/>
                                     <TextBlock Text="{Binding Label}"></TextBlock>
                                 </StackPanel>
