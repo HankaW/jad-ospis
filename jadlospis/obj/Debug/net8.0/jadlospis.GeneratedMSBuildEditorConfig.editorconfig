@@ -15,27 +15,27 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = jadlospis
-build_property.ProjectDir = /home/norbert/Dev/C#/jadlospis/jadlospis/
+build_property.ProjectDir = C:\Users\wojci\Desktop\studia\semestr_V\C# projekt\jadlospis\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/App.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/Assets/Icons.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/Assets/Icons.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/HomePageView.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/Views/HomePageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/JadlospisPageView.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/Views/JadlospisPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/MainWindow.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/ProduktPageView.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/Views/ProduktPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/home/norbert/Dev/C\#/jadlospis/jadlospis/Views/ProduktView.axaml]
+[C:/Users/wojci/Desktop/studia/semestr_V/C\# projekt/jadlospis/Views/ProduktView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

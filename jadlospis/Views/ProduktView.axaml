@@ -16,8 +16,15 @@
             <TextBlock Text="{Binding Name}"/>
             <Border Background="#f0faf3">
                 <StackPanel>
-                    <TextBlock Text="{Binding Gram}"/>
-                    <TextBlock Text="{Binding Kcal}"/>
+                    <!-- Dodanie nowych TextBlocków dla wartości odżywczych -->
+                    <TextBlock Text="Węglowodany: {Binding Carbohydrates100g}g"/>
+                    <TextBlock Text="Energia (kcal): {Binding EnergyKcal100g} kcal"/>
+                    <TextBlock Text="Energia: {Binding Energy100g} kJ"/>
+                    <TextBlock Text="Tłuszcz: {Binding Fat100g}g"/>
+                    <TextBlock Text="Białko: {Binding Proteins100g}g"/>
+                    <TextBlock Text="Sól: {Binding Salt100g}g"/>
+                    <TextBlock Text="Tłuszcze nasycone: {Binding SaturatedFat100g}g"/>
+                    <TextBlock Text="Cukry: {Binding Sugars100g}g"/>
                 </StackPanel>
             </Border>
         </StackPanel>
