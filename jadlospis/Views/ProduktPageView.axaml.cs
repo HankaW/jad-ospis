@@ -56,37 +56,66 @@ public partial class ProduktPageView : UserControl
         }
     }
     
+    public class StringToDoubleConverter : JsonConverter<double>
+    {
+        public override double Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String && double.TryParse(reader.GetString(), out double result))
+            {
+                return result;
+            }
+            else if (reader.TokenType == JsonTokenType.Number)
+            {
+                return reader.GetDouble();
+            }
+            return 0;
+        }
+
+        public override void Write(Utf8JsonWriter writer, double value, JsonSerializerOptions options)
+        {
+            writer.WriteNumberValue(value);
+        }
+    }
+
     public class Nutriments
     {
         [JsonPropertyName("carbohydrates_100g")]
-        public double Carbohydrates100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double Carbohydrates100g { get; set; } = 0;
         
         [JsonPropertyName("energy-kcal_100g")]
-        public double EnergyKcal100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double EnergyKcal100g { get; set; } = 0;
         
         [JsonPropertyName("energy_100g")]
-        public double Energy100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double Energy100g { get; set; } = 0;
         
         [JsonPropertyName("fat_100g")]
-        public double Fat100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double Fat100g { get; set; } = 0;
         
         [JsonPropertyName("proteins_100g")]
-        public double Proteins100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double Proteins100g { get; set; } = 0;
         
         [JsonPropertyName("salt_100g")]
-        public double Salt100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double Salt100g { get; set; } = 0;
         
         [JsonPropertyName("saturated-fat_100g")]
-        public double SaturatedFat100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double SaturatedFat100g { get; set; } = 0;
         
         [JsonPropertyName("sugars_100g")]
-        public double Sugars100g { get; set; }
+        [JsonConverter(typeof(StringToDoubleConverter))]
+        public double Sugars100g { get; set; } = 0;
     }
     
     public class Product
     {
-        [JsonPropertyName("product_name")]
-        public string Name { get; set; }
+        [JsonPropertyName("product_name")] 
+        public string Name { get; set; } = "";
         
         [JsonPropertyName("image_front_small_url")]
         public string ImageUrl { get; set; }
