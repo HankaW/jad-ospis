@@ -8,34 +8,22 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace jadlospis.ViewModels;
 
+// Główna klasa ViewModelu okna aplikacji, dziedziczy po ViewModelBase
 public partial class MainWindowViewModel : ViewModelBase
 {
-    // Property to control the Pane's open state
+    // Właściwość kontrolująca stan otwarcia panelu bocznego
     [ObservableProperty]
     private bool _isPaneOpen = true;
 
-    // Holds the current page view model
-    [ObservableProperty] 
+    // Właściwość przechowująca aktualny ViewModel strony
+    [ObservableProperty]
     private ViewModelBase _currentPage = new HomePageViewModel();
-    
-    // Holds the selected list item
+
+    // Właściwość przechowująca wybrany element listy
     [ObservableProperty]
     private ListItemTemplate? _selectedListItem;
 
-    // Method called when the selected list item changes
-    partial void OnSelectedListItemChanged(ListItemTemplate? value)
-    {
-        if(value is null) return;
-
-        // Create an instance of the selected view model type
-        var instance = Activator.CreateInstance(value.ModelType);
-        if (instance is null) return;
-
-        // Set the current page to the newly created instance
-        CurrentPage = (ViewModelBase)instance;
-    }
-
-    // Collection of list items for navigation
+    // Kolekcja elementów listy służących do nawigacji
     public ObservableCollection<ListItemTemplate> Items { get; } = new()
     {
         new ListItemTemplate(typeof(HomePageViewModel), "Główna", "HomeRegular"),
@@ -43,35 +31,50 @@ public partial class MainWindowViewModel : ViewModelBase
         new ListItemTemplate(typeof(JadlospisPageViewModel), "Jadłospis", "DocumentEditRegular"),
     };
 
-    // Command to toggle the Pane's open state
+    // Metoda wywoływana przy zmianie wybranego elementu listy
+    partial void OnSelectedListItemChanged(ListItemTemplate? value)
+    {
+        // Jeśli wartość jest nullem, nic nie robimy
+        if (value is null) return;
+
+        // Tworzymy instancję ViewModelu odpowiadającego wybranemu typowi
+        var instance = Activator.CreateInstance(value.ModelType);
+        if (instance is null) return;
+
+        // Ustawiamy bieżący ViewModel na nowo utworzony
+        CurrentPage = (ViewModelBase)instance;
+    }
+
+    // Komenda służąca do przełączania stanu otwarcia panelu
     [RelayCommand]
     public void TrigerPane()
     {
+        // Zmiana stanu otwarcia panelu
         IsPaneOpen = !IsPaneOpen;
     }
-    
 }
 
-// Class representing a template for list items
+// Klasa reprezentująca szablon elementu listy
 public class ListItemTemplate
 {
-    // Constructor to initialize list item properties
+    // Konstruktor inicjujący właściwości elementu listy
     public ListItemTemplate(Type type, string label, string iconKey)
     {
         ModelType = type;
         Label = label;
 
-        // Attempt to find the specified resource for icon
+        // Próbujemy znaleźć zasób ikony na podstawie klucza
         Application.Current!.TryFindResource(iconKey, out var res);
+        // Ustawiamy ikonę elementu na znalezioną geometrię strumieniową
         ListItemIcon = (StreamGeometry)res!;
     }
 
-    // Icon associated with the list item
-    public StreamGeometry ListItemIcon { get; set; }
+    // Typ ViewModelu powiązanego z danym elementem listy
+    public Type ModelType { get; set; }
 
-    // Label displayed for the list item
+    // Etykieta wyświetlana dla elementu listy
     public string Label { get; set; }
 
-    // Type of the view model associated with the list item
-    public Type ModelType { get; set; }
+    // Ikona skojarzona z elementem listy
+    public StreamGeometry ListItemIcon { get; set; }
 }

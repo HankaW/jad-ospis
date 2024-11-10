@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:jadlospis.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Width="250"
              x:Class="jadlospis.Views.ProduktView"
              x:DataType="vm:ProduktViewModel">
     
