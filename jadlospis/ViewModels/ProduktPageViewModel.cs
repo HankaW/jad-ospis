@@ -1,13 +1,25 @@
+<<<<<<< HEAD
 using CommunityToolkit.Mvvm.ComponentModel;
 using jadlospis.Views;
+=======
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using jadlospis.Utils;
+>>>>>>> norbert
 
 namespace jadlospis.ViewModels;
 
 public partial class ProduktPageViewModel : ViewModelBase
 {
-    private static ProduktViewModel p1 = new ProduktViewModel("p1",
-        "https://images.openfoodfacts.org/images/products/730/040/048/1588/front_en.269.400.jpg");
+    [ObservableProperty]
+    public string? _produktName;
 
+<<<<<<< HEAD
     [ObservableProperty] private ProduktViewModel produkt1 = p1;
 
     // Dodanie nowych właściwości odżywczych
@@ -35,5 +47,39 @@ public partial class ProduktPageViewModel : ViewModelBase
         Salt100g = product.Nutriments.Salt100g;
         SaturatedFat100g = product.Nutriments.SaturatedFat100g;
         Sugars100g = product.Nutriments.Sugars100g;
+=======
+    public ObservableCollection<ProduktViewModel> ProduktyLista { get; set; } = new();
+    private ProduktLoader loader = new ProduktLoader("", 1, 16);
+
+    [RelayCommand]
+    public void Wypisz()
+    {
+        loader.Name = ProduktName;
+        loader.GetProducts();
+        ProduktyLista = loader.GetProductsList();
+        
+    }
+    
+    [RelayCommand]
+    public void Poprzenie()
+    {
+        loader.CurrentPage = loader.CurrentPage - 1;
+        loader.GetProducts();
+        ProduktyLista = loader.GetProductsList();
+    }
+
+    [RelayCommand]
+    public void Nastepna()
+    {
+        loader.CurrentPage = loader.CurrentPage + 1;
+        loader.GetProducts();
+        ProduktyLista = loader.GetProductsList();
+    }
+
+    public ProduktPageViewModel()
+    {
+        loader.GetProducts();
+        ProduktyLista = loader.GetProductsList();
+>>>>>>> norbert
     }
 }
