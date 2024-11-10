@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:jadlospis.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             Width="250"
+             x:Class="jadlospis.Views.ProduktView"
+             x:DataType="vm:ProduktViewModel">
+    
+    <Border CornerRadius="10,10,0,0"
+            Background="#009b72"
+            >
+        <StackPanel>
+            <Image Source="{Binding ImageBitmap}" MaxWidth="220" MaxHeight="150"/>
+            <TextBlock Text="{Binding Name}"/>
+            <Border Background="#e8fff0">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Energy} "/>
+                        <TextBlock Text="kj"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding EnergyKcal}"/>
+                        <TextBlock Text="kcal"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Carbs}"/>
+                        <TextBlock Text="g"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Sugar}"/>
+                        <TextBlock Text="g"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Fat}"/>
+                        <TextBlock Text="g"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding SaturatedFat}"/>
+                        <TextBlock Text="g"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Protein}"/>
+                        <TextBlock Text="g"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Salt}"/>
+                        <TextBlock Text="g"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>
