@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 
-namespace jadlospis.ViewModels
+namespace jadlospis.Utils
 {
     public static class ImageHelper
     {

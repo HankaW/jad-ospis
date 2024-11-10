@@ -2,48 +2,66 @@ using System;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using jadlospis.interfaces;
+using jadlospis.Utils;
+
 
 namespace jadlospis.ViewModels;
 
 public partial class ProduktViewModel : ViewModelBase
 {
+    [ObservableProperty] 
+    private string _name;
     [ObservableProperty]
-    private string _name = string.Empty;
-    
-    [ObservableProperty]
-    private string _image = string.Empty;
-    
-    [ObservableProperty]
-    private float _gram = 100f;
-    
-    [ObservableProperty]
-    private float _kcal = 0f;
-    
-    [ObservableProperty]
-    private float _carbs = 0f;
-    
-    [ObservableProperty]
-    private float fat = 0f;
-    
-    [ObservableProperty]
-    private float protein = 0f;
-    
-    [ObservableProperty]
-    private float solt = 0f;
-    
-    
-    
-
+    private double _carbs;
+    [ObservableProperty] 
+    private double _sugar;
+    [ObservableProperty] 
+    private double _energy;
+    [ObservableProperty] 
+    private double _energyKcal;
+    [ObservableProperty] 
+    private double _fat;
+    [ObservableProperty] 
+    private double _saturatedFat;
+    [ObservableProperty] 
+    private double _protein;
+    [ObservableProperty] 
+    private double _salt;
+    private string image;
     // Use a nullable Bitmap to represent the loaded image
     public Bitmap? ImageBitmap { get; private set; }
 
-    public ProduktViewModel(string name = "p1", string image = "", float gram = 100, float kcal = 100)
+    public ProduktViewModel(string name, double carbs, double sugar, double energy, double energyKcal, double fat, double saturatedFat, double protein, double salt, string image)
     {
         Name = name;
-        Image = image;
-        Gram = gram;
-        Kcal = kcal;
+        Carbs = carbs;
+        Sugar = sugar;
+        Energy = energy;
+        EnergyKcal = energyKcal;
+        Fat = fat;
+        SaturatedFat = saturatedFat;
+        Protein = protein;
+        Salt = salt;
+        this.image = image;
+        
+        // Load the image based on the `image` parameter
+        LoadImageAsync(image);
+    }
 
+    public ProduktViewModel(Products product)
+    {
+        Name = product.Name;
+        Carbs = product.Nutriments.Carbs;
+        Sugar = product.Nutriments.Sugar;
+        Energy = product.Nutriments.Energy;
+        EnergyKcal = product.Nutriments.EnergyKcal;
+        Fat = product.Nutriments.Fat;
+        SaturatedFat = product.Nutriments.SaturatedFat;
+        Protein = product.Nutriments.Protein;
+        Salt = product.Nutriments.Salt;
+        image = product.ImageUrl;
+        
         // Load the image based on the `image` parameter
         LoadImageAsync(image);
     }
@@ -64,4 +82,6 @@ public partial class ProduktViewModel : ViewModelBase
         // Notify that the ImageBitmap property has changed
         OnPropertyChanged(nameof(ImageBitmap));
     }
+
+    
 }
