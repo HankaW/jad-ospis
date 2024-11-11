@@ -53,7 +53,7 @@ public partial class ProduktViewModel : ViewModelBase
     public ProduktViewModel(Products product)
     {
         // Inicjalizacja właściwości na podstawie obiektu produktu
-        Name = product.Name;
+        Name = string.IsNullOrWhiteSpace(product.Name) ? "Brak nazwy" : product.Name;
         Carbs = product.Nutriments.Carbs;
         Sugar = product.Nutriments.Sugar;
         Energy = product.Nutriments.Energy;
