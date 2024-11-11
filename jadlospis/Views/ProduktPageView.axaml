@@ -10,34 +10,52 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" /> <!-- Pasek wyszukiwania i przyciski -->
+            <RowDefinition Height="Auto" /> <!-- Przyciski nawigacyjne -->
+            <RowDefinition Height="*" />    <!-- Obszar wyświetlania produktów -->
         </Grid.RowDefinitions>
 
-        <!-- Search bar and navigation buttons -->
+        <!-- Pasek wyszukiwania i przycisk Wyszukaj z lupą -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" Margin="0,10,0,0">
             <TextBox Width="500" Text="{Binding ProduktName}" />
-            <Button Command="{Binding Wypisz}">Wyszukaj</Button>
+            <Button Command="{Binding Wypisz}" Padding="10,5" Background="#009b72" Foreground="White">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Ikona lupy obok tekstu -->
+                    <PathIcon Data="{StaticResource search_regular}" Width="16" Height="16" Margin="0,0,5,0"/>
+                    <TextBlock Text="Wyszukaj" Foreground="Black"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
+        <!-- Przyciski nawigacyjne Poprzednie/Następne z ikonami strzałek -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" Margin="0,10,0,0">
-            <Button Command="{Binding Poprzenie}">Poprzednie</Button>
-            <Button Command="{Binding Nastepna}">Następne</Button>
+            <Button Command="{Binding Poprzenie}" Padding="10,5" Background="#009b72" Foreground="White">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <PathIcon Data="{StaticResource arrow_left_regular}" Width="16" Height="16" Margin="0,0,5,0" />
+                    <TextBlock Text="Poprzednia" Foreground="Black"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding Nastepna}" Padding="10,5" Background="#009b72" Foreground="White">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Następna" Foreground="Black"/>
+                    <PathIcon Data="{StaticResource arrow_right_regular}" Width="16" Height="16" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
         </StackPanel>
 
-        <!-- Scrollable 4x4 Grid of ProduktView items -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Height="400">
+        <!-- Scrollable grid of ProduktView items filling available space -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0">
             <ItemsControl ItemsSource="{Binding ProduktyLista}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="4" Columns="4" />
+                        <!-- WrapPanel ensures that products flow horizontally in rows -->
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:ProduktView DataContext="{Binding}" />
+                        <local:ProduktView DataContext="{Binding}" Width="200" Height="300" Margin="5"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

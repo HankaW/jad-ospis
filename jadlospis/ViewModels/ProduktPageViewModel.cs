@@ -9,7 +9,7 @@ namespace jadlospis.ViewModels;
 public partial class ProduktPageViewModel : ViewModelBase
 {
     // Maksymalna liczba produktów na stronę
-    const int MAX_PRODUCTS_ON_PAGE = 16;
+    const int MAX_PRODUCTS_ON_PAGE = 25;
 
     // Właściwość przechowująca nazwę produktu, używana do filtrowania produktów
     [ObservableProperty]

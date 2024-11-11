@@ -24,7 +24,9 @@ public class ProduktLoader
         get => name;
         set => name = value;
     }
-    
+
+    public double TotalProducts { get; set; }
+
     private ObservableCollection<ProduktViewModel> products = new();
     public ObservableCollection<ProduktViewModel> GetProductsList() => products;
 
