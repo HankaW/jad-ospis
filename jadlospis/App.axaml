@@ -19,7 +19,6 @@
             </FluentTheme.Palettes>
         </FluentTheme>
         <StyleInclude Source="Assets/Icons.axaml"></StyleInclude>
-        <StyleInclude Source="/Views/Icons.axaml"></StyleInclude>
 
     </Application.Styles>
 </Application>
