@@ -5,6 +5,8 @@
       <map>
         <entry key="jadlospis/App.axaml" value="jadlospis/jadlospis.csproj" />
         <entry key="jadlospis/Assets/Icons.axaml" value="jadlospis/jadlospis.csproj" />
+        <entry key="jadlospis/PathData.axaml" value="jadlospis/jadlospis.csproj" />
+        <entry key="jadlospis/Views/Icons.axaml" value="jadlospis/jadlospis.csproj" />
         <entry key="jadlospis/Views/JadlospisPageView.axaml" value="jadlospis/jadlospis.csproj" />
         <entry key="jadlospis/Views/MainWindow.axaml" value="jadlospis/jadlospis.csproj" />
         <entry key="jadlospis/Views/ProduktPageView.axaml" value="jadlospis/jadlospis.csproj" />
