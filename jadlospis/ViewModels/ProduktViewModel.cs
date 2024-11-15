@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using jadlospis.Utils;
+using jadlospis.Models;
 
 namespace jadlospis.ViewModels;
+
 
 // Klasa ViewModel reprezentująca produkt. Dziedziczy po ViewModelBase
 public partial class ProduktViewModel : ViewModelBase
@@ -24,14 +26,14 @@ public partial class ProduktViewModel : ViewModelBase
     [ObservableProperty] private double _salt;            // Sól
 
     // Ścieżka do obrazu produktu (URL)
-    private string image;
+    private string? _image;
 
     // Właściwość reprezentująca załadowany obraz produktu jako Bitmapę
     public Bitmap? ImageBitmap { get; private set; }
 
     // Konstruktor klasy, przyjmujący wartości odżywcze i URL obrazu
     public ProduktViewModel(string name, double carbs, double sugar, double energy, double energyKcal, 
-                            double fat, double saturatedFat, double protein, double salt, string image)
+                            double fat, double saturatedFat, double protein, double salt, string? image)
     {
         // Inicjalizacja właściwości na podstawie przekazanych danych
         Name = name;
@@ -43,7 +45,7 @@ public partial class ProduktViewModel : ViewModelBase
         SaturatedFat = saturatedFat;
         Protein = protein;
         Salt = salt;
-        this.image = image;
+        this._image = image;
 
         // Ładowanie obrazu na podstawie przekazanej ścieżki URL
         LoadImageAsync(image);
@@ -54,22 +56,26 @@ public partial class ProduktViewModel : ViewModelBase
     {
         // Inicjalizacja właściwości na podstawie obiektu produktu
         Name = string.IsNullOrWhiteSpace(product.Name) ? "Brak nazwy" : product.Name;
-        Carbs = product.Nutriments.Carbs;
-        Sugar = product.Nutriments.Sugar;
-        Energy = product.Nutriments.Energy;
-        EnergyKcal = product.Nutriments.EnergyKcal;
-        Fat = product.Nutriments.Fat;
-        SaturatedFat = product.Nutriments.SaturatedFat;
-        Protein = product.Nutriments.Protein;
-        Salt = product.Nutriments.Salt;
-        image = product.ImageUrl;
+        if (product.Nutriments != null)
+        {
+            Carbs = product.Nutriments.Carbs;
+            Sugar = product.Nutriments.Sugar;
+            Energy = product.Nutriments.Energy;
+            EnergyKcal = product.Nutriments.EnergyKcal;
+            Fat = product.Nutriments.Fat;
+            SaturatedFat = product.Nutriments.SaturatedFat;
+            Protein = product.Nutriments.Protein;
+            Salt = product.Nutriments.Salt;
+        }
+
+        _image = product.ImageUrl;
 
         // Ładowanie obrazu na podstawie przekazanej ścieżki URL
-        LoadImageAsync(image);
+        LoadImageAsync(_image);
     }
 
     // Metoda asynchroniczna do ładowania obrazu produktu
-    private async void LoadImageAsync(string image)
+    private async void LoadImageAsync(string? image)
     {
         Bitmap? loadedImage = null;
 

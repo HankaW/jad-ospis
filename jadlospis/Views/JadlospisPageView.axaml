@@ -6,22 +6,14 @@
 
     <StackPanel Margin="20">
         <TextBlock Text="Nazwa jadłospisu" FontWeight="Bold" />
-        <TextBox Text="{Binding JadlospisName}" Margin="0,5" />
+        <TextBox Text="{Binding Name}" Margin="0,5" />
 
         <TextBlock Text="Liczba osób" FontWeight="Bold" Margin="10,20,0,5" />
-        <TextBox Text="{Binding NumberOfPeople}" Margin="0,5" />
+        <TextBox Text="{Binding IloscOsob}" Margin="0,5" />
 
         <TextBlock Text="Jadłospis dla:" FontWeight="Bold" Margin="10,20,0,5" />
         <ComboBox ItemsSource="{Binding AvailableMealsFor}" 
-                  SelectedItem="{Binding MealFor}" 
+                  SelectedItem="{Binding TargetGroup}" 
                   Margin="0,5" />
-
-        <Button Content="Zapisz jadłospis" 
-                Command="{Binding SaveMealPlan}" 
-                Background="#23b08b" 
-                Foreground="White" 
-                Padding="10,5" 
-                Margin="10,20,0,0" 
-                HorizontalAlignment="Center"/>
     </StackPanel>
 </UserControl>
