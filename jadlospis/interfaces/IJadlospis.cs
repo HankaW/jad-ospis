@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using jadlospis.Models;
 
 namespace jadlospis.interfaces;
@@ -8,7 +9,7 @@ public interface IJadlospis
 {
     Dictionary<string, double> SumNutriments { get; set; } // <string, double>
     Dictionary<string, double> MinNutriments { get; set; } // <string, double>
-    List<Danie> Dania { get; set; }
+    ObservableCollection<Danie> Dania { get; set; }
     string TargetGroup { get; set; }
     int IloscOsob { get; set; }
     double SumaCeny { get; set; }
@@ -18,4 +19,6 @@ public interface IJadlospis
     void ObliczSumaCeny();
     void ObliczSumaNutriments();
     void UstawMinNutriments();
+    
+    void AddDanie();
 }

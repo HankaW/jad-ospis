@@ -6,6 +6,7 @@ namespace jadlospis.Models;
 
 public class Products: IProducts
 {
+    public int Id { get; set; }
     public double ProductsGram { get; set; } = 100;
 
     [JsonPropertyName("product_name")] 

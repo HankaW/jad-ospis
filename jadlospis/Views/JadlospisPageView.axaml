@@ -12,8 +12,14 @@
         <TextBox Text="{Binding IloscOsob}" Margin="0,5" />
 
         <TextBlock Text="Jadłospis dla:" FontWeight="Bold" Margin="10,20,0,5" />
+        
+        <StackPanel>
+           
+        </StackPanel>
+        
         <ComboBox ItemsSource="{Binding AvailableMealsFor}" 
-                  SelectedItem="{Binding TargetGroup}" 
+                  SelectedItem="{Binding TargetGroup, Mode=TwoWay }" 
                   Margin="0,5" />
+        <Button Command="{Binding AddDanie}"> Dodaj danie</Button>
     </StackPanel>
 </UserControl>

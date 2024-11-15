@@ -15,8 +15,17 @@ namespace jadlospis.ViewModels
 
         public Dictionary<string, double> SumNutriments { get; set; }
         public Dictionary<string, double> MinNutriments { get; set; }
-        public List<Danie> Dania { get; set; }
-        public string TargetGroup { get; set; }
+        
+        public ObservableCollection<Danie> Dania { get; set; }
+
+        private string _targetGroup = "Dzieci (do 11 ręb)";
+        public string TargetGroup { get => _targetGroup;
+            set
+            {
+                _targetGroup = value;
+                UstawMinNutriments();
+            }
+        }
         public int IloscOsob { get; set; }
         public double SumaCeny { get; set; }
         public string Name { get; set; }
@@ -24,7 +33,7 @@ namespace jadlospis.ViewModels
         
         public JadlospisPageViewModel()
         {
-            TargetGroup = "Młodzieży (11-19 lat)";
+            _targetGroup = "Dzieci (do 11 ręb)";
             SumNutriments = InitDictionary();
             MinNutriments = InitDictionary();
             Dania = new();
@@ -78,50 +87,44 @@ namespace jadlospis.ViewModels
         {
             throw new NotImplementedException();
         }
-
+        
+        private void HelpUpdateNutriments(double carbs, double sugar, double energy, double energyKcal, double fat, double saturatedFat, double protein, double salt)
+        {
+            SumNutriments["carbs"] = carbs;
+            SumNutriments["sugar"] = sugar;
+            SumNutriments["energy"] = energy;
+            SumNutriments["energyKcal"] = energyKcal;
+            SumNutriments["fat"] = fat;
+            SumNutriments["saturatedFat"] = saturatedFat;
+            SumNutriments["protein"] = protein;
+            SumNutriments["salt"] = salt;
+        }
+        
         public void UstawMinNutriments()
         {
             switch (this.TargetGroup)
             {
                 case "Dzieci (do 11 r.ż)":
-                    MinNutriments["carbs"] = 200;
-                    MinNutriments["sugar"] = 40;
-                    MinNutriments["energy"] = 1500; // zależne od wieku i aktywności
-                    MinNutriments["fat"] = 50;
-                    MinNutriments["saturatedFat"] = 15;
-                    MinNutriments["protein"] = 30;
-                    MinNutriments["salt"] = 3;
+                    HelpUpdateNutriments(200, 40, 1500, 0, 50, 15, 30, 3);
                     break;
                 case "Młodzieży (11-19 lat)":
-                    MinNutriments["carbs"] = 260;
-                    MinNutriments["sugar"] = 50;
-                    MinNutriments["energy"] = 2500; // dla aktywności średniej
-                    MinNutriments["fat"] = 70;
-                    MinNutriments["saturatedFat"] = 25;
-                    MinNutriments["protein"] = 60;
-                    MinNutriments["salt"] = 5;
+                    HelpUpdateNutriments(260, 50, 2500, 0, 70, 25, 60, 5);
                     break;
                 case "Dorosłych (19-59 lat)":
-                    MinNutriments["carbs"] = 260; // g/dzień
-                    MinNutriments["sugar"] = 50;  // g/dzień
-                    MinNutriments["energy"] = 2000; // kcal/dzień
-                    MinNutriments["fat"] = 60;  // g/dzień
-                    MinNutriments["saturatedFat"] = 20; // g/dzień
-                    MinNutriments["protein"] = 50; // g/dzień
-                    MinNutriments["salt"] = 5;  // g/dzień
+                    HelpUpdateNutriments(260, 50, 2000, 0, 60, 20, 50, 5);
                     break;
                 case "Seniorów (60+)":
-                    MinNutriments["carbs"] = 250;
-                    MinNutriments["sugar"] = 50;
-                    MinNutriments["energy"] = 1800; // w zależności od aktywności
-                    MinNutriments["fat"] = 60;
-                    MinNutriments["saturatedFat"] = 20;
-                    MinNutriments["protein"] = 60; // zwiększona ilość w porównaniu do dorosłych
-                    MinNutriments["salt"] = 5;
+                    HelpUpdateNutriments(200, 40, 1500, 0, 50, 15, 30, 3);
                     break;
             }
-            
-            Console.WriteLine(this.MinNutriments);
+        }
+
+        [RelayCommand]
+        public void AddDanie()
+        {
+            Danie newDanie = new(Dania.Count + 1);
+            Dania.Add(newDanie);
+            Console.WriteLine(Dania.Count);
         }
     }
 }
