@@ -25,6 +25,9 @@ public class ProduktLoader
         get => _name;
         set => _name = value;
     }
+    
+    private Products _singleProduct = new Products();
+    public Products GetSingleProduct() => _singleProduct;
 
     public double TotalProducts { get; set; }
 
@@ -37,6 +40,33 @@ public class ProduktLoader
         this._name = produktName;
         this._currentPage = currentPage;
         this._pageSize = maxProductsOnPage;
+    }
+
+    public async void SingeProduct()
+    {
+
+            string url = $"https://world.openfoodfacts.org/cgi/search.pl?search_terms={_name}&search_simple=1&action=process&json=1&page_size={_pageSize}&page={_currentPage}";
+
+            try
+            {
+                // Wysyłamy zapytanie HTTP GET do API
+                HttpResponseMessage response = await Client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                // Odczytujemy odpowiedź jako JSON i deserializujemy dane do obiektów
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Root? data = JsonSerializer.Deserialize<Root>(responseBody);
+
+                if(data?.Products == null) return;
+
+                _singleProduct = data.Products[0];
+            }
+            catch (HttpRequestException ex)
+            {
+                // Logowanie błędów związanych z zapytaniem HTTP
+                Console.WriteLine($"An error occurred while downloading products: {ex.Message}");
+            }
+        
     }
 
     // Asynchroniczna metoda do pobierania produktów z API

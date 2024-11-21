@@ -7,14 +7,14 @@ namespace jadlospis.ViewModels;
 using jadlospis.Models;
 public partial class DanieViewModel: ViewModelBase
 {
-    [ObservableProperty] public string _nazwa = string.Empty;
+    [ObservableProperty] private string _nazwa = string.Empty;
     [ObservableProperty]
     private double _cena = 0;
     
-    public ObservableCollection<Products>? Products { get; set; }
+    public ObservableCollection<ProduktWDaniuViewModel>? Products { get; set; }
     public void AddProduct()
     {
-        Products newProducts = new Products();
+        ProduktWDaniuViewModel newProducts = new ProduktWDaniuViewModel();
         this.Products?.Add(newProducts);
     }
     

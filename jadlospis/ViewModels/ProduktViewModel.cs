@@ -98,4 +98,20 @@ public partial class ProduktViewModel : ViewModelBase
             OnPropertyChanged(nameof(ImageBitmap)); // Powiadamiamy o zmianie właściwości
         });
     }
+
+    public Products returnProducts()
+    {
+        Products p = new Products();
+        p.Name = Name;
+        p.Nutriments = new Nutriments();
+        p.Nutriments.Carbs = Carbs;
+        p.Nutriments.Sugar = Sugar;
+        p.Nutriments.Energy = Energy;
+        p.Nutriments.EnergyKcal = EnergyKcal;
+        p.Nutriments.Fat = Fat;
+        p.Nutriments.SaturatedFat = SaturatedFat;
+        p.Nutriments.Protein = Protein;
+        p.Nutriments.Salt = Salt;
+        return p;
+    }
 }

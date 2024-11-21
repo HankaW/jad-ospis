@@ -12,6 +12,7 @@
         <entry key="Views/MainWindow.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktPageView.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktView.axaml" value="jadlospis.csproj" />
+        <entry key="Views/ProduktWDaniuView.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktyPageView.axaml" value="jadlospis.csproj" />
       </map>
     </option>
