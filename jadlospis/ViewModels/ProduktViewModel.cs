@@ -56,15 +56,19 @@ public partial class ProduktViewModel : ViewModelBase
     {
         // Inicjalizacja właściwości na podstawie obiektu produktu
         Name = string.IsNullOrWhiteSpace(product.Name) ? "Brak nazwy" : product.Name;
-        Carbs = Math.Round(product.Nutriments.Carbs, 2);
-        Sugar = Math.Round(product.Nutriments.Sugar, 2);
-        Energy = Math.Round(product.Nutriments.Energy, 2);
-        EnergyKcal = Math.Round(product.Nutriments.EnergyKcal, 2);
-        Fat = Math.Round(product.Nutriments.Fat, 2);
-        SaturatedFat = Math.Round(product.Nutriments.SaturatedFat, 2);
-        Protein = Math.Round(product.Nutriments.Protein, 2);
-        Salt = Math.Round(product.Nutriments.Salt, 2);
-        image = product.ImageUrl;
+        if (product.Nutriments != null)
+        {
+            Carbs = Math.Round(product.Nutriments.Carbs, 2);
+            Sugar = Math.Round(product.Nutriments.Sugar, 2);
+            Energy = Math.Round(product.Nutriments.Energy, 2);
+            EnergyKcal = Math.Round(product.Nutriments.EnergyKcal, 2);
+            Fat = Math.Round(product.Nutriments.Fat, 2);
+            SaturatedFat = Math.Round(product.Nutriments.SaturatedFat, 2);
+            Protein = Math.Round(product.Nutriments.Protein, 2);
+            Salt = Math.Round(product.Nutriments.Salt, 2);
+        }
+
+        _image = product.ImageUrl;
 
         // Ładowanie obrazu na podstawie przekazanej ścieżki URL
         LoadImageAsync(_image);

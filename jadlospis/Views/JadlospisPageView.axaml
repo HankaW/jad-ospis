@@ -11,15 +11,25 @@
         <TextBlock Text="Liczba osób" FontWeight="Bold" Margin="10,20,0,5" />
         <TextBox Text="{Binding IloscOsob}" Margin="0,5" />
 
-        <TextBlock Text="Jadłospis dla:" FontWeight="Bold" Margin="10,20,0,5" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Jadłospis dla:" FontWeight="Bold" Margin="10,20,0,5" />
         
-        <StackPanel>
-           
+            <ComboBox ItemsSource="{Binding AvailableMealsFor}" 
+                      SelectedItem="{Binding TargetGroup, Mode=TwoWay }" 
+                      Margin="0,5" />
         </StackPanel>
         
-        <ComboBox ItemsSource="{Binding AvailableMealsFor}" 
-                  SelectedItem="{Binding TargetGroup, Mode=TwoWay }" 
-                  Margin="0,5" />
+        <StackPanel Orientation="Vertical">
+            <ItemsControl ItemsSource="{Binding Dania}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Vertical"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </StackPanel>
+        
         <Button Command="{Binding AddDanie}"> Dodaj danie</Button>
+
     </StackPanel>
 </UserControl>

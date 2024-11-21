@@ -15,7 +15,7 @@ public class Danie : IDanie
     {
         this.Products = new ObservableCollection<Products>();
         Nazwa = $"Danie {nrDania}";
-        Cena = 0;
+        Cena = 1;
     }
 
     public void AddProduct(Products product)

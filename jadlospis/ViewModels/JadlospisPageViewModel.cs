@@ -14,11 +14,13 @@ namespace jadlospis.ViewModels
         
 
         public Dictionary<string, double> SumNutriments { get; set; }
+        
         public Dictionary<string, double> MinNutriments { get; set; }
         
-        public ObservableCollection<Danie> Dania { get; set; }
+        
+        public ObservableCollection<DanieViewModel> Dania { get; set; }
 
-        private string _targetGroup = "Dzieci (do 11 ręb)";
+        private string _targetGroup = "Młodzieży (11-19 lat)";
         public string TargetGroup { get => _targetGroup;
             set
             {
@@ -33,7 +35,7 @@ namespace jadlospis.ViewModels
         
         public JadlospisPageViewModel()
         {
-            _targetGroup = "Dzieci (do 11 ręb)";
+            _targetGroup = "Młodzieży (11-19 lat)";
             SumNutriments = InitDictionary();
             MinNutriments = InitDictionary();
             Dania = new();
@@ -123,7 +125,8 @@ namespace jadlospis.ViewModels
         public void AddDanie()
         {
             Danie newDanie = new(Dania.Count + 1);
-            Dania.Add(newDanie);
+            DanieViewModel daniaV = new DanieViewModel(newDanie);
+            Dania.Add(daniaV);
             Console.WriteLine(Dania.Count);
         }
     }

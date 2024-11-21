@@ -5,6 +5,7 @@
       <map>
         <entry key="App.axaml" value="jadlospis.csproj" />
         <entry key="Assets/Icons.axaml" value="jadlospis.csproj" />
+        <entry key="Views/DanieView.axaml" value="jadlospis.csproj" />
         <entry key="Views/HomePageView.axaml" value="jadlospis.csproj" />
         <entry key="Views/Icons.axaml" value="jadlospis.csproj" />
         <entry key="Views/JadlospisPageView.axaml" value="jadlospis.csproj" />
