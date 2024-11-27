@@ -99,7 +99,7 @@ public partial class ProduktViewModel : ViewModelBase
         });
     }
 
-    public Products returnProducts()
+    public Products ReturnProducts()
     {
         Products p = new Products();
         p.Name = Name;

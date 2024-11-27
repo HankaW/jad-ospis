@@ -24,4 +24,7 @@ public partial class DanieViewModel: ViewModelBase
         this.Cena = danie.Cena;
         this.Products = danie.Products;
     }
+    
+    
+    
 }

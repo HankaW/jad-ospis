@@ -7,7 +7,17 @@
              x:Class="jadlospis.Views.ProduktWDaniuView"
              x:DataType="vm:ProduktWDaniuViewModel">
     <StackPanel Orientation="Horizontal">
-        <TextBox Text="{Binding Name}"></TextBox>
+        <StackPanel>
+            <StackPanel>
+                <TextBlock> Nazwa produktu </TextBlock>
+                <TextBox Text="{Binding Name, Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock> Gramatura </TextBlock>
+                <TextBox Text="{Binding Gramatura, Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <Button Command="{Binding Wyszukaj}"> Wyszukaj </Button>
+        </StackPanel>
         <ItemsControl ItemsSource="{Binding ProduktView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -16,6 +26,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <TextBox Text="{Binding Gramatura}"></TextBox>
+        <Button IsVisible="{Binding IsVisible}" Command="{Binding Nastepny}"> Nastepny </Button>
     </StackPanel>
 </UserControl>
