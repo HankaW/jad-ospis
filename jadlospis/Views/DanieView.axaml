@@ -14,7 +14,7 @@
         </StackPanel>
         <StackPanel>
             <TextBlock>Cena</TextBlock>
-            <TextBox Text="{Binding Cena }"></TextBox>
+            <NumericUpDown Minimum="0" Value="{Binding Cena, Mode=TwoWay }"></NumericUpDown>
         </StackPanel>
         <ItemsControl ItemsSource="{Binding Products}">
             <ItemsControl.ItemsPanel>
@@ -24,5 +24,6 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
         <Button Command="{Binding AddProduct }">Dodaj </Button>
+        <Button Command="{Binding UsuwDanie }">Usun </Button>
     </StackPanel>
 </UserControl>

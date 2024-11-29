@@ -9,7 +9,7 @@
         <TextBox Text="{Binding Name}" Margin="0,5" />
 
         <TextBlock Text="Liczba osób" FontWeight="Bold" Margin="10,20,0,5" />
-        <TextBox Text="{Binding IloscOsob}" Margin="0,5" />
+        <NumericUpDown Minimum="1" FormatString="0" Value="{Binding IloscOsob, Mode=TwoWay}" Margin="0,5" />
 
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Jadłospis dla:" FontWeight="Bold" Margin="10,20,0,5" />
@@ -30,6 +30,36 @@
         </StackPanel>
         
         <Button Command="{Binding AddDanie}"> Dodaj danie</Button>
-
+        <StackPanel>
+            <TextBlock> Podsumowanie</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock> Cena: </TextBlock>
+                <TextBlock Text="{Binding SumaCeny}"> </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding MinNutriments}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Key}" Margin="5"/>
+                                <TextBlock Text=": " Margin="5"/>
+                                <TextBlock Text="{Binding Value}" Margin="5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding SumNutriments}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Key}" Margin="5"/>
+                                <TextBlock Text=": " Margin="5"/>
+                                <TextBlock Text="{Binding Value}" Margin="5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </UserControl>

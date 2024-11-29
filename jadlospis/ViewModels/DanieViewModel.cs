@@ -7,24 +7,49 @@ namespace jadlospis.ViewModels;
 using jadlospis.Models;
 public partial class DanieViewModel: ViewModelBase
 {
+    private JadlospisPageViewModel _jadlospis;
     [ObservableProperty] private string _nazwa = string.Empty;
-    [ObservableProperty]
+
     private double _cena = 0;
+    public double Cena
+    {
+        get => _cena;
+        set
+        {
+            if(value == null || value < 0) _cena = 0;
+            _cena= value;
+            _jadlospis?.ObliczSumaCeny();
+        }
+    }
     
     public ObservableCollection<ProduktWDaniuViewModel>? Products { get; set; }
     public void AddProduct()
     {
-        ProduktWDaniuViewModel newProducts = new ProduktWDaniuViewModel();
-        this.Products?.Add(newProducts);
+        ProduktWDaniuViewModel newProduct = new ProduktWDaniuViewModel(this); // Przekazujemy referencję do DanieViewModel
+        this.Products?.Add(newProduct);
     }
     
-    public DanieViewModel(Danie danie)
+    public DanieViewModel(Danie danie, JadlospisPageViewModel jadlospis)
     {
         this.Nazwa = danie.Nazwa;
         this.Cena = danie.Cena;
         this.Products = danie.Products;
+        this._jadlospis = jadlospis;
     }
     
-    
+    public void UsuwDanie()
+    {
+        _jadlospis.RemoveDanie(this);
+    }
+
+    public void UpdateNutriments()
+    {
+        _jadlospis.ObliczSumaNutriments();
+    }
+
+    public void RemoveProduct(ProduktWDaniuViewModel product)
+    {
+        this.Products?.Remove(product); // Usuwamy produkt z kolekcji
+    }
     
 }

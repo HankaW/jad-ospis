@@ -1,21 +1,21 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using jadlospis.Models;
 using jadlospis.Utils;
 
 namespace jadlospis.ViewModels;
 
-public partial class ProduktWDaniuViewModel: ViewModelBase
+public partial class ProduktWDaniuViewModel : ViewModelBase
 {
-    private Products _products = new Products();
-    ProduktLoader _productLoader = new ProduktLoader("", 1, 1);
-    
+    private DanieViewModel _danieViewModel;
+    public Products Products = new Products();
+    private ProduktLoader _productLoader = new ProduktLoader("", 1, 1);
+
     [ObservableProperty]
     private bool _isVisible = false;
-    
-    private string _name = "";
+
+    private string _name = string.Empty;
     public string Name
     {
         get => _name;
@@ -29,25 +29,7 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
         }
     }
 
-    public void Wyszukaj()
-    {
-        if(Name != "" || Name != null)
-        {
-            _productLoader.Name = Name;
-            _productLoader.SingeProduct();
-            _products= _productLoader.GetSingleProduct();
-            ProduktView.Clear();
-            ProduktView.Add(new ProduktViewModel(_products));
-        }
-        
-        IsVisible = true;
-    }
-
-    public ObservableCollection<ProduktViewModel> ProduktView {get; set;}
-
-   
     private string _gramatura = "100";
-    
     public string Gramatura
     {
         get => _gramatura;
@@ -56,35 +38,39 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
             if (_gramatura != value)
             {
                 _gramatura = value;
-
-                // Zaktualizowanie gramatury w obiekcie produktu
                 if (double.TryParse(value, out double gramatura))
                 {
-                    _products.ProductsGram = gramatura;
-
-                    // Zaktualizowanie wartości odżywczych na podstawie nowej gramatury
-                    var updatedNutriments = _products.GetCalculatedNutriments(gramatura);
-
-                    // Zaktualizowanie wartości odżywczych w widoku
-                    if (updatedNutriments != null)
-                    {
-                        ProduktView[0].Carbs = updatedNutriments["carbs"];
-                        ProduktView[0].Sugar = updatedNutriments["sugar"];
-                        ProduktView[0].Energy = updatedNutriments["energy"];
-                        ProduktView[0].EnergyKcal = updatedNutriments["energyKcal"];
-                        ProduktView[0].Fat = updatedNutriments["fat"];
-                        ProduktView[0].SaturatedFat = updatedNutriments["saturatedFat"];
-                        ProduktView[0].Protein = updatedNutriments["protein"];
-                        ProduktView[0].Salt = updatedNutriments["salt"];
-                    }
+                    Products.ProductsGram = gramatura;
+                    UpdateNutriments(gramatura);
+                    
                 }
             }
         }
     }
-    
-    public ProduktWDaniuViewModel()
+
+    public ObservableCollection<ProduktViewModel> ProduktView { get; set; }
+
+    public ProduktWDaniuViewModel(DanieViewModel danieViewModel)
     {
+        _danieViewModel = danieViewModel;
         ProduktView = new ObservableCollection<ProduktViewModel>();
+    }
+    
+    // Metoda do usuwania produktu
+    public void UsunProdukt()
+    {
+        _danieViewModel.RemoveProduct(this); // Usuwamy produkt z kolekcji w DanieViewModel
+    }
+
+    public void Wyszukaj()
+    {
+        _productLoader.Name = Name;
+        _productLoader.SingeProduct();
+        Products = _productLoader.GetSingleProduct();
+        ProduktView.Clear();
+        ProduktView.Add(new ProduktViewModel(Products));
+        IsVisible = true;
+        _danieViewModel.UpdateNutriments();
     }
 
     public void Nastepny()
@@ -95,4 +81,20 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
         Wyszukaj();
     }
 
+    private void UpdateNutriments(double gramatura)
+    {
+        var updatedNutriments = Products.GetCalculatedNutriments(gramatura);
+        if (updatedNutriments != null)
+        {
+            ProduktView[0].Carbs = updatedNutriments["carbs"];
+            ProduktView[0].Sugar = updatedNutriments["sugar"];
+            ProduktView[0].Energy = updatedNutriments["energy"];
+            ProduktView[0].EnergyKcal = updatedNutriments["energyKcal"];
+            ProduktView[0].Fat = updatedNutriments["fat"];
+            ProduktView[0].SaturatedFat = updatedNutriments["saturatedFat"];
+            ProduktView[0].Protein = updatedNutriments["protein"];
+            ProduktView[0].Salt = updatedNutriments["salt"];
+            _danieViewModel.UpdateNutriments();
+        }
+    }
 }
