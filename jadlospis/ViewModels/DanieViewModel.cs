@@ -12,6 +12,15 @@ public partial class DanieViewModel: ViewModelBase
     private double _cena = 0;
     
     public ObservableCollection<ProduktWDaniuViewModel>? Products { get; set; }
+
+    public IJadlospis IJadlospis
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
     public void AddProduct()
     {
         ProduktWDaniuViewModel newProducts = new ProduktWDaniuViewModel();

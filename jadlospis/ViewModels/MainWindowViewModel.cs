@@ -31,6 +31,22 @@ public partial class MainWindowViewModel : ViewModelBase
         new ListItemTemplate(typeof(JadlospisPageViewModel), "Jadłospis", "DocumentEditRegular"),
     };
 
+    public HomePageViewModel HomePageViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public ProduktViewModel ProduktViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
     // Metoda wywoływana przy zmianie wybranego elementu listy
     partial void OnSelectedListItemChanged(ListItemTemplate? value)
     {
@@ -77,4 +93,12 @@ public class ListItemTemplate
 
     // Ikona skojarzona z elementem listy
     public StreamGeometry ListItemIcon { get; set; }
+
+    public MainWindowViewModel MainWindowViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
 }

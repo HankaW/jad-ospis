@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="jadlospis.Models.Products">
+    <Position X="19.5" Y="4.5" Width="1.75" />
+    <AssociationLine Name="ProduktViewModel" Type="jadlospis.ViewModels.ProduktViewModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.062" Y="6.824" />
+        <Point X="21.062" Y="8.42" />
+        <Point X="21.021" Y="8.42" Type="JumpStart" />
+        <Point X="20.854" Y="8.42" Type="JumpEnd" />
+        <Point X="20.645" Y="8.42" Type="JumpStart" />
+        <Point X="20.479" Y="8.42" Type="JumpEnd" />
+        <Point X="17.083" Y="8.42" Type="JumpStart" />
+        <Point X="16.917" Y="8.42" Type="JumpEnd" />
+        <Point X="16.125" Y="8.42" />
+        <Point X="16.125" Y="8.086" />
+        <Point X="15.75" Y="8.086" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAACQEAAAAAAIAAQAAAAAAQAAAEAAAAAACAAAgAAAAA=</HashCode>
+      <FileName>Models\Products.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Nutriments1" />
+      <Property Name="ProduktLoader" />
+      <Property Name="ProduktViewModel" />
+      <Property Name="ProduktWDaniuViewModel" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="jadlospis.Utils.ProduktLoader">
+    <Position X="22" Y="4.5" Width="1.5" />
+    <AssociationLine Name="ProduktPageViewModel" Type="jadlospis.ViewModels.ProduktPageViewModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="23" Y="8.622" />
+        <Point X="23" Y="10.023" />
+        <Point X="23.75" Y="10.023" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProduktWDaniuViewModel" Type="jadlospis.ViewModels.ProduktWDaniuViewModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="23" Y="8.622" />
+        <Point X="23" Y="11.062" />
+        <Point X="22.75" Y="11.062" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AIAAIAEAAAEAAAAAAEAAAAQABAQABAAAQKBAAAAAAAY=</HashCode>
+      <FileName>Utils\ProduktLoader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Products" />
+      <Property Name="ProduktPageViewModel" />
+      <Property Name="ProduktWDaniuViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.Utils.Root">
+    <Position X="24.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Utils\ProduktLoader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ProduktLoader" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.ViewModels.DanieViewModel">
+    <Position X="29.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAASAAAAAAAAAAAAAAAAAAY=</HashCode>
+      <FileName>ViewModels\DanieViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jadlospis.ViewModels.ProduktPageViewModel">
+    <Position X="23.75" Y="9.75" Width="2" />
+    <AssociationLine Name="ProduktViewModel" Type="jadlospis.ViewModels.ProduktViewModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="25" Y="9.75" />
+        <Point X="25" Y="8.562" />
+        <Point X="23.927" Y="8.562" Type="JumpStart" />
+        <Point X="23.76" Y="8.562" Type="JumpEnd" />
+        <Point X="21.614" Y="8.562" Type="JumpStart" />
+        <Point X="21.448" Y="8.562" Type="JumpEnd" />
+        <Point X="21.021" Y="8.562" Type="JumpStart" />
+        <Point X="20.854" Y="8.562" Type="JumpEnd" />
+        <Point X="20.645" Y="8.562" Type="JumpStart" />
+        <Point X="20.479" Y="8.562" Type="JumpEnd" />
+        <Point X="17.083" Y="8.562" Type="JumpStart" />
+        <Point X="16.917" Y="8.562" Type="JumpEnd" />
+        <Point X="15.75" Y="8.562" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAABEAAAAAAAAABAAAIAEAABAEAAAAAAAAgAICgAAA=</HashCode>
+      <FileName>ViewModels\ProduktPageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ProduktLoader" />
+      <Property Name="MainWindowViewModel" />
+      <Property Name="ProduktViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.ViewModels.ProduktViewModel">
+    <Position X="14.25" Y="6.75" Width="1.5" />
+    <AssociationLine Name="Products" Type="jadlospis.Models.Products" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.75" Y="8.188" />
+        <Point X="16.042" Y="8.188" Type="JumpStart" />
+        <Point X="16.208" Y="8.188" Type="JumpEnd" />
+        <Point X="20.479" Y="8.188" Type="JumpStart" />
+        <Point X="20.645" Y="8.188" Type="JumpEnd" />
+        <Point X="20.812" Y="8.188" />
+        <Point X="20.812" Y="6.824" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProduktLoader" Type="jadlospis.Utils.ProduktLoader" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.75" Y="8.188" />
+        <Point X="16.042" Y="8.188" Type="JumpStart" />
+        <Point X="16.208" Y="8.188" Type="JumpEnd" />
+        <Point X="17" Y="8.188" />
+        <Point X="17" Y="4.25" />
+        <Point X="22.375" Y="4.25" />
+        <Point X="22.375" Y="4.5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProduktPageViewModel" Type="jadlospis.ViewModels.ProduktPageViewModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.75" Y="8.188" />
+        <Point X="16.042" Y="8.188" Type="JumpStart" />
+        <Point X="16.208" Y="8.188" Type="JumpEnd" />
+        <Point X="17" Y="8.188" />
+        <Point X="17" Y="8.872" />
+        <Point X="20.479" Y="8.872" Type="JumpStart" />
+        <Point X="20.645" Y="8.872" Type="JumpEnd" />
+        <Point X="20.854" Y="8.872" Type="JumpStart" />
+        <Point X="21.021" Y="8.872" Type="JumpEnd" />
+        <Point X="21.448" Y="8.872" Type="JumpStart" />
+        <Point X="21.614" Y="8.872" Type="JumpEnd" />
+        <Point X="22.355" Y="8.872" Type="JumpStart" />
+        <Point X="22.521" Y="8.872" Type="JumpEnd" />
+        <Point X="22.917" Y="8.872" Type="JumpStart" />
+        <Point X="23.083" Y="8.872" Type="JumpEnd" />
+        <Point X="23.76" Y="8.872" Type="JumpStart" />
+        <Point X="23.927" Y="8.872" Type="JumpEnd" />
+        <Point X="24.297" Y="8.872" />
+        <Point X="24.297" Y="9.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProduktWDaniuViewModel" Type="jadlospis.ViewModels.ProduktWDaniuViewModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.75" Y="8.188" />
+        <Point X="16.042" Y="8.188" Type="JumpStart" />
+        <Point X="16.208" Y="8.188" Type="JumpEnd" />
+        <Point X="20.479" Y="8.188" Type="JumpStart" />
+        <Point X="20.645" Y="8.188" Type="JumpEnd" />
+        <Point X="20.854" Y="8.188" Type="JumpStart" />
+        <Point X="21.145" Y="8.188" Type="JumpEnd" />
+        <Point X="21.531" Y="8.188" />
+        <Point X="21.531" Y="10.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.158" Y="0.242" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAAAIgAAAQEAAAEAAAAAAAEAAAEAQAAAmCABAAAAEAQ=</HashCode>
+      <FileName>ViewModels\ProduktViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Nutriments" />
+      <Property Name="Products" />
+      <Property Name="ProduktLoader" />
+      <Property Name="ProduktPageViewModel" />
+      <Property Name="ProduktWDaniuViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.ViewModels.ProduktWDaniuViewModel">
+    <Position X="21.25" Y="10.25" Width="1.5" />
+    <AssociationLine Name="Products" Type="jadlospis.Models.Products" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.25" Y="10.312" />
+        <Point X="21.021" Y="10.312" Type="JumpStart" />
+        <Point X="20.854" Y="10.312" Type="JumpEnd" />
+        <Point X="20.562" Y="10.312" />
+        <Point X="20.562" Y="6.824" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ProduktLoader" Type="jadlospis.Utils.ProduktLoader" FixedToPoint="true">
+      <Path>
+        <Point X="22.438" Y="10.25" />
+        <Point X="22.438" Y="8.622" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="DanieViewModel" Type="jadlospis.ViewModels.DanieViewModel" ManuallyRouted="true">
+      <Path>
+        <Point X="21.816" Y="13.155" />
+        <Point X="21.816" Y="13.3" />
+        <Point X="27.917" Y="13.3" Type="JumpStart" />
+        <Point X="28.083" Y="13.3" Type="JumpEnd" />
+        <Point X="29.037" Y="13.3" Type="JumpStart" />
+        <Point X="29.203" Y="13.3" Type="JumpEnd" />
+        <Point X="29.417" Y="13.3" Type="JumpStart" />
+        <Point X="29.583" Y="13.3" Type="JumpEnd" />
+        <Point X="30.25" Y="13.3" />
+        <Point X="30.25" Y="12.963" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAQAAAAAAAAAAQAAQACAEAgAEAAIAAAAAAAAQ=</HashCode>
+      <FileName>ViewModels\ProduktWDaniuViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Danie" />
+      <Property Name="Products" />
+      <Property Name="ProduktLoader" />
+      <Property Name="DanieViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.Views.DanieView">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\DanieView.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jadlospis.Views.ProduktPageView">
+    <Position X="1.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\ProduktPageView.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jadlospis.Views.ProduktView">
+    <Position X="1" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\ProduktView.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jadlospis.Views.ProduktWDaniuView">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\ProduktWDaniuView.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Avalonia.Controls.UserControl">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="jadlospis.ViewModels.MainWindowViewModel">
+    <Position X="27" Y="10" Width="2" />
+    <AssociationLine Name="ProduktViewModel" Type="jadlospis.ViewModels.ProduktViewModel" ManuallyRouted="true">
+      <Path>
+        <Point X="28.266" Y="10" />
+        <Point X="28.266" Y="9.573" />
+        <Point X="25.083" Y="9.573" Type="JumpStart" />
+        <Point X="24.917" Y="9.573" Type="JumpEnd" />
+        <Point X="24.38" Y="9.573" Type="JumpStart" />
+        <Point X="24.214" Y="9.573" Type="JumpEnd" />
+        <Point X="23.927" Y="9.573" Type="JumpStart" />
+        <Point X="23.76" Y="9.573" Type="JumpEnd" />
+        <Point X="23.083" Y="9.573" Type="JumpStart" />
+        <Point X="22.917" Y="9.573" Type="JumpEnd" />
+        <Point X="22.521" Y="9.573" Type="JumpStart" />
+        <Point X="22.355" Y="9.573" Type="JumpEnd" />
+        <Point X="21.614" Y="9.573" Type="JumpStart" />
+        <Point X="21.448" Y="9.573" Type="JumpEnd" />
+        <Point X="21.021" Y="9.573" Type="JumpStart" />
+        <Point X="20.854" Y="9.573" Type="JumpEnd" />
+        <Point X="20.645" Y="9.573" Type="JumpStart" />
+        <Point X="20.479" Y="9.573" Type="JumpEnd" />
+        <Point X="20.333" Y="9.573" Type="JumpStart" />
+        <Point X="20.167" Y="9.573" Type="JumpEnd" />
+        <Point X="19.88" Y="9.573" />
+        <Point X="19.88" Y="9.221" />
+        <Point X="15.75" Y="9.221" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAACCAEAAAAAAAAAABEAAAAAABAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ProduktViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.Models.Nutriments">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AChgAMEAgIAAAAAACAAEAAACAAAAAIEAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Nutriments.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Products" />
+      <Property Name="ProduktViewModel" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="jadlospis.Models.Danie">
+    <Position X="27.75" Y="5.25" Width="1.5" />
+    <AssociationLine Name="JadlospisPageViewModel" Type="jadlospis.ViewModels.JadlospisPageViewModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="28.875" Y="7.382" />
+        <Point X="28.875" Y="8.062" />
+        <Point X="28.825" Y="8.062" />
+        <Point X="28.825" Y="9.442" />
+        <Point X="29.12" Y="9.442" />
+        <Point X="29.12" Y="13.749" />
+        <Point X="20.75" Y="13.749" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAQQgAAAAAAAAAAAAAgAAAAAAQ=</HashCode>
+      <FileName>Models\Danie.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DanieViewModel" />
+      <Property Name="JadlospisPageViewModel" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="jadlospis.ViewModels.JadlospisPageViewModel">
+    <Position X="18.5" Y="10.5" Width="2.25" />
+    <AssociationLine Name="Danie" Type="jadlospis.Models.Danie" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.25" Y="10.5" />
+        <Point X="20.25" Y="8.888" />
+        <Point X="20.479" Y="8.888" Type="JumpStart" />
+        <Point X="20.645" Y="8.888" Type="JumpEnd" />
+        <Point X="20.854" Y="8.888" Type="JumpStart" />
+        <Point X="21.021" Y="8.888" Type="JumpEnd" />
+        <Point X="21.448" Y="8.888" Type="JumpStart" />
+        <Point X="21.614" Y="8.888" Type="JumpEnd" />
+        <Point X="22.355" Y="8.888" Type="JumpStart" />
+        <Point X="22.521" Y="8.888" Type="JumpEnd" />
+        <Point X="22.917" Y="8.888" Type="JumpStart" />
+        <Point X="23.083" Y="8.888" Type="JumpEnd" />
+        <Point X="23.76" Y="8.888" Type="JumpStart" />
+        <Point X="23.927" Y="8.888" Type="JumpEnd" />
+        <Point X="24.917" Y="8.888" Type="JumpStart" />
+        <Point X="25.083" Y="8.888" Type="JumpEnd" />
+        <Point X="28.203" Y="8.888" />
+        <Point X="28.203" Y="7.382" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Program" Type="jadlospis.Program" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.25" Y="10.5" />
+        <Point X="20.25" Y="9.438" />
+        <Point X="20.479" Y="9.438" Type="JumpStart" />
+        <Point X="20.645" Y="9.438" Type="JumpEnd" />
+        <Point X="20.854" Y="9.438" Type="JumpStart" />
+        <Point X="21.021" Y="9.438" Type="JumpEnd" />
+        <Point X="21.448" Y="9.438" Type="JumpStart" />
+        <Point X="21.614" Y="9.438" Type="JumpEnd" />
+        <Point X="22.355" Y="9.438" Type="JumpStart" />
+        <Point X="22.521" Y="9.438" Type="JumpEnd" />
+        <Point X="22.917" Y="9.438" Type="JumpStart" />
+        <Point X="23.083" Y="9.438" Type="JumpEnd" />
+        <Point X="23.76" Y="9.438" Type="JumpStart" />
+        <Point X="23.927" Y="9.438" Type="JumpEnd" />
+        <Point X="24.214" Y="9.438" Type="JumpStart" />
+        <Point X="24.38" Y="9.438" Type="JumpEnd" />
+        <Point X="24.917" Y="9.438" Type="JumpStart" />
+        <Point X="25.083" Y="9.438" Type="JumpEnd" />
+        <Point X="29.102" Y="9.438" Type="JumpStart" />
+        <Point X="29.268" Y="9.438" Type="JumpEnd" />
+        <Point X="30.355" Y="9.438" Type="JumpStart" />
+        <Point X="30.521" Y="9.438" Type="JumpEnd" />
+        <Point X="31" Y="9.438" />
+        <Point X="31" Y="7.296" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="MainWindowViewModel" Type="jadlospis.ViewModels.MainWindowViewModel" ManuallyRouted="true">
+      <Path>
+        <Point X="20.75" Y="13.945" />
+        <Point X="21.54" Y="13.945" />
+        <Point X="21.54" Y="13.828" />
+        <Point X="28" Y="13.828" />
+        <Point X="28" Y="12.713" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAAQAEAAIBABAKBAAIBQQACAAEADAACAAQAAAgAAA=</HashCode>
+      <FileName>ViewModels\JadlospisPageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Danie" />
+      <Property Name="Program" />
+      <Property Name="MainWindowViewModel" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="jadlospis.Views.HomePageView">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\HomePageView.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jadlospis.Views.JadlospisPageView">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\JadlospisPageView.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Avalonia.Controls.ContentControl">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="jadlospis.Program">
+    <Position X="29.75" Y="6" Width="1.5" />
+    <AssociationLine Name="JadlospisPageViewModel" Type="jadlospis.ViewModels.JadlospisPageViewModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="30.438" Y="7.296" />
+        <Point X="30.438" Y="10" />
+        <Point X="29.5" Y="10" />
+        <Point X="29.5" Y="13.749" />
+        <Point X="20.75" Y="13.749" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIBAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="JadlospisPageViewModel" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="jadlospis.Views.MainWindow">
+    <Position X="7.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\MainWindow.axaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Avalonia.Controls.Window" Collapsed="true">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

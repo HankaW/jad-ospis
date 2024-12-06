@@ -129,5 +129,37 @@ namespace jadlospis.ViewModels
             Dania.Add(daniaV);
             Console.WriteLine(Dania.Count);
         }
+
+        public Danie Danie
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        internal Program Program
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public MainWindowViewModel MainWindowViewModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
+        public ViewModelBase ViewModelBase
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

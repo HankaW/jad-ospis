@@ -103,6 +103,30 @@ public class ProduktLoader
             Console.WriteLine($"An error occurred while parsing the response: {ex.Message}");
         }
     }
+
+    public Products Products
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public ProduktPageViewModel ProduktPageViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public ProduktWDaniuViewModel ProduktWDaniuViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
 }
 
 
@@ -111,4 +135,12 @@ public class Root
 {
     [JsonPropertyName("products")]
     public List<Products>? Products { get; set; }
+
+    public ProduktLoader ProduktLoader
+    {
+        get => default;
+        set
+        {
+        }
+    }
 }

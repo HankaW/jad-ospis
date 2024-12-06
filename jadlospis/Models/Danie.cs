@@ -12,6 +12,22 @@ public class Danie : IDanie
     public double Cena { get; set; }
     public ObservableCollection<ProduktWDaniuViewModel> Products { get; set; }
 
+    public DanieViewModel DanieViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public JadlospisPageViewModel JadlospisPageViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
     public Danie(int nrDania)
     {
         this.Products = new ObservableCollection<ProduktWDaniuViewModel>();

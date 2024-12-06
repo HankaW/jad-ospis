@@ -39,5 +39,36 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
     {
         ProduktView = new ObservableCollection<ProduktViewModel>();
     }
-    
+
+    public Danie Danie
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public Products Products
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public ProduktLoader ProduktLoader
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public DanieViewModel DanieViewModel
+    {
+        get => default;
+        set
+        {
+        }
+    }
 }
