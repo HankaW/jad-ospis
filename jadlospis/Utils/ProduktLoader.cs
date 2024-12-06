@@ -44,30 +44,53 @@ public class ProduktLoader
 
     public async void SingeProduct()
     {
+        string url = $"https://world.openfoodfacts.org/cgi/search.pl?search_terms={_name}&search_simple=1&action=process&json=1&page_size={_pageSize}&page={_currentPage}";
 
-            string url = $"https://world.openfoodfacts.org/cgi/search.pl?search_terms={_name}&search_simple=1&action=process&json=1&page_size={_pageSize}&page={_currentPage}";
+        try
+        {
+            // Wysyłamy zapytanie HTTP GET do API
+            HttpResponseMessage response = await Client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
-            try
+            // Odczytujemy odpowiedź jako JSON i deserializujemy dane do obiektów
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Root? data = JsonSerializer.Deserialize<Root>(responseBody);
+
+            if (data?.Products == null || data.Products.Count == 0)
             {
-                // Wysyłamy zapytanie HTTP GET do API
-                HttpResponseMessage response = await Client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
+                // Jeśli brak produktów, resetujemy stronę i próbujemy ponownie
+                if (_currentPage > 1)
+                {
+                    _currentPage = 1;
+                    response = await Client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    responseBody = await response.Content.ReadAsStringAsync();
+                    data = JsonSerializer.Deserialize<Root>(responseBody);
+                }
+            }
 
-                // Odczytujemy odpowiedź jako JSON i deserializujemy dane do obiektów
-                string responseBody = await response.Content.ReadAsStringAsync();
-                Root? data = JsonSerializer.Deserialize<Root>(responseBody);
-
-                if(data?.Products == null) return;
-
+            // Jeśli produkty zostały znalezione, ustawiamy pierwszy produkt
+            if (data?.Products != null && data.Products.Count > 0)
+            {
                 _singleProduct = data.Products[0];
             }
-            catch (HttpRequestException ex)
+            else
             {
-                // Logowanie błędów związanych z zapytaniem HTTP
-                Console.WriteLine($"An error occurred while downloading products: {ex.Message}");
+                Console.WriteLine("No products found.");
             }
-        
+        }
+        catch (HttpRequestException ex)
+        {
+            // Logowanie błędów związanych z zapytaniem HTTP
+            Console.WriteLine($"An error occurred while downloading products: {ex.Message}");
+        }
+        catch (JsonException ex)
+        {
+            // Logowanie błędów związanych z deserializacją danych
+            Console.WriteLine($"An error occurred while parsing the response: {ex.Message}");
+        }
     }
+
 
     // Asynchroniczna metoda do pobierania produktów z API
     public async Task GetProducts()

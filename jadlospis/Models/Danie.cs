@@ -9,7 +9,7 @@ namespace jadlospis.Models;
 public class Danie : IDanie
 {
     public string Nazwa { get; set; }
-    public double Cena { get; set; }
+    public double Cena { get; set; } = 0;
     public ObservableCollection<ProduktWDaniuViewModel> Products { get; set; }
 
     public DanieViewModel DanieViewModel

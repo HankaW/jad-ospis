@@ -5,9 +5,20 @@
              xmlns:vm="clr-namespace:jadlospis.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="jadlospis.Views.ProduktWDaniuView"
-             x:DataType="vm:ProduktWDaniuViewModel">
+             x:DataType="vm:ProduktWDaniuViewModel"
+             >
     <StackPanel Orientation="Horizontal">
-        <TextBox Text="{Binding Name}"></TextBox>
+        <StackPanel>
+            <StackPanel>
+                <TextBlock> Nazwa produktu </TextBlock>
+                <TextBox Text="{Binding Name, Mode=TwoWay}"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock> Gramatura </TextBlock>
+                <NumericUpDown FormatString="0" Minimum="0" Value="{Binding Gramatura, Mode=TwoWay}"></NumericUpDown>
+            </StackPanel>
+            <Button Command="{Binding Wyszukaj}"> Wyszukaj </Button>
+        </StackPanel>
         <ItemsControl ItemsSource="{Binding ProduktView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -16,6 +27,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <TextBox Text="{Binding Gramatura}"></TextBox>
+        <Button IsVisible="{Binding IsVisible}" Command="{Binding Nastepny}"> Nastepny </Button>
+        <Button IsVisible="{Binding IsVisible}" Command="{Binding UsunProdukt}"> Usun </Button>
     </StackPanel>
 </UserControl>

@@ -8,8 +8,8 @@ namespace jadlospis.interfaces;
 
 public interface IJadlospis
 {
-    Dictionary<string, double> SumNutriments { get; set; } // <string, double>
-    Dictionary<string, double> MinNutriments { get; set; } // <string, double>
+    ObservableCollection<KeyValuePair<string, double>> SumNutriments { get; set; } // <string, double>
+    ObservableCollection<KeyValuePair<string, double>> MinNutriments { get; set; } // <string, double>
     ObservableCollection<DanieViewModel> Dania { get; set; }
     string TargetGroup { get; set; }
     int IloscOsob { get; set; }
