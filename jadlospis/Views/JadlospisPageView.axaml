@@ -5,6 +5,8 @@
              x:DataType="vm:JadlospisPageViewModel">
 
     <StackPanel Margin="20">
+        <Button Command="{Binding ZapiszJadlospis}">Zapisz</Button>
+        <Button Command="{Binding SaveAsPdf}"> Zapisz jako PDF</Button>
         <TextBlock Text="Nazwa jadłospisu" FontWeight="Bold" />
         <TextBox Text="{Binding Name}" Margin="0,5" />
 
