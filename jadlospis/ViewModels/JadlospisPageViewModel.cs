@@ -4,14 +4,27 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Timers;
 using jadlospis.interfaces;
 using jadlospis.Models;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
+using PdfSharp.Pdf;
+
 
 namespace jadlospis.ViewModels
 {
     public partial class JadlospisPageViewModel : ViewModelBase, IJadlospis
     {
+        
+        private string _fileName = "";
+        public string FileName { get => _fileName; set => _fileName = value; }
+        
+        private static Timer _timer = null!;
+        public Timer Timer { get => _timer; set => _timer = value; }
         public ObservableCollection<KeyValuePair<string, double>> SumNutriments { get; set; }
         public ObservableCollection<KeyValuePair<string, double>> MinNutriments { get; set; }
 
@@ -55,7 +68,6 @@ namespace jadlospis.ViewModels
             SumNutriments = InitNutrimentsCollection();
             MinNutriments = InitNutrimentsCollection();
 
-            // Ustaw wartości domyślne dla grupy "Młodzieży (11-19 lat)"
             var values = new[] { 260, 50, 2500, 0, 70, 25, 60, 5 };
             var keys = MinNutriments.Select(kv => kv.Key).ToList();
             for (int i = 0; i < keys.Count; i++)
@@ -67,6 +79,14 @@ namespace jadlospis.ViewModels
             Dania = new();
             Name = $"Jadłospis {DateTime.Now}";
             Data = DateTime.Now;
+            
+            FileName = Name.Replace(" ", "_") + "_" + Data.ToString("yyyy-MM-dd") + ".json";
+            
+            ZapiszJadlospis();
+            
+            _timer = new Timer(300000); // 5 min
+            _timer.Elapsed += (sender, e) => ZapiszJadlospis();
+            _timer.Start();
         }
 
         public JadlospisPageViewModel(JadlospisPageViewModel jadlospis)
@@ -79,6 +99,8 @@ namespace jadlospis.ViewModels
             SumaCeny = jadlospis.SumaCeny;
             Name = jadlospis.Name;
             Data = jadlospis.Data;
+            FileName = jadlospis.FileName;
+            _timer = jadlospis.Timer;
         }
 
         public void RemoveDanie(DanieViewModel danie)
@@ -110,13 +132,12 @@ namespace jadlospis.ViewModels
             {
                 SumaCeny += danie.Cena;
             }
-            SumaCeny*= IloscOsob;
+            SumaCeny *= IloscOsob;
             SumaCeny = Math.Round(SumaCeny, 2);
         }
 
         public void ObliczSumaNutriments()
         {
-            // Reset wartości do zera
             var keys = SumNutriments.Select(kv => kv.Key).ToList();
             for (int i = 0; i < keys.Count; i++)
             {
@@ -126,7 +147,6 @@ namespace jadlospis.ViewModels
                 SumNutriments.Add(new KeyValuePair<string, double>(key, 0));
             }
 
-            // Oblicz wartości na podstawie dania
             foreach (var danie in Dania)
             {
                 if (danie.Products != null)
@@ -135,7 +155,6 @@ namespace jadlospis.ViewModels
                     {
                         if (product.Products.Nutriments != null)
                         {
-                            // Zaktualizuj wartości składników odżywczych
                             foreach (var nutriment in new[]
                                      {
                                          ("carbs", product.Products.Nutriments.Carbs),
@@ -184,6 +203,72 @@ namespace jadlospis.ViewModels
 
 
         [RelayCommand]
+        public void ZapiszJadlospis()
+        {
+            try
+            {
+                // Pobierz ścieżkę do katalogu "Dokumenty" użytkownika
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                // Utwórz podkatalog "jadlospisy"
+                string targetDirectory = Path.Combine(documentsPath, "jadlospisy");
+                if (!Directory.Exists(targetDirectory))
+                {
+                    Directory.CreateDirectory(targetDirectory);
+                }
+
+                // Utwórz nazwę pliku na podstawie nazwy jadłospisu i daty
+                string fileName = $"{FileName}.json";
+                string filePath = Path.Combine(targetDirectory, fileName);
+
+                // Serializuj obiekt do JSON
+                string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
+                var jadlospisData = new
+                {
+                    Name,
+                    Data,
+                    IloscOsob,
+                    SumaCeny,
+                    TargetGroup,
+                    Dania = Dania.Select(d => new
+                    {
+                        d.Nazwa,
+                        d.Cena,
+                        Produkty = d.Products?.Select(p => new
+                        {
+                            p.Products.Name,
+                            p.Products.ImageUrl,
+                            Nutriments = new
+                            {
+                                p.Products.Nutriments.Carbs,
+                                p.Products.Nutriments.Sugar,
+                                p.Products.Nutriments.Energy,
+                                p.Products.Nutriments.EnergyKcal,
+                                p.Products.Nutriments.Fat,
+                                p.Products.Nutriments.SaturatedFat,
+                                p.Products.Nutriments.Protein,
+                                p.Products.Nutriments.Salt
+                            }
+                        })
+                    }),
+                    SumNutriments = SumNutriments.ToDictionary(kv => kv.Key, kv => kv.Value),
+                    MinNutriments = MinNutriments.ToDictionary(kv => kv.Key, kv => kv.Value)
+                };
+
+                string jsonData = JsonSerializer.Serialize(jadlospisData, new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+
+                File.WriteAllText(filePath, jsonData);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Błąd podczas zapisu do pliku JSON: {ex.Message}");
+            }
+        }
+
+        [RelayCommand]
         public void AddDanie()
         {
             Danie newDanie = new(Dania.Count + 1);
@@ -193,36 +278,45 @@ namespace jadlospis.ViewModels
             ObliczSumaCeny();
         }
 
-        public Danie Danie
+        public PdfDocument GetInvoce()
         {
-            get => default;
-            set
-            {
-            }
+            var document = new Document();
+            
+            BuildDocument(document);
+
+            var pdfRenderer = new PdfDocumentRenderer();
+            pdfRenderer.Document = document;
+            
+            pdfRenderer.RenderDocument();
+
+            return pdfRenderer.PdfDocument;
         }
 
-        internal Program Program
+        private void BuildDocument(Document document)
         {
-            get => default;
-            set
-            {
-            }
+            Section section = document.AddSection();
+            
+            //TODO Dodać informacje o jadłospisie i sformatowac je w odpowiedniej formacie
+            Paragraph paragraph = section.AddParagraph(); ;
+            paragraph.AddText($"Jadłospis dla {Name} na dzien {Data}");
+            paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+            paragraph.AddLineBreak();
+
+            paragraph = section.AddParagraph();
+            paragraph.AddText($"Liczba osob: {IloscOsob}. Łączna cen: {SumaCeny}");
+            paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+            paragraph.AddLineBreak();
         }
 
-        public MainWindowViewModel MainWindowViewModel
+        [RelayCommand]
+        public void SaveAsPdf()
         {
-            get => default;
-            set
-            {
-            }
-        }
-
-        public ViewModelBase ViewModelBase
-        {
-            get => default;
-            set
-            {
-            }
+            var document = GetInvoce();
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            
+            string targetDirectory = Path.Combine(documentsPath, $"{Name}.pdf");
+            
+            document.Save(targetDirectory);
         }
     }
 }
