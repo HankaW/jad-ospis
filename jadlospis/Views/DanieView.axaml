@@ -6,24 +6,37 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="jadlospis.Views.DanieView"
              x:DataType="vm:DanieViewModel">
-             
-    <StackPanel Orientation="Horizontal">
-        <StackPanel>
-            <TextBlock>Nazwa</TextBlock>
-            <TextBox Text="{Binding Nazwa }"></TextBox>
+    
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+   
+        <!-- Nagłówki i pola w jednej linii, wyśrodkowane -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,5,7">
+            <!-- Nazwa -->
+            <StackPanel Orientation="Vertical" Margin="0,5,5,7">
+                <TextBlock Text="Nazwa:" HorizontalAlignment="Center"/>
+                <TextBox Text="{Binding Nazwa}" Width="200" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Cena -->
+            <StackPanel Orientation="Vertical" Margin="0,5,5,7">
+                <TextBlock Text="Cena:" HorizontalAlignment="Center"/>
+                <NumericUpDown Minimum="0" Value="{Binding Cena, Mode=TwoWay}" Width="150" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Przyciski -->
+            <StackPanel Orientation="Horizontal" Margin="7">
+                <Button Command="{Binding AddProduct}" Background="#23b08b" Foreground="Black" HorizontalAlignment="Center" Padding="10,5" Margin="5, 16, 5,5">Dodaj produkt do dania</Button>
+                <Button Command="{Binding UsuwDanie}" Background="#23b08b" Foreground="Black" HorizontalAlignment="Center" Padding="10,5" Margin="5,16,5,5">Usuń to danie</Button>
+            </StackPanel>
         </StackPanel>
-        <StackPanel>
-            <TextBlock>Cena</TextBlock>
-            <NumericUpDown Minimum="0" Value="{Binding Cena, Mode=TwoWay }"></NumericUpDown>
-        </StackPanel>
-        <ItemsControl ItemsSource="{Binding Products}">
+
+        <!-- Produkty -->
+        <ItemsControl ItemsSource="{Binding Products}" Margin="0,5,5,20">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Vertical"></WrapPanel>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <Button Command="{Binding AddProduct }">Dodaj </Button>
-        <Button Command="{Binding UsuwDanie }">Usun </Button>
     </StackPanel>
 </UserControl>

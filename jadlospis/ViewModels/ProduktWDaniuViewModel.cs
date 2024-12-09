@@ -80,20 +80,26 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
         OnPropertyChanged(nameof(Gramatura));
         Wyszukaj();
     }
-
+    public void Poprzenie()
+    {
+        _productLoader.CurrentPage--;
+        Gramatura = "100";
+        OnPropertyChanged(nameof(Gramatura));
+        Wyszukaj();
+    }
     private void UpdateNutriments(double gramatura)
     {
         var updatedNutriments = Products.GetCalculatedNutriments(gramatura);
         if (updatedNutriments != null)
         {
-            ProduktView[0].Carbs = updatedNutriments["carbs"];
-            ProduktView[0].Sugar = updatedNutriments["sugar"];
-            ProduktView[0].Energy = updatedNutriments["energy"];
-            ProduktView[0].EnergyKcal = updatedNutriments["energyKcal"];
-            ProduktView[0].Fat = updatedNutriments["fat"];
-            ProduktView[0].SaturatedFat = updatedNutriments["saturatedFat"];
-            ProduktView[0].Protein = updatedNutriments["protein"];
-            ProduktView[0].Salt = updatedNutriments["salt"];
+            ProduktView[0].Carbs = updatedNutriments["Węglowowany"];
+            ProduktView[0].Sugar = updatedNutriments["Cukier"];
+            ProduktView[0].Energy = updatedNutriments["Energia"];
+            ProduktView[0].EnergyKcal = updatedNutriments["Kalorie"];
+            ProduktView[0].Fat = updatedNutriments["Tłuszcz"];
+            ProduktView[0].SaturatedFat = updatedNutriments["Tłuszcze nasycone"];
+            ProduktView[0].Protein = updatedNutriments["Białko"];
+            ProduktView[0].Salt = updatedNutriments["Sól"];
             _danieViewModel.UpdateNutriments();
         }
     }

@@ -19,16 +19,28 @@ namespace jadlospis.ViewModels
 {
     public partial class JadlospisPageViewModel : ViewModelBase, IJadlospis
     {
-        
+
         private string _fileName = "";
-        public string FileName { get => _fileName; set => _fileName = value; }
-        
+
+        public string FileName
+        {
+            get => _fileName;
+            set => _fileName = value;
+        }
+
         private static Timer _timer = null!;
-        public Timer Timer { get => _timer; set => _timer = value; }
+
+        public Timer Timer
+        {
+            get => _timer;
+            set => _timer = value;
+        }
+
         public ObservableCollection<KeyValuePair<string, double>> SumNutriments { get; set; }
         public ObservableCollection<KeyValuePair<string, double>> MinNutriments { get; set; }
 
         public ObservableCollection<DanieViewModel> Dania { get; set; }
+
         public ObservableCollection<string> AvailableMealsFor { get; } = new()
         {
             "Dorosłych (19-59 lat)",
@@ -38,6 +50,7 @@ namespace jadlospis.ViewModels
         };
 
         private string _targetGroup = "Młodzieży (11-19 lat)";
+
         public string TargetGroup
         {
             get => _targetGroup;
@@ -49,8 +62,9 @@ namespace jadlospis.ViewModels
         }
 
         private int _iloscOsob = 1;
-        public int IloscOsob 
-        { 
+
+        public int IloscOsob
+        {
             get => _iloscOsob;
             set
             {
@@ -58,6 +72,7 @@ namespace jadlospis.ViewModels
                 ObliczSumaCeny();
             }
         }
+
         [ObservableProperty] private double _sumaCeny;
         public string Name { get; set; }
         public DateTime Data { get; set; }
@@ -79,11 +94,11 @@ namespace jadlospis.ViewModels
             Dania = new();
             Name = $"Jadłospis {DateTime.Now}";
             Data = DateTime.Now;
-            
+
             FileName = Name.Replace(" ", "_") + "_" + Data.ToString("yyyy-MM-dd") + ".json";
-            
+
             ZapiszJadlospis();
-            
+
             _timer = new Timer(300000); // 5 min
             _timer.Elapsed += (sender, e) => ZapiszJadlospis();
             _timer.Start();
@@ -114,14 +129,14 @@ namespace jadlospis.ViewModels
         {
             return new ObservableCollection<KeyValuePair<string, double>>
             {
-                new("carbs", 0),
-                new("sugar", 0),
-                new("energy", 0),
-                new("energyKcal", 0),
-                new("fat", 0),
-                new("saturatedFat", 0),
-                new("protein", 0),
-                new("salt", 0)
+                new("Węglowodany", 0),
+                new("Cukier", 0),
+                new("Energia", 0),
+                new("Kalorie", 0),
+                new("Tłuszcz", 0),
+                new("Tłuszcze nasycone", 0),
+                new("Białko", 0),
+                new("Sól", 0)
             };
         }
 
@@ -132,6 +147,7 @@ namespace jadlospis.ViewModels
             {
                 SumaCeny += danie.Cena;
             }
+
             SumaCeny *= IloscOsob;
             SumaCeny = Math.Round(SumaCeny, 2);
         }
@@ -157,14 +173,14 @@ namespace jadlospis.ViewModels
                         {
                             foreach (var nutriment in new[]
                                      {
-                                         ("carbs", product.Products.Nutriments.Carbs),
-                                         ("sugar", product.Products.Nutriments.Sugar),
-                                         ("energy", product.Products.Nutriments.Energy),
-                                         ("energyKcal", product.Products.Nutriments.EnergyKcal),
-                                         ("fat", product.Products.Nutriments.Fat),
-                                         ("saturatedFat", product.Products.Nutriments.SaturatedFat),
-                                         ("protein", product.Products.Nutriments.Protein),
-                                         ("salt", product.Products.Nutriments.Salt)
+                                         ("Węglowodany", product.Products.Nutriments.Carbs),
+                                         ("Cukier", product.Products.Nutriments.Sugar),
+                                         ("Energia", product.Products.Nutriments.Energy),
+                                         ("Kalorie", product.Products.Nutriments.EnergyKcal),
+                                         ("Tłuszcz", product.Products.Nutriments.Fat),
+                                         ("Tłuszcze nasycone", product.Products.Nutriments.SaturatedFat),
+                                         ("Białko", product.Products.Nutriments.Protein),
+                                         ("Sól", product.Products.Nutriments.Salt)
                                      })
                             {
                                 var current = SumNutriments.First(kv => kv.Key == nutriment.Item1);
@@ -184,10 +200,10 @@ namespace jadlospis.ViewModels
         {
             var values = TargetGroup switch
             {
-                "Dzieci (do 11 r.ż)" => new[] { 200, 40, 1500, 0, 50, 15, 30, 3 },
-                "Młodzieży (11-19 lat)" => new[] { 260, 50, 2500, 0, 70, 25, 60, 5 },
-                "Dorosłych (19-59 lat)" => new[] { 260, 50, 2000, 0, 60, 20, 50, 5 },
-                "Seniorów (60+)" => new[] { 200, 40, 1500, 0, 50, 15, 30, 3 },
+                "Dzieci (do 11 r.ż)" => new[] { 200, 40, 0, 1500, 50, 15, 30, 3 },
+                "Młodzieży (11-19 lat)" => new[] { 260, 50, 0, 2500, 70, 25, 60, 5 },
+                "Dorosłych (19-59 lat)" => new[] { 260, 50, 0, 2000, 60, 20, 50, 5 },
+                "Seniorów (60+)" => new[] { 200, 40, 0, 1500, 50, 15, 30, 3 },
                 _ => throw new InvalidOperationException()
             };
 
@@ -211,7 +227,7 @@ namespace jadlospis.ViewModels
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
                 // Utwórz podkatalog "jadlospisy"
-                string targetDirectory = Path.Combine(documentsPath, "jadlospisy");
+                string targetDirectory = Path.Combine(documentsPath, "jadłospisy");
                 if (!Directory.Exists(targetDirectory))
                 {
                     Directory.CreateDirectory(targetDirectory);
@@ -281,12 +297,12 @@ namespace jadlospis.ViewModels
         public PdfDocument GetInvoce()
         {
             var document = new Document();
-            
+
             BuildDocument(document);
 
             var pdfRenderer = new PdfDocumentRenderer();
             pdfRenderer.Document = document;
-            
+
             pdfRenderer.RenderDocument();
 
             return pdfRenderer.PdfDocument;
@@ -295,9 +311,10 @@ namespace jadlospis.ViewModels
         private void BuildDocument(Document document)
         {
             Section section = document.AddSection();
-            
+
             //TODO Dodać informacje o jadłospisie i sformatowac je w odpowiedniej formacie
-            Paragraph paragraph = section.AddParagraph(); ;
+            Paragraph paragraph = section.AddParagraph();
+            ;
             paragraph.AddText($"Jadłospis dla {Name} na dzien {Data}");
             paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
             paragraph.AddLineBreak();
@@ -306,17 +323,106 @@ namespace jadlospis.ViewModels
             paragraph.AddText($"Liczba osob: {IloscOsob}. Łączna cen: {SumaCeny}");
             paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
             paragraph.AddLineBreak();
+
+            foreach (var danie in Dania)
+            {
+                paragraph = section.AddParagraph();
+                paragraph.AddFormattedText($"Danie: {danie.Nazwa}, Cena: {danie.Cena:C}", TextFormat.Bold);
+                paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
+                paragraph.AddLineBreak();
+
+
+                if (danie.Products != null && danie.Products.Any())
+                {
+                    foreach (var product in danie.Products)
+                    {
+                        paragraph = section.AddParagraph();
+                        paragraph.AddText($"- Produkt: {product.Products.Name}");
+                        paragraph.AddLineBreak();
+                       
+                    }
+                }
+            }
+            // Podsumowanie kaloryczne
+    paragraph = section.AddParagraph();
+    paragraph.AddFormattedText("Podsumowanie kaloryczne", TextFormat.Bold);
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+    paragraph.AddLineBreak();
+
+    paragraph = section.AddParagraph();
+    paragraph.AddFormattedText($"Minimalne wymagania kaloryczne dla: {TargetGroup}");
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
+    paragraph.AddLineBreak();
+
+    foreach (var minNutriment in MinNutriments)
+    {
+        paragraph = section.AddParagraph();
+        paragraph.AddText($"- {minNutriment.Key}: {minNutriment.Value} g");
+        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
+    }
+
+    paragraph.AddLineBreak();
+    paragraph = section.AddParagraph();
+    paragraph.AddText("Rzeczywista wartość wszystkich składników odżywczych z jadłospisu:");
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
+    paragraph.AddLineBreak();
+
+    foreach (var sumNutriment in SumNutriments)
+    {
+        paragraph = section.AddParagraph();
+        paragraph.AddText($"- {sumNutriment.Key}: {sumNutriment.Value} g");
+        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
+    }
+
+    paragraph.AddLineBreak();
+    paragraph = section.AddParagraph();
+    paragraph.AddFormattedText("Porównanie zapotrzebowania z rzeczywistością:", TextFormat.Bold);
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
+    paragraph.AddLineBreak();
+
+    foreach (var minNutriment in MinNutriments)
+    {
+        var actual = SumNutriments.FirstOrDefault(sn => sn.Key == minNutriment.Key).Value;
+        var difference = actual - minNutriment.Value;
+        paragraph = section.AddParagraph();
+        paragraph.AddText($"- {minNutriment.Key}: {actual} g (wymagane: {minNutriment.Value} g, różnica: {difference:+0.##;-0.##;0} g)");
+        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
+    }
+
         }
 
         [RelayCommand]
         public void SaveAsPdf()
         {
-            var document = GetInvoce();
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            
-            string targetDirectory = Path.Combine(documentsPath, $"{Name}.pdf");
-            
-            document.Save(targetDirectory);
+            try
+            {
+                var document = GetInvoce();
+
+                // Pobierz ścieżkę do katalogu "Dokumenty" użytkownika
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+                // Utwórz podkatalog "jadłospisy"
+                string targetDirectory = Path.Combine(documentsPath, "jadłospisy");
+                if (!Directory.Exists(targetDirectory))
+                {
+                    Directory.CreateDirectory(targetDirectory);
+                }
+
+                // Zastąp niedozwolone znaki w nazwie pliku
+                string sanitizedFileName =
+                    string.Concat(Name.Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '.' : ch));
+
+                // Utwórz pełną ścieżkę pliku
+                string targetFilePath = Path.Combine(targetDirectory, $"{sanitizedFileName}.pdf");
+
+                // Zapisz dokument PDF
+                document.Save(targetFilePath);
+                Debug.WriteLine($"Plik PDF zapisano pomyślnie pod ścieżką: {targetFilePath}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Błąd podczas zapisywania pliku PDF: {ex.Message}");
+            }
         }
     }
 }

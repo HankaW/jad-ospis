@@ -5,29 +5,67 @@
              xmlns:vm="clr-namespace:jadlospis.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="jadlospis.Views.ProduktWDaniuView"
-             x:DataType="vm:ProduktWDaniuViewModel"
-             >
-    <StackPanel Orientation="Horizontal">
-        <StackPanel>
-            <StackPanel>
-                <TextBlock> Nazwa produktu </TextBlock>
-                <TextBox Text="{Binding Name, Mode=TwoWay}"></TextBox>
+             x:DataType="vm:ProduktWDaniuViewModel">
+
+    <Grid>
+        <!-- Grid layout to manage the layout structure -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Add product header -->
+            <RowDefinition Height="Auto" /> <!-- Section with name, weight, and search -->
+            <RowDefinition Height="*" /> <!-- ProduktView -->
+            <RowDefinition Height="Auto" /> <!-- Navigation buttons -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" /> <!-- Full width -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Header: Add Product -->
+        <TextBlock Grid.Row="0" FontSize="14" FontWeight="Bold"  Margin="0,5,5,10">Dodaj produkt do wybranego dania:
+        </TextBlock>
+
+        <!-- Name, Gramatura, and Search Button -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,5,10">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBlock Text="Nazwa produktu:" HorizontalAlignment="Center"/>
+                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200"/>
             </StackPanel>
-            <StackPanel>
-                <TextBlock> Gramatura </TextBlock>
-                <NumericUpDown FormatString="0" Minimum="0" Value="{Binding Gramatura, Mode=TwoWay}"></NumericUpDown>
+
+            <StackPanel Orientation="Vertical" Margin="0,5,5,5">
+                <TextBlock Text="Gramatura:" HorizontalAlignment="Center"/>
+                <NumericUpDown FormatString="0" Minimum="0" Value="{Binding Gramatura, Mode=TwoWay}" Width="150"/>
             </StackPanel>
-            <Button Command="{Binding Wyszukaj}"> Wyszukaj </Button>
+
+            <Button Command="{Binding Wyszukaj}" Background="#23b08b" Foreground="Black" Margin="10, 20 5,5" Padding="10,5">
+                Wyszukaj
+            </Button>
+            <Button Command="{Binding UsunProdukt}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5, 20, 5,5">
+                Usuń
+            </Button>
         </StackPanel>
-        <ItemsControl ItemsSource="{Binding ProduktView}">
+
+        <!-- ProduktView -->
+        
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding ProduktView}" Margin="10">
+            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <!-- WrapPanel ensures that products flow horizontally in rows -->
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <Button IsVisible="{Binding IsVisible}" Command="{Binding Nastepny}"> Nastepny </Button>
-        <Button IsVisible="{Binding IsVisible}" Command="{Binding UsunProdukt}"> Usun </Button>
-    </StackPanel>
+
+        <!-- Navigation Buttons -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button IsVisible="{Binding IsVisible}" Command="{Binding Poprzenie}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5">
+                Poprzedni
+            </Button>
+            <Button IsVisible="{Binding IsVisible}" Command="{Binding Nastepny}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5">
+                Nastepny
+            </Button>
+            <Button IsVisible="{Binding IsVisible}" Command="{Binding UsunProdukt}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5">
+                Usuń
+            </Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

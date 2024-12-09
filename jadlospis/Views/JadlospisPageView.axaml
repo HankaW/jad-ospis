@@ -3,65 +3,105 @@
              xmlns:vm="using:jadlospis.ViewModels"
              x:Class="jadlospis.Views.JadlospisPageView"
              x:DataType="vm:JadlospisPageViewModel">
+    
+    <Grid>
+        <!-- Definicja kolumn i wierszy -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <StackPanel Margin="20">
-        <Button Command="{Binding ZapiszJadlospis}">Zapisz</Button>
-        <Button Command="{Binding SaveAsPdf}"> Zapisz jako PDF</Button>
-        <TextBlock Text="Nazwa jadłospisu" FontWeight="Bold" />
-        <TextBox Text="{Binding Name}" Margin="0,5" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Liczba osób" FontWeight="Bold" Margin="10,20,0,5" />
-        <NumericUpDown Minimum="1" FormatString="0" Value="{Binding IloscOsob, Mode=TwoWay}" Margin="0,5" />
-
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Jadłospis dla:" FontWeight="Bold" Margin="10,20,0,5" />
-        
-            <ComboBox ItemsSource="{Binding AvailableMealsFor}" 
-                      SelectedItem="{Binding TargetGroup, Mode=TwoWay }" 
-                      Margin="0,5" />
+        <!-- Przyciski w prawym górnym rogu -->
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Margin="10">
+            <Button Command="{Binding ZapiszJadlospis}" Background="#23b08b" Foreground="black" Margin="5">Zapisz</Button>
+            <Button Command="{Binding SaveAsPdf}" Background="#23b08b" Foreground="Black" Margin="5">Zapisz jako PDF</Button>
         </StackPanel>
-        
-        <StackPanel Orientation="Vertical">
-            <ItemsControl ItemsSource="{Binding Dania}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Vertical"></WrapPanel>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-        </StackPanel>
-        
-        <Button Command="{Binding AddDanie}"> Dodaj danie</Button>
-        <StackPanel>
-            <TextBlock> Podsumowanie</TextBlock>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock> Cena: </TextBlock>
-                <TextBlock Text="{Binding SumaCeny}"> </TextBlock>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="15">
+                <TextBlock Text="Nazwa jadłospisu: " FontWeight="Bold" />
+                <TextBox Text="{Binding Name}" Margin="0,5" />
+
+                <TextBlock Text="Liczba osób: " FontWeight="Bold" Margin="10,20,0,5" />
+                <NumericUpDown Minimum="1" FormatString="0" Value="{Binding IloscOsob, Mode=TwoWay}" Margin="0,5" />
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Jadłospis dla: " FontWeight="Bold" Margin="10,20,15,25" />
+                    <ComboBox ItemsSource="{Binding AvailableMealsFor}" 
+                              SelectedItem="{Binding TargetGroup, Mode=TwoWay }" 
+                              Margin="0,12" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="0" FontSize="18" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10">
+                    DANIA:
+                </TextBlock>
+                <StackPanel Orientation="Vertical">
+                    <ItemsControl ItemsSource="{Binding Dania}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical"></WrapPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Command="{Binding AddDanie}" Background="#72c896" Foreground="Black" Padding="10,5" >Dodaj danie</Button>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Grid.Row="0" FontSize="16" FontWeight="Bold" Foreground="Black"  Margin="0,25,0,5">
+                        PODSUMOWANIE:
+                    </TextBlock>                    
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Grid.Row="0" FontSize="14" FontWeight="Bold" Foreground="Black" Margin="0,5,0,10">
+                            Cena: 
+                            <TextBlock Text="{Binding SumaCeny}"> </TextBlock>
+                            <TextBlock> zł</TextBlock>
+                        </TextBlock>   
+                    </StackPanel>
+
+                    <!-- Sekcja obok siebie: Zapotrzebowanie dzienne i Zużycie w jadłospisie -->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*">
+                        <!-- Zapotrzebowanie dzienne -->
+                        <StackPanel Grid.Column="0" Margin="0,2,0,0">
+                            <TextBlock FontWeight="Bold" Text="Zapotrzebowanie dzienne:" />
+                            <ItemsControl ItemsSource="{Binding MinNutriments}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}" Margin="0,2,0,0"/>
+                                            <TextBlock Text=": " Margin="0,1,0,0"/>
+                                            <TextBlock Text="{Binding Value}" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <!-- Zużycie w jadłospisie -->
+                        <StackPanel Grid.Column="1" Margin="5">
+                            <TextBlock FontWeight="Bold" Text="Zapotrzebowanie realizowane przez jadłospis:" />
+                            <ItemsControl ItemsSource="{Binding SumNutriments}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}" Margin="0,2,0,0"/>
+                                            <TextBlock Text=": " Margin="0,1,0,0"/>
+                                            <TextBlock Text="{Binding Value}" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding MinNutriments}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Key}" Margin="5"/>
-                                <TextBlock Text=": " Margin="5"/>
-                                <TextBlock Text="{Binding Value}" Margin="5"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl ItemsSource="{Binding SumNutriments}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Key}" Margin="5"/>
-                                <TextBlock Text=": " Margin="5"/>
-                                <TextBlock Text="{Binding Value}" Margin="5"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-        </StackPanel>
-    </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>
