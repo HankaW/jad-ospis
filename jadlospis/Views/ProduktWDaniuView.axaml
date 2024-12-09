@@ -45,9 +45,7 @@
         </StackPanel>
 
         <!-- ProduktView -->
-        
         <ItemsControl Grid.Row="2" ItemsSource="{Binding ProduktView}" Margin="10">
-            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>

@@ -48,12 +48,12 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<ProduktViewModel> ProduktView { get; set; }
+    public ObservableCollection<ProduktWJadlospisViewModel> ProduktView { get; set; }
 
     public ProduktWDaniuViewModel(DanieViewModel danieViewModel)
     {
         _danieViewModel = danieViewModel;
-        ProduktView = new ObservableCollection<ProduktViewModel>();
+        ProduktView = new ObservableCollection<ProduktWJadlospisViewModel>();
     }
     
     // Metoda do usuwania produktu
@@ -68,7 +68,7 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
         _productLoader.SingeProduct();
         Products = _productLoader.GetSingleProduct();
         ProduktView.Clear();
-        ProduktView.Add(new ProduktViewModel(Products));
+        ProduktView.Add(new ProduktWJadlospisViewModel(Products));
         IsVisible = true;
         _danieViewModel.UpdateNutriments();
     }

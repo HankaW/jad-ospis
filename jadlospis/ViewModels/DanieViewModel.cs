@@ -23,14 +23,7 @@ public partial class DanieViewModel: ViewModelBase
     }
     
     public ObservableCollection<ProduktWDaniuViewModel>? Products { get; set; }
-
-    public IJadlospis IJadlospis
-    {
-        get => default;
-        set
-        {
-        }
-    }
+    
 
     public void AddProduct()
     {

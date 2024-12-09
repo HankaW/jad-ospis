@@ -1,0 +1,69 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:jadlospis.ViewModels"
+             x:Class="jadlospis.Views.ProduktWJadlospisView"
+             x:DataType="vm:ProduktWJadlospisViewModel">
+
+    <Border CornerRadius="10" Background="#fff" BorderBrush="#e0e0e0" BorderThickness="1" Padding="10">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Produkt Image -->
+            <Image Source="{Binding ImageBitmap}" Width="150" Height="100" HorizontalAlignment="Center" Stretch="Uniform"/>
+
+            <!-- Produkt Name -->
+            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" TextAlignment="Center" Grid.Row="1" TextWrapping="Wrap"/>
+
+            <!-- Produkt Nutritional Information -->
+            <Border Background="#f7f9fa" Padding="5" Margin="10,10,10,0" CornerRadius="7" Grid.Row="2">
+            <StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Białko:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding Protein}" FontSize="12"/>
+                        <TextBlock Text="g" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Węglowodany:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding Carbs}" FontSize="12"/>
+                        <TextBlock Text="g" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Tłuszcze:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding Fat}" FontSize="12"/>
+                        <TextBlock Text="g" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Tłuszcze nasycone:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding SaturatedFat}" FontSize="12"/>
+                        <TextBlock Text="g" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Cukry:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding Sugar}" FontSize="12"/>
+                        <TextBlock Text="g" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Energia:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding Energy}" FontSize="12"/>
+                        <TextBlock Text="kJ" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Kalorie:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding EnergyKcal}" FontSize="12"/>
+                        <TextBlock Text="kcal" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Sól:" FontSize="12" Foreground="#777"/>
+                        <TextBlock Text="{Binding Salt}" FontSize="12"/>
+                        <TextBlock Text="g" FontSize="12" Foreground="#777"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
+
