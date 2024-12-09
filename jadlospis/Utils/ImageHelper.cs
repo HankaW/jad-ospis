@@ -13,14 +13,6 @@ namespace jadlospis.Utils
         // Statyczny HttpClient, aby uniknąć wielokrotnego tworzenia nowych instancji
         private static readonly HttpClient httpClient = new HttpClient();
 
-        public static ViewModels.ProduktViewModel ProduktViewModel
-        {
-            get => default;
-            set
-            {
-            }
-        }
-
         // Metoda do ładowania obrazu z zasobów osadzonych w aplikacji
         public static Bitmap LoadFromResource(Uri resourceUri)
         {

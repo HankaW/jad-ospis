@@ -71,27 +71,4 @@ public partial class ProduktPageViewModel : ViewModelBase
         ProduktyLista = loader.GetProductsList();
     }
 
-    public ProduktLoader ProduktLoader
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public MainWindowViewModel MainWindowViewModel
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public ProduktViewModel ProduktViewModel
-    {
-        get => default;
-        set
-        {
-        }
-    }
 }

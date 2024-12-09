@@ -28,35 +28,6 @@ public partial class ProduktWJadlospisViewModel : ViewModelBase
     // Właściwość reprezentująca załadowany obraz produktu jako Bitmapę
     public Bitmap? ImageBitmap { get; private set; }
 
-    public Nutriments Nutriments
-    {
-        get => default;
-        set { }
-    }
-
-    public Products Products
-    {
-        get => default;
-        set { }
-    }
-
-    public ProduktLoader ProduktLoader
-    {
-        get => default;
-        set { }
-    }
-
-    public ProduktPageViewModel ProduktPageViewModel
-    {
-        get => default;
-        set { }
-    }
-
-    public ProduktWDaniuViewModel ProduktWDaniuViewModel
-    {
-        get => default;
-        set { }
-    }
 
     // Konstruktor klasy, przyjmujący wartości odżywcze i URL obrazu
     public ProduktWJadlospisViewModel(string name, double carbs, double sugar, double energy, double energyKcal,
