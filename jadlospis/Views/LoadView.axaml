@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:jadlospis.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="jadlospis.Views.LoadView"
+             x:DataType="vm:LoadViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Pasek wyszukiwania i przyciski -->
+            <RowDefinition Height="Auto" /> <!-- Przyciski nawigacyjne -->
+            <RowDefinition Height="*" />    <!-- Obszar wyświetlania produktów -->
+        </Grid.RowDefinitions>
+        <!-- Scrollable grid of ProduktView items filling available space -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0">
+            <ItemsControl ItemsSource="{Binding Jadlospisy}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- WrapPanel ensures that products flow horizontally in rows -->
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

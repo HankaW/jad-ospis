@@ -9,11 +9,14 @@
         <entry key="Views/HomePageView.axaml" value="jadlospis.csproj" />
         <entry key="Views/Icons.axaml" value="jadlospis.csproj" />
         <entry key="Views/JadlospisPageView.axaml" value="jadlospis.csproj" />
+        <entry key="Views/LoadView.axaml" value="jadlospis.csproj" />
         <entry key="Views/MainWindow.axaml" value="jadlospis.csproj" />
+        <entry key="Views/OpenJadlospisView.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktPageView.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktView.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktWDaniuView.axaml" value="jadlospis.csproj" />
         <entry key="Views/ProduktyPageView.axaml" value="jadlospis.csproj" />
+        <entry key="Views/WczytaneJadlospisyView.axaml" value="jadlospis.csproj" />
       </map>
     </option>
   </component>

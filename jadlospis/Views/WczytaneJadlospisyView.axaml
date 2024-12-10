@@ -4,11 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:jadlospis.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="jadlospis.Views.HomePageView"
-             x:DataType="vm:HomePageViewModel">
-    
+             x:Class="jadlospis.Views.WczytaneJadlospisyView"
+             x:DataType="vm:WczytaneJadlospisyViewModel">
     <StackPanel>
-        <Button Command="{Binding OopenLoadPage}" IsVisible="{Binding IsVisible}"> Strona główna </Button>
-        <TransitioningContentControl Content="{Binding CurrentPage}" />
+        <TextBlock Text="{Binding Name}"></TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding OpenJadlospis}">Wczytaj</Button>
+            <Button Command="{Binding CopyJadlospis}">Kopiuj</Button>
+            <Button Command="{Binding DeleteJadlospis}">Usuń</Button>
+        </StackPanel>
     </StackPanel>
 </UserControl>

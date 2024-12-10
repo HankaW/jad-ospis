@@ -30,6 +30,8 @@ public partial class MainWindowViewModel : ViewModelBase
         new ListItemTemplate(typeof(ProduktPageViewModel), "Produkt", "NotebookRegular"),
         new ListItemTemplate(typeof(JadlospisPageViewModel), "Jadłospis", "DocumentEditRegular"),
     };
+    
+    
 
     // Metoda wywoływana przy zmianie wybranego elementu listy
     partial void OnSelectedListItemChanged(ListItemTemplate? value)
@@ -41,9 +43,12 @@ public partial class MainWindowViewModel : ViewModelBase
         var instance = Activator.CreateInstance(value.ModelType);
         if (instance is null) return;
 
+
         // Ustawiamy bieżący ViewModel na nowo utworzony
         CurrentPage = (ViewModelBase)instance;
     }
+    
+    delegate void OpenJadlospisDelegate(ViewModelBase viewModel);
 
     // Komenda służąca do przełączania stanu otwarcia panelu
     [RelayCommand]
@@ -51,11 +56,6 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         // Zmiana stanu otwarcia panelu
         IsPaneOpen = !IsPaneOpen;
-    }
-    
-    public void OpenJadlospis(ViewModelBase viewModel)
-    {
-        CurrentPage = viewModel;
     }
 }
 
