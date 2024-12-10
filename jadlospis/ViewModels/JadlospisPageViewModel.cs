@@ -550,20 +550,13 @@ namespace jadlospis.ViewModels
                 // Pobierz ścieżkę do katalogu "Dokumenty" użytkownika
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-                // Utwórz podkatalog "jadłospisy"
-                string targetDirectory = Path.Combine(documentsPath, "jadłospisy");
-                if (!Directory.Exists(targetDirectory))
-                {
-                    Directory.CreateDirectory(targetDirectory);
-                }
-
                 // Zastąp niedozwolone znaki w nazwie pliku
                 string sanitizedFileName =
                     string.Concat(Name.Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '.' : ch));
 
                 // Dodaj datę do nazwy pliku w formacie: "yyyy-MM-dd_HH-mm-ss"
                 string datePart = DateTime.Now.ToString("yyyy.MM.dd H-mm-ss");
-                string targetFilePath = Path.Combine(targetDirectory, $"jadlospis {datePart}.pdf");
+                string targetFilePath = Path.Combine(documentsPath, $"jadlospis {datePart}.pdf");
 
                 // Zapisz dokument PDF
                 document.Save(targetFilePath);

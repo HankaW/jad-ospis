@@ -29,5 +29,7 @@ public class HomePageViewModel: ViewModelBase
             
             Console.WriteLine(j.Dania.Count);
         }
+        
+        
     }
 }

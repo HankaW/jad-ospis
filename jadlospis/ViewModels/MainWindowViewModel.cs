@@ -52,6 +52,11 @@ public partial class MainWindowViewModel : ViewModelBase
         // Zmiana stanu otwarcia panelu
         IsPaneOpen = !IsPaneOpen;
     }
+    
+    public void OpenJadlospis(ViewModelBase viewModel)
+    {
+        CurrentPage = viewModel;
+    }
 }
 
 // Klasa reprezentująca szablon elementu listy
