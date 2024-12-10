@@ -20,8 +20,7 @@
             <!-- Cena -->
             <StackPanel Orientation="Vertical" Margin="0,5,5,7">
                 <TextBlock Text="Cena:" HorizontalAlignment="Center"/>
-                <NumericUpDown Minimum="0" Value="{Binding Cena, Mode=TwoWay}" Width="150" HorizontalAlignment="Center"/>
-            </StackPanel>
+                <NumericUpDown Minimum="0" Increment="0.01" FormatString="0.00" Value="{Binding Cena, Mode=TwoWay}" Width="150" HorizontalAlignment="Center"/>            </StackPanel>
 
             <!-- Przyciski -->
             <StackPanel Orientation="Horizontal" Margin="7">

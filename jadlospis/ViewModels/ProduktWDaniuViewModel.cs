@@ -42,7 +42,6 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
                 {
                     Products.ProductsGram = gramatura;
                     UpdateNutriments(gramatura);
-                    
                 }
             }
         }
@@ -51,10 +50,17 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
     public ObservableCollection<ProduktWJadlospisViewModel> ProduktView { get; set; }
     public object ProductView { get; }
 
+    // Delegaty
+    public delegate void PageChangeHandler();
+    public PageChangeHandler OnPageChange;
+
     public ProduktWDaniuViewModel(DanieViewModel danieViewModel)
     {
         _danieViewModel = danieViewModel;
         ProduktView = new ObservableCollection<ProduktWJadlospisViewModel>();
+
+        // Inicjalizacja delegatów
+        OnPageChange += Wyszukaj;
     }
     
     // Metoda do usuwania produktu
@@ -79,15 +85,21 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
         _productLoader.CurrentPage++;
         Gramatura = "100";
         OnPropertyChanged(nameof(Gramatura));
-        Wyszukaj();
+
+        // Wywołanie delegata dla zmiany strony
+        OnPageChange?.Invoke();
     }
+
     public void Poprzenie()
     {
         _productLoader.CurrentPage--;
         Gramatura = "100";
         OnPropertyChanged(nameof(Gramatura));
-        Wyszukaj();
+
+        // Wywołanie delegata dla zmiany strony
+        OnPageChange?.Invoke();
     }
+
     private void UpdateNutriments(double gramatura)
     {
         var updatedNutriments = Products.GetCalculatedNutriments(gramatura);
