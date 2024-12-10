@@ -246,7 +246,6 @@ namespace jadlospis.ViewModels
                 string json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
                 var jadlospisData = new
                 {
-                    FileName,
                     Name,
                     Data,
                     IloscOsob,
@@ -314,8 +313,7 @@ namespace jadlospis.ViewModels
 
             if (deserializedData == null)
                 throw new InvalidDataException("Nie udało się wczytać danych JSON.");
-
-            this.FileName = deserializedData.FileName;
+            
             this.Name = deserializedData.Name;
             this.Data = deserializedData.Data;
             this.IloscOsob = deserializedData.IloscOsob;
@@ -338,13 +336,13 @@ namespace jadlospis.ViewModels
                     var productViewModel = new ProduktWDaniuViewModel(danieViewModel)
                     {
                         Name = productData.Name,
+                        Gramatura = productData.ProductsGram.ToString(),
                         ProduktView = new ObservableCollection<ProduktWJadlospisViewModel>
                         {
                             new ProduktWJadlospisViewModel(new Products
                             {
                                 Name = productData.Name,
                                 ImageUrl = productData.ImageUrl,
-                                ProductsGram = productData.ProductsGram,
                                 Nutriments = new Nutriments
                                 {
                                     Carbs = productData.Nutriments.Węglowodany,

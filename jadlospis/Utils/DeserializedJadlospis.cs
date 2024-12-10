@@ -14,7 +14,6 @@ namespace jadlospis.Utils
         public List<DanieData> Dania { get; set; }
         public NutrimentsData SumNutriments { get; set; }
         public NutrimentsData MinNutriments { get; set; }
-        public string FileName { get; set; }
 
         public class DanieData
         {
