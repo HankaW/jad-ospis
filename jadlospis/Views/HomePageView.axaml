@@ -7,8 +7,10 @@
              x:Class="jadlospis.Views.HomePageView"
              x:DataType="vm:HomePageViewModel">
     
-    <StackPanel>
-        <Button Command="{Binding OopenLoadPage}" IsVisible="{Binding IsVisible}"> Strona główna </Button>
-        <TransitioningContentControl Content="{Binding CurrentPage}" />
-    </StackPanel>
+    <ScrollViewer>
+        <StackPanel>
+            <Button Command="{Binding OopenLoadPage}" IsVisible="{Binding IsVisible}" Background="#23b08b" Margin="10"> Strona główna </Button>
+            <TransitioningContentControl Content="{Binding CurrentPage}" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
