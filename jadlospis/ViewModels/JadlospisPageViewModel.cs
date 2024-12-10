@@ -469,7 +469,11 @@ private void BuildDocument(Document document)
     table.Borders.Width = 1.0; // Grubsze obramowanie
     table.Borders.Color = MigraDoc.DocumentObjectModel.Color.FromRgb(120, 120, 120);
 
-    // Zmniejszenie szerokości tabeli
+    // Wyśrodkowanie tabeli na stronie
+    table.Rows.LeftIndent = Unit.FromCentimeter(1); // Ustawienie odpowiedniego marginesu
+    table.Format.Alignment = ParagraphAlignment.Center;
+
+    // Dodanie kolumn do tabeli
     Column column1 = table.AddColumn(Unit.FromCentimeter(7)); // Węższe kolumny
     Column column2 = table.AddColumn(Unit.FromCentimeter(7));
 
@@ -501,7 +505,6 @@ private void BuildDocument(Document document)
         row.BottomPadding = Unit.FromPoint(3);
     }
 }
-
 
         [RelayCommand]
         public void SaveAsPdf()
