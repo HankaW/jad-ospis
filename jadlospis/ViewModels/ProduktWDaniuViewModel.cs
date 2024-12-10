@@ -49,6 +49,7 @@ public partial class ProduktWDaniuViewModel : ViewModelBase
     }
 
     public ObservableCollection<ProduktWJadlospisViewModel> ProduktView { get; set; }
+    public object ProductView { get; }
 
     public ProduktWDaniuViewModel(DanieViewModel danieViewModel)
     {

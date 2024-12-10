@@ -389,8 +389,10 @@ namespace jadlospis.ViewModels
         }
 private void BuildDocument(Document document)
 {
+    
     // Dodanie sekcji
     Section section = document.AddSection();
+    
 
     // Dodanie daty i godziny generowania w prawym górnym rogu
     Paragraph dateParagraph = section.Headers.Primary.AddParagraph();
@@ -446,12 +448,11 @@ private void BuildDocument(Document document)
             foreach (var product in danie.Products)
             {
                 paragraph = section.AddParagraph();
-                paragraph.AddText($"- produkt: ,,{product.Name}'' (gramatura: {product.Gramatura} g)");
+                paragraph.AddText($"- produkt: ,,{product.Products.Name}'' (gramatura: {product.Gramatura} g)");
                 paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
                 paragraph.Format.SpaceAfter = "2pt";
             }
         }
-
         danieNumer++;
     }
 
