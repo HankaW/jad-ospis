@@ -22,5 +22,8 @@
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview3" />
         <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
         <PackageReference Include="System.Text.Json" Version="9.0.0" />
+        <Content Include="Assets\Images\zdj.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>

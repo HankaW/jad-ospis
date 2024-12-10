@@ -16,6 +16,9 @@ using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
 
 
 namespace jadlospis.ViewModels
@@ -389,11 +392,28 @@ namespace jadlospis.ViewModels
         }
 private void BuildDocument(Document document)
 {
-    
+    // Dodanie sekcji
     // Dodanie sekcji
     Section section = document.AddSection();
-    
 
+        // Ścieżka relatywna do obrazu
+    string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "zdj.png");
+
+    if (!File.Exists(imagePath))
+    {
+        Console.WriteLine($"Plik obrazu nie istnieje: {imagePath}");
+        throw new FileNotFoundException($"Nie znaleziono pliku: {imagePath}");
+    }
+
+    // Załaduj obrazek
+    XImage image = XImage.FromFile(imagePath);
+
+    // Dodanie obrazka na stronie
+    Paragraph imageParagraph = section.AddParagraph();
+    imageParagraph.Format.Alignment = ParagraphAlignment.Center;
+    imageParagraph.AddImage(imagePath);
+
+   
     // Dodanie daty i godziny generowania w prawym górnym rogu
     Paragraph dateParagraph = section.Headers.Primary.AddParagraph();
     dateParagraph.AddText($"Data wygenerowania: {DateTime.Now:dd-MM-yyyy HH:mm}");
