@@ -178,14 +178,14 @@ namespace jadlospis.ViewModels
                         {
                             foreach (var nutriment in new[]
                                      {
-                                         ("Węglowodany", product.Products.Nutriments.Carbs),
-                                         ("Cukier", product.Products.Nutriments.Sugar),
-                                         ("Energia", product.Products.Nutriments.Energy),
-                                         ("Kalorie", product.Products.Nutriments.EnergyKcal),
-                                         ("Tłuszcz", product.Products.Nutriments.Fat),
-                                         ("Tłuszcze nasycone", product.Products.Nutriments.SaturatedFat),
-                                         ("Białko", product.Products.Nutriments.Protein),
-                                         ("Sól", product.Products.Nutriments.Salt)
+                                         ("Węglowodany", Math.Round(product.Products.Nutriments.Carbs, 2)),
+                                         ("Cukier", Math.Round(product.Products.Nutriments.Sugar, 2)),
+                                         ("Energia", Math.Round(product.Products.Nutriments.Energy, 2)),
+                                         ("Kalorie", Math.Round(product.Products.Nutriments.EnergyKcal, 2)),
+                                         ("Tłuszcz", Math.Round(product.Products.Nutriments.Fat, 2)),
+                                         ("Tłuszcze nasycone", Math.Round(product.Products.Nutriments.SaturatedFat, 2)),
+                                         ("Białko", Math.Round(product.Products.Nutriments.Protein, 2)),
+                                         ("Sól", Math.Round(product.Products.Nutriments.Salt, 2))
                                      })
                             {
                                 var current = SumNutriments.First(kv => kv.Key == nutriment.Item1);
