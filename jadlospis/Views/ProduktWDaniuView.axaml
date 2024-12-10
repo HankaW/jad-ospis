@@ -31,7 +31,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="5">
-                <TextBlock Text="Gramatura:" HorizontalAlignment="Center"/>
+                <TextBlock Text="Gramatura [g]:" HorizontalAlignment="Center"/>
                 <NumericUpDown FormatString="0" Minimum="0" Value="{Binding Gramatura, Mode=TwoWay}" Width="150"/>
             </StackPanel>
 

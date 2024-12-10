@@ -13,6 +13,7 @@ using jadlospis.Models;
 using jadlospis.Utils;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
+using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Pdf;
 
@@ -386,90 +387,121 @@ namespace jadlospis.ViewModels
 
             return pdfRenderer.PdfDocument;
         }
+private void BuildDocument(Document document)
+{
+    // Dodanie sekcji
+    Section section = document.AddSection();
 
-        private void BuildDocument(Document document)
+    // Dodanie daty i godziny generowania w prawym górnym rogu
+    Paragraph dateParagraph = section.Headers.Primary.AddParagraph();
+    dateParagraph.AddText($"Data wygenerowania: {DateTime.Now:dd-MM-yyyy HH:mm}");
+    dateParagraph.Format.Alignment = ParagraphAlignment.Right;
+    dateParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 9);
+
+    // Nagłówek dokumentu
+    Paragraph paragraph = section.AddParagraph();
+    paragraph.AddFormattedText($"JADŁOSPIS: ,,{Name.ToUpper()}''", TextFormat.Bold);
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 16);
+    paragraph.Format.SpaceAfter = "10pt";
+    paragraph.Format.Alignment = ParagraphAlignment.Center;
+
+    // Informacje o liczbie osób i cenie
+    paragraph = section.AddParagraph();
+    paragraph.AddText($"Liczba osób: {IloscOsob}");
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+    paragraph.Format.SpaceAfter = "5pt";
+
+    paragraph = section.AddParagraph();
+    paragraph.AddText($"Łączna cena: {SumaCeny:C}");
+    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+    paragraph.Format.SpaceAfter = "20pt"; // Większy odstęp przed pierwszym daniem
+
+    // Iteracja przez dania z numeracją i odstępami
+    int danieNumer = 1;
+    foreach (var danie in Dania)
+    {
+        // Dodanie odstępu przed kolejnym daniem
+        if (danieNumer > 1)
         {
-            // Dodanie sekcji
-            Section section = document.AddSection();
+            section.AddParagraph().AddLineBreak();
+        }
 
-           //TODO Dodać informacje o jadłospisie i sformatowac je w odpowiedniej formacie
-            Paragraph paragraph = section.AddParagraph();
-            ;
-            paragraph.AddText($"Jadłospis dla {Name} na dzien {Data}");
-            paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
-            paragraph.AddLineBreak();
+        // Nagłówek dania
+        paragraph = section.AddParagraph();
+        paragraph.AddFormattedText($"Danie {danieNumer}:", TextFormat.Bold);
+        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+        paragraph.Format.SpaceAfter = "5pt";
 
-            paragraph = section.AddParagraph();
-            paragraph.AddText($"Liczba osob: {IloscOsob}. Łączna cen: {SumaCeny}");
-            paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
-            paragraph.AddLineBreak();
+        // Szczegóły dania
+        paragraph = section.AddParagraph();
+        paragraph.AddText($"{danie.Nazwa}");
+        paragraph.AddLineBreak();
+        paragraph.AddText($"Cena: {danie.Cena:C}");
+        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
+        paragraph.Format.SpaceAfter = "10pt"; // Większy odstęp między szczegółami a produktami
 
-            foreach (var danie in Dania)
+        // Iteracja przez produkty w daniu
+        if (danie.Products != null && danie.Products.Any())
+        {
+            foreach (var product in danie.Products)
             {
                 paragraph = section.AddParagraph();
-                paragraph.AddFormattedText($"Danie: {danie.Nazwa}, Cena: {danie.Cena:C}", TextFormat.Bold);
-                paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
-                paragraph.AddLineBreak();
-
-
-                if (danie.Products != null && danie.Products.Any())
-                {
-                    foreach (var product in danie.Products)
-                    {
-                        paragraph = section.AddParagraph();
-                        paragraph.AddText($"- Produkt: {product.Products.Name}");
-                        paragraph.AddLineBreak();
-                       
-                    }
-                }
+                paragraph.AddText($"- produkt: ,,{product.Name}'' (gramatura: {product.Gramatura} g)");
+                paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
+                paragraph.Format.SpaceAfter = "2pt";
             }
-            // Podsumowanie kaloryczne
+        }
+
+        danieNumer++;
+    }
+
+    // Większy odstęp między ostatnim daniem a podsumowaniem kalorycznym
+    section.AddParagraph().AddLineBreak();
+
+    // Podsumowanie kaloryczne jako tabela
     paragraph = section.AddParagraph();
-    paragraph.AddFormattedText("Podsumowanie kaloryczne", TextFormat.Bold);
+    paragraph.AddFormattedText($"Podsumowanie kaloryczne dla: {TargetGroup}", TextFormat.Bold);
     paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
-    paragraph.AddLineBreak();
+    paragraph.Format.SpaceBefore = "15pt"; // Większy odstęp przed tabelą
+    paragraph.Format.SpaceAfter = "10pt";
 
-    paragraph = section.AddParagraph();
-    paragraph.AddFormattedText($"Minimalne wymagania kaloryczne dla: {TargetGroup}");
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
-    paragraph.AddLineBreak();
+    Table table = section.AddTable();
+    table.Borders.Width = 1.0; // Grubsze obramowanie
+    table.Borders.Color = MigraDoc.DocumentObjectModel.Color.FromRgb(120, 120, 120);
 
+    // Zmniejszenie szerokości tabeli
+    Column column1 = table.AddColumn(Unit.FromCentimeter(7)); // Węższe kolumny
+    Column column2 = table.AddColumn(Unit.FromCentimeter(7));
+
+    // Nagłówki tabeli
+    Row headerRow = table.AddRow();
+    headerRow.Cells[0].AddParagraph("Minimalne wymagania kaloryczne");
+    headerRow.Cells[1].AddParagraph("Jadłospis realizuje");
+    headerRow.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
+    headerRow.Format.Alignment = ParagraphAlignment.Center;
+    headerRow.Shading.Color = MigraDoc.DocumentObjectModel.Color.FromRgb(200, 230, 255);
+
+    // Wypełnienie danych w tabeli
     foreach (var minNutriment in MinNutriments)
     {
-        paragraph = section.AddParagraph();
-        paragraph.AddText($"- {minNutriment.Key}: {minNutriment.Value} g");
-        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
-    }
+        Row row = table.AddRow();
+        row.Cells[0].AddParagraph($"{minNutriment.Key}: {minNutriment.Value} g");
+        row.Cells[0].Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 9);
 
-    paragraph.AddLineBreak();
-    paragraph = section.AddParagraph();
-    paragraph.AddText("Rzeczywista wartość wszystkich składników odżywczych z jadłospisu:");
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
-    paragraph.AddLineBreak();
-
-    foreach (var sumNutriment in SumNutriments)
-    {
-        paragraph = section.AddParagraph();
-        paragraph.AddText($"- {sumNutriment.Key}: {sumNutriment.Value} g");
-        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
-    }
-
-    paragraph.AddLineBreak();
-    paragraph = section.AddParagraph();
-    paragraph.AddFormattedText("Porównanie zapotrzebowania z rzeczywistością:", TextFormat.Bold);
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 11);
-    paragraph.AddLineBreak();
-
-    foreach (var minNutriment in MinNutriments)
-    {
         var actual = SumNutriments.FirstOrDefault(sn => sn.Key == minNutriment.Key).Value;
         var difference = actual - minNutriment.Value;
-        paragraph = section.AddParagraph();
-        paragraph.AddText($"- {minNutriment.Key}: {actual} g (wymagane: {minNutriment.Value} g, różnica: {difference:+0.##;-0.##;0} g)");
-        paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
+        row.Cells[1].AddParagraph($"{actual} g (różnica: {difference:+0.##;-0.##;0} g)");
+        row.Cells[1].Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 9);
     }
 
-        }
+    // Ustawienie odstępów między wierszami tabeli
+    foreach (Row row in table.Rows)
+    {
+        row.TopPadding = Unit.FromPoint(3); // Mniejsze odstępy w tabeli
+        row.BottomPadding = Unit.FromPoint(3);
+    }
+}
+
 
         [RelayCommand]
         public void SaveAsPdf()
