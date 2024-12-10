@@ -238,7 +238,7 @@ namespace jadlospis.ViewModels
                 }
 
                 // Utwórz nazwę pliku na podstawie nazwy jadłospisu i daty
-                string fileName = $"{FileName}";
+                string fileName = string.Join("_", FileName.Split(Path.GetInvalidFileNameChars()));
                 string filePath = Path.Combine(targetDirectory, fileName);
 
                 // Serializuj obiekt do JSON
