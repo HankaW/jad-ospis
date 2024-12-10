@@ -103,14 +103,14 @@ public partial class ProduktWJadlospisViewModel : ViewModelBase
         Products p = new Products();
         p.Name = Name;
         p.Nutriments = new Nutriments();
-        p.Nutriments.Carbs = Carbs;
-        p.Nutriments.Sugar = Sugar;
-        p.Nutriments.Energy = Energy;
-        p.Nutriments.EnergyKcal = EnergyKcal;
-        p.Nutriments.Fat = Fat;
-        p.Nutriments.SaturatedFat = SaturatedFat;
-        p.Nutriments.Protein = Protein;
-        p.Nutriments.Salt = Salt;
+        p.Nutriments.Carbs = Math.Round(Carbs, 2);
+        p.Nutriments.Sugar = Math.Round(Sugar, 2);
+        p.Nutriments.Energy = Math.Round(Energy, 2);
+        p.Nutriments.EnergyKcal = Math.Round(EnergyKcal, 2);
+        p.Nutriments.Fat = Math.Round(Fat, 2);
+        p.Nutriments.SaturatedFat = Math.Round(SaturatedFat, 2);
+        p.Nutriments.Protein = Math.Round(Protein, 2);
+        p.Nutriments.Salt = Math.Round(Salt, 2);
         return p;
     }
 }

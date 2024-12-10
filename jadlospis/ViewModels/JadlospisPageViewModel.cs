@@ -102,7 +102,7 @@ namespace jadlospis.ViewModels
             Data = DateTime.Now;
 
             FileName = Name.Replace(" ", "_") + "_" + Data.ToString("yyyy-MM-dd") + ".json";
-            
+
             _timer = new Timer(300000); // 5 min
             _timer.Elapsed += (sender, e) => ZapiszJadlospis();
             _timer.Start();
@@ -287,7 +287,7 @@ namespace jadlospis.ViewModels
                 Debug.WriteLine($"Błąd podczas zapisu do pliku JSON: {ex.Message}");
             }
         }
-        
+
         // Konwersja Nutriments na ObservableCollection<KeyValuePair<string, double>>
         ObservableCollection<KeyValuePair<string, double>> ConvertNutrimentsToCollection(Nutriments nutriments)
         {
@@ -390,13 +390,13 @@ namespace jadlospis.ViewModels
 
             return pdfRenderer.PdfDocument;
         }
-private void BuildDocument(Document document)
+
+    private void BuildDocument(Document document)
 {
-    // Dodanie sekcji
     // Dodanie sekcji
     Section section = document.AddSection();
 
-        // Ścieżka relatywna do obrazu
+    // Ścieżka relatywna do obrazu
     string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "zdj.png");
 
     if (!File.Exists(imagePath))
@@ -408,35 +408,45 @@ private void BuildDocument(Document document)
     // Załaduj obrazek
     XImage image = XImage.FromFile(imagePath);
 
-    // Dodanie obrazka na stronie
-    Paragraph imageParagraph = section.AddParagraph();
-    imageParagraph.Format.Alignment = ParagraphAlignment.Center;
-    imageParagraph.AddImage(imagePath);
+    // Dodanie obrazka do sekcji nagłówka
+    Paragraph headerImageParagraph = section.Headers.Primary.AddParagraph();
+    headerImageParagraph.Format.Alignment = ParagraphAlignment.Left;
+    headerImageParagraph.Format.LeftIndent = 0; // Brak marginesu od lewej
+    headerImageParagraph.Format.SpaceAfter = "30pt"; // Większy odstęp pod obrazkiem
 
+    // Dodanie obrazu i ustawienie jego rozmiaru
+    Image headerImage = headerImageParagraph.AddImage(imagePath);
+    headerImage.Width = Unit.FromCentimeter(3); // Ustaw szerokość obrazka na 3 cm
+    headerImage.Height = Unit.FromCentimeter(3); // Ustaw wysokość obrazka na 3 cm
+    
+    // Dodanie nagłówka JADŁOSPIS na środku strony
+    Paragraph titleParagraph = section.AddParagraph();
+    titleParagraph.AddFormattedText("JADŁOSPIS", TextFormat.Bold);
+    titleParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 20);
+    titleParagraph.Format.Alignment = ParagraphAlignment.Center;
+    titleParagraph.Format.SpaceAfter = "5pt";
+
+    // Dodanie nazwy jadłospisu na środku strony pod tytułem
+    Paragraph nameParagraph = section.AddParagraph();
+    nameParagraph.AddFormattedText($",, {Name.ToUpper()} ''", TextFormat.Italic);
+    nameParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 16);
+    nameParagraph.Format.Alignment = ParagraphAlignment.Center;
+    nameParagraph.Format.SpaceAfter = "20pt";
+ 
+    
+    // Dodanie liczby osób i ceny pod obrazkiem
+    Paragraph imageDetailsParagraph = section.Headers.Primary.AddParagraph();
+    imageDetailsParagraph.AddText($"Liczba osób: {IloscOsob}\nŁączna cena: {SumaCeny:C}");
+    imageDetailsParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+    imageDetailsParagraph.Format.Alignment = ParagraphAlignment.Left;
+    imageDetailsParagraph.Format.SpaceAfter = "40pt"; // Odstęp pod tekstem "Łączna cena"
+
+// Dodanie pustego akapitu, aby upewnić się, że kolejne elementy nie nachodzą
+    section.AddParagraph().AddLineBreak();
+    section.AddParagraph().AddLineBreak();
+    section.AddParagraph().AddLineBreak();
+    section.AddParagraph().AddLineBreak();
    
-    // Dodanie daty i godziny generowania w prawym górnym rogu
-    Paragraph dateParagraph = section.Headers.Primary.AddParagraph();
-    dateParagraph.AddText($"Data wygenerowania: {DateTime.Now:dd-MM-yyyy HH:mm}");
-    dateParagraph.Format.Alignment = ParagraphAlignment.Right;
-    dateParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 9);
-
-    // Nagłówek dokumentu
-    Paragraph paragraph = section.AddParagraph();
-    paragraph.AddFormattedText($"JADŁOSPIS: ,,{Name.ToUpper()}''", TextFormat.Bold);
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 16);
-    paragraph.Format.SpaceAfter = "10pt";
-    paragraph.Format.Alignment = ParagraphAlignment.Center;
-
-    // Informacje o liczbie osób i cenie
-    paragraph = section.AddParagraph();
-    paragraph.AddText($"Liczba osób: {IloscOsob}");
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
-    paragraph.Format.SpaceAfter = "5pt";
-
-    paragraph = section.AddParagraph();
-    paragraph.AddText($"Łączna cena: {SumaCeny:C}");
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
-    paragraph.Format.SpaceAfter = "20pt"; // Większy odstęp przed pierwszym daniem
 
     // Iteracja przez dania z numeracją i odstępami
     int danieNumer = 1;
@@ -447,13 +457,16 @@ private void BuildDocument(Document document)
         {
             section.AddParagraph().AddLineBreak();
         }
+        else
+        {
+            section.AddParagraph().AddLineBreak(); // Dodatkowy odstęp przed pierwszym daniem
+        }
 
         // Nagłówek dania
-        paragraph = section.AddParagraph();
+        Paragraph paragraph = section.AddParagraph();
         paragraph.AddFormattedText($"Danie {danieNumer}:", TextFormat.Bold);
         paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
         paragraph.Format.SpaceAfter = "5pt";
-
         // Szczegóły dania
         paragraph = section.AddParagraph();
         paragraph.AddText($"{danie.Nazwa}");
@@ -468,11 +481,12 @@ private void BuildDocument(Document document)
             foreach (var product in danie.Products)
             {
                 paragraph = section.AddParagraph();
-                paragraph.AddText($"- produkt: ,,{product.Products.Name}'' (gramatura: {product.Gramatura} g)");
+                paragraph.AddText($"- produkt: \"{product.Products.Name}\" (gramatura: {product.Gramatura} g)");
                 paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 10);
                 paragraph.Format.SpaceAfter = "2pt";
             }
         }
+
         danieNumer++;
     }
 
@@ -480,11 +494,11 @@ private void BuildDocument(Document document)
     section.AddParagraph().AddLineBreak();
 
     // Podsumowanie kaloryczne jako tabela
-    paragraph = section.AddParagraph();
-    paragraph.AddFormattedText($"Podsumowanie kaloryczne dla: {TargetGroup}", TextFormat.Bold);
-    paragraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
-    paragraph.Format.SpaceBefore = "15pt"; // Większy odstęp przed tabelą
-    paragraph.Format.SpaceAfter = "10pt";
+    Paragraph summaryParagraph = section.AddParagraph();
+    summaryParagraph.AddFormattedText($"Podsumowanie kaloryczne dla: {TargetGroup}", TextFormat.Bold);
+    summaryParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 12);
+    summaryParagraph.Format.SpaceBefore = "15pt"; // Większy odstęp przed tabelą
+    summaryParagraph.Format.SpaceAfter = "10pt";
 
     Table table = section.AddTable();
     table.Borders.Width = 1.0; // Grubsze obramowanie
@@ -526,8 +540,7 @@ private void BuildDocument(Document document)
         row.BottomPadding = Unit.FromPoint(3);
     }
 }
-
-        [RelayCommand]
+    [RelayCommand]
         public void SaveAsPdf()
         {
             try
@@ -548,8 +561,9 @@ private void BuildDocument(Document document)
                 string sanitizedFileName =
                     string.Concat(Name.Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '.' : ch));
 
-                // Utwórz pełną ścieżkę pliku
-                string targetFilePath = Path.Combine(targetDirectory, $"{sanitizedFileName}.pdf");
+                // Dodaj datę do nazwy pliku w formacie: "yyyy-MM-dd_HH-mm-ss"
+                string datePart = DateTime.Now.ToString("yyyy.MM.dd H-mm-ss");
+                string targetFilePath = Path.Combine(targetDirectory, $"jadlospis {datePart}.pdf");
 
                 // Zapisz dokument PDF
                 document.Save(targetFilePath);
