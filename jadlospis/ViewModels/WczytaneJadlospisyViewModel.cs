@@ -46,8 +46,8 @@ public partial class WczytaneJadlospisyViewModel: ViewModelBase
     public void OpenJadlospis()
     {
         File.Delete(filePath);
-        _homePageViewModel.IsVisible = true;
         _jadlospis.ZapiszJadlospis();
+        _homePageViewModel.IsVisible = true;
         _homePageViewModel.CurrentPage = _jadlospis;
     }
 }
