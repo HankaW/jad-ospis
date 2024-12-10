@@ -224,7 +224,7 @@ namespace jadlospis.ViewModels
 
 
         [RelayCommand]
-        public async Task ZapiszJadlospis()
+        public void ZapiszJadlospis()
         {
             try
             {
@@ -282,7 +282,7 @@ namespace jadlospis.ViewModels
                     WriteIndented = true
                 });
 
-                await File.WriteAllTextAsync(filePath, jsonData);
+                File.WriteAllText(filePath, jsonData);
             }
             catch (Exception ex)
             {
