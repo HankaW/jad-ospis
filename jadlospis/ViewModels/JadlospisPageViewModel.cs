@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Timers;
 using jadlospis.interfaces;
 using jadlospis.Models;
+using jadlospis.Utils;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.Rendering;
@@ -97,9 +98,7 @@ namespace jadlospis.ViewModels
             Data = DateTime.Now;
 
             FileName = Name.Replace(" ", "_") + "_" + Data.ToString("yyyy-MM-dd") + ".json";
-
-            ZapiszJadlospis();
-
+            
             _timer = new Timer(300000); // 5 min
             _timer.Elapsed += (sender, e) => ZapiszJadlospis();
             _timer.Start();
@@ -235,7 +234,7 @@ namespace jadlospis.ViewModels
                 }
 
                 // Utwórz nazwę pliku na podstawie nazwy jadłospisu i daty
-                string fileName = $"{FileName}.json";
+                string fileName = $"{FileName}";
                 string filePath = Path.Combine(targetDirectory, fileName);
 
                 // Serializuj obiekt do JSON
@@ -283,6 +282,85 @@ namespace jadlospis.ViewModels
             {
                 Debug.WriteLine($"Błąd podczas zapisu do pliku JSON: {ex.Message}");
             }
+        }
+        
+        // Konwersja Nutriments na ObservableCollection<KeyValuePair<string, double>>
+        ObservableCollection<KeyValuePair<string, double>> ConvertNutrimentsToCollection(Nutriments nutriments)
+        {
+            return new ObservableCollection<KeyValuePair<string, double>>
+            {
+                new KeyValuePair<string, double>("carbs", nutriments.Carbs),
+                new KeyValuePair<string, double>("sugar", nutriments.Sugar),
+                new KeyValuePair<string, double>("energy", nutriments.Energy),
+                new KeyValuePair<string, double>("energyKcal", nutriments.EnergyKcal),
+                new KeyValuePair<string, double>("fat", nutriments.Fat),
+                new KeyValuePair<string, double>("saturatedFat", nutriments.SaturatedFat),
+                new KeyValuePair<string, double>("protein", nutriments.Protein),
+                new KeyValuePair<string, double>("salt", nutriments.Salt)
+            };
+        }
+
+        public void LoadFromJson(string filePath)
+        {
+            string jsonContent = File.ReadAllText(filePath);
+            var deserializedData = JsonSerializer.Deserialize<DeserializedJadlospis>(jsonContent);
+
+            if (deserializedData == null)
+                throw new InvalidDataException("Nie udało się wczytać danych JSON.");
+
+
+            this.Name = deserializedData.Name;
+            this.Data = deserializedData.Data;
+            this.IloscOsob = deserializedData.IloscOsob;
+            this.SumaCeny = deserializedData.SumaCeny;
+            this.TargetGroup = deserializedData.TargetGroup;
+            this.Dania = new ObservableCollection<DanieViewModel>();
+
+            int nrDania = 1;
+            foreach (var danieData in deserializedData.Dania)
+            {
+                var danieViewModel = new DanieViewModel(new Danie(nrDania)
+                {
+                    Nazwa = danieData.Nazwa,
+                    Cena = danieData.Cena,
+                    Products = new ObservableCollection<ProduktWDaniuViewModel>()
+                }, this);
+
+                foreach (var productData in danieData.Produkty)
+                {
+                    var productViewModel = new ProduktWDaniuViewModel(danieViewModel)
+                    {
+                        Name = productData.Name,
+                        Gramatura = "100",
+                        ProduktView = new ObservableCollection<ProduktWJadlospisViewModel>
+                        {
+                            new ProduktWJadlospisViewModel(new Products
+                            {
+                                Name = productData.Name,
+                                ImageUrl = productData.ImageUrl,
+                                Nutriments = new Nutriments
+                                {
+                                    Carbs = productData.Nutriments.Węglowodany,
+                                    Sugar = productData.Nutriments.Cukier,
+                                    Energy = productData.Nutriments.Energia,
+                                    EnergyKcal = productData.Nutriments.Kalorie,
+                                    Fat = productData.Nutriments.Tłuszcz,
+                                    SaturatedFat = productData.Nutriments.TłuszczeNasycone,
+                                    Protein = productData.Nutriments.Białko,
+                                    Salt = productData.Nutriments.Sól
+                                }
+                            })
+                        }
+                    };
+                    danieViewModel.Products?.Add(productViewModel);
+                }
+
+                this.Dania.Add(danieViewModel);
+                nrDania++;
+            }
+
+            this.ObliczSumaCeny();
+            this.ObliczSumaNutriments();
         }
 
         [RelayCommand]

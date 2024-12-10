@@ -32,7 +32,7 @@ public partial class ProduktViewModel : ViewModelBase
     public Bitmap? ImageBitmap { get; private set; }
 
 
-   // Konstruktor klasy, przyjmujący wartości odżywcze i URL obrazu
+    // Konstruktor klasy, przyjmujący wartości odżywcze i URL obrazu
     public ProduktViewModel(string name, double carbs, double sugar, double energy, double energyKcal, 
                             double fat, double saturatedFat, double protein, double salt, string? image)
     {

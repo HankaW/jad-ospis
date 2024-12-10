@@ -22,37 +22,7 @@ public class Products: IProducts
         set; 
     } // Składniki odżywcze
 
-    public Nutriments Nutriments1
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public Utils.ProduktLoader ProduktLoader
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public ViewModels.ProduktViewModel ProduktViewModel
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public ViewModels.ProduktWDaniuViewModel ProduktWDaniuViewModel
-    {
-        get => default;
-        set
-        {
-        }
-    }
+ 
 
     public Dictionary<string, double>? GetCalculatedNutriments(double produktProductsGram)
     {

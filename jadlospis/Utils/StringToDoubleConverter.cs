@@ -6,13 +6,6 @@ namespace jadlospis.Utils;
 
 public class StringToDoubleConverter : JsonConverter<double>
 {
-    public Models.Nutriments Nutriments
-    {
-        get => default;
-        set
-        {
-        }
-    }
 
     // Metoda odczytuje wartość z JSON i próbuje przekonwertować ją na typ double
     public override double Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -37,47 +37,6 @@ public class Nutriments : INutrimesnt
     [JsonPropertyName("salt_100g")]
     [JsonConverter(typeof(StringToDoubleConverter))]
     public double Salt { get; set; } = 0; // Sól na 100g
-
-    public IProducts IProducts
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public Products Products
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public StringToDoubleConverter StringToDoubleConverter
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public ViewModels.ProduktViewModel ProduktViewModel
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
-    public INutrimesnt INutrimesnt
-    {
-        get => default;
-        set
-        {
-        }
-    }
-
     public Dictionary<string, double> GetNutriment(double productsGram)
     {
         Dictionary<string, double> result = new Dictionary<string, double>();
