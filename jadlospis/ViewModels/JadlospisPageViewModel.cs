@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Timers;
 using jadlospis.interfaces;
 using jadlospis.Models;
@@ -223,7 +224,7 @@ namespace jadlospis.ViewModels
 
 
         [RelayCommand]
-        public void ZapiszJadlospis()
+        public async Task ZapiszJadlospis()
         {
             try
             {
@@ -258,6 +259,7 @@ namespace jadlospis.ViewModels
                         {
                             p.Products.Name,
                             p.Products.ImageUrl,
+                            p.Products.ProductsGram,
                             Nutriments = new
                             {
                                 p.Products.Nutriments.Carbs,
@@ -280,7 +282,7 @@ namespace jadlospis.ViewModels
                     WriteIndented = true
                 });
 
-                File.WriteAllText(filePath, jsonData);
+                await File.WriteAllTextAsync(filePath, jsonData);
             }
             catch (Exception ex)
             {
@@ -335,7 +337,7 @@ namespace jadlospis.ViewModels
                     var productViewModel = new ProduktWDaniuViewModel(danieViewModel)
                     {
                         Name = productData.Name,
-                        Gramatura = "100",
+                        Gramatura = productData.ProductsGram.ToString(),
                         ProduktView = new ObservableCollection<ProduktWJadlospisViewModel>
                         {
                             new ProduktWJadlospisViewModel(new Products
@@ -354,7 +356,9 @@ namespace jadlospis.ViewModels
                                     Salt = productData.Nutriments.Sól
                                 }
                             })
+                            
                         }
+                        
                     };
                     danieViewModel.Products?.Add(productViewModel);
                 }

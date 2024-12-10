@@ -29,8 +29,13 @@ public partial class HomePageViewModel: ViewModelBase
         {
             Directory.CreateDirectory(_targetDirectory);
         }
+        
+        UpdateLoader();
+        CurrentPage = loader;
+    }
 
-
+    private void LoadJadlospisy()
+    {
         //wczytanie plików json z katalogu jadlospisy
         var files = Directory.GetFiles(_targetDirectory, "*.json");
         foreach (var file in files)
@@ -40,13 +45,12 @@ public partial class HomePageViewModel: ViewModelBase
             
             Jadlospisy.Add(new WczytaneJadlospisyViewModel(tempJadlospis, this, file));
         }
-        
-        UpdateLoader();
-        CurrentPage = loader;
     }
 
     public void UpdateLoader()
     {
+        loader.Jadlospisy.Clear();
+        LoadJadlospisy();
         loader.Jadlospisy = Jadlospisy;
     }
 
@@ -54,6 +58,8 @@ public partial class HomePageViewModel: ViewModelBase
     public void OopenLoadPage()
     {
         IsVisible = false;
+        UpdateLoader();
+        
         CurrentPage = loader;
     }
     

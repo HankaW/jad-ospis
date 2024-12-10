@@ -36,7 +36,6 @@ public partial class WczytaneJadlospisyViewModel: ViewModelBase
     [RelayCommand]
     public void DeleteJadlospis()
     {
-        
         File.Delete(filePath);
         _homePageViewModel.Jadlospisy.Remove(this);
         _homePageViewModel.UpdateLoader();
