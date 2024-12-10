@@ -10,8 +10,8 @@
     <Grid>
         <!-- Grid layout to manage the layout structure -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" /> <!-- Add product header -->
-            <RowDefinition Height="Auto" /> <!-- Section with name, weight, and search -->
+            <RowDefinition Height="Auto" /> <!-- Header -->
+            <RowDefinition Height="Auto" /> <!-- Section with name, weight, and buttons -->
             <RowDefinition Height="*" /> <!-- ProduktView -->
             <RowDefinition Height="Auto" /> <!-- Navigation buttons -->
         </Grid.RowDefinitions>
@@ -21,49 +21,45 @@
         </Grid.ColumnDefinitions>
 
         <!-- Header: Add Product -->
-        <TextBlock Grid.Row="0" FontSize="14" FontWeight="Bold"  Margin="0,5,5,10">Dodaj produkt do wybranego dania:
-        </TextBlock>
+        <TextBlock Grid.Row="0" FontSize="14" FontWeight="Bold" Margin="0,5,5,10">Dodaj produkt do wybranego dania:</TextBlock>
 
-        <!-- Name, Gramatura, and Search Button -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,5,10">
+        <!-- Name, Gramatura, Search and Delete Buttons -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0">
             <StackPanel Orientation="Vertical" Margin="5">
                 <TextBlock Text="Nazwa produktu:" HorizontalAlignment="Center"/>
                 <TextBox Text="{Binding Name, Mode=TwoWay}" Width="200"/>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Margin="0,5,5,5">
+            <StackPanel Orientation="Vertical" Margin="5">
                 <TextBlock Text="Gramatura:" HorizontalAlignment="Center"/>
                 <NumericUpDown FormatString="0" Minimum="0" Value="{Binding Gramatura, Mode=TwoWay}" Width="150"/>
             </StackPanel>
 
-            <Button Command="{Binding Wyszukaj}" Background="#23b08b" Foreground="Black" Margin="10, 20 5,5" Padding="10,5">
+            <Button Command="{Binding Wyszukaj}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5,20,5,5">
                 Wyszukaj
             </Button>
-            <Button Command="{Binding UsunProdukt}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5, 20, 5,5">
+            <Button Command="{Binding UsunProdukt}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5,20,5,5">
                 Usuń
             </Button>
         </StackPanel>
 
         <!-- ProduktView -->
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding ProduktView}" Margin="10">
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding ProduktView}" Margin="15">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
         <!-- Navigation Buttons -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="43,2,10,20">
             <Button IsVisible="{Binding IsVisible}" Command="{Binding Poprzenie}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5">
                 Poprzedni
             </Button>
             <Button IsVisible="{Binding IsVisible}" Command="{Binding Nastepny}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5">
                 Nastepny
             </Button>
-            <Button IsVisible="{Binding IsVisible}" Command="{Binding UsunProdukt}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5">
-                Usuń
-            </Button>
-        </StackPanel>
+         </StackPanel>
     </Grid>
 </UserControl>

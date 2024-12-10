@@ -11,6 +11,7 @@ using System.Timers;
 using jadlospis.interfaces;
 using jadlospis.Models;
 using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.Rendering;
 using PdfSharp.Pdf;
 
@@ -310,9 +311,10 @@ namespace jadlospis.ViewModels
 
         private void BuildDocument(Document document)
         {
+            // Dodanie sekcji
             Section section = document.AddSection();
 
-            //TODO Dodać informacje o jadłospisie i sformatowac je w odpowiedniej formacie
+           //TODO Dodać informacje o jadłospisie i sformatowac je w odpowiedniej formacie
             Paragraph paragraph = section.AddParagraph();
             ;
             paragraph.AddText($"Jadłospis dla {Name} na dzien {Data}");
