@@ -52,6 +52,7 @@ public class Products: IProducts
         Nutriments = new Nutriments();
         ImageUrl = "";
     }
+    
 
     public Dictionary<string, double>? GetCalculatedNutriments(double produktProductsGram)
     {

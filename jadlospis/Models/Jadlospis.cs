@@ -12,9 +12,9 @@ public class Jadlospis: IJadlospis
     public Dictionary<string, double> SumNutriments { get; set; }
     public Dictionary<string, double> MinNutriments { get; set; }
     public List<Danie> Dania { get; set; }
-    private string _targetGroup;
+    private string? _targetGroup;
 
-    public string TargetGroup
+    public string? TargetGroup
     {
         get => _targetGroup;
         set
@@ -30,8 +30,8 @@ public class Jadlospis: IJadlospis
 
     public Jadlospis()
     {
-        SumNutriments = initDictionary();
-        MinNutriments = initDictionary();
+        SumNutriments = InitDictionary();
+        MinNutriments = InitDictionary();
         Dania = new List<Danie>();
         TargetGroup = "Młodzieży (11-19 lat)";
         IloscOsob = 1;
@@ -54,7 +54,7 @@ public class Jadlospis: IJadlospis
         Data = jadlospis.Data;
     }
 
-    private Dictionary<string,double> initDictionary()
+    private Dictionary<string,double> InitDictionary()
     {
         Dictionary<string, double> result = new Dictionary<string, double>();
         result.Add("carbs",0);
@@ -79,7 +79,7 @@ public class Jadlospis: IJadlospis
 
     public void ObliczSumaNutriments()
     {
-        SumNutriments = initDictionary();
+        SumNutriments = InitDictionary();
         foreach (var danie in Dania)
         {
             var temp = danie.GetNutrimeftFromProducts();
@@ -112,6 +112,11 @@ public class Jadlospis: IJadlospis
         Danie danie = new Danie(this);
         Dania.Add(danie);
     }
+    
+    public void AddDanie(Danie danie)
+    {
+        Dania.Add(danie);
+    }
 
     public void DeleteDanie(Danie danie)
     {
@@ -121,11 +126,10 @@ public class Jadlospis: IJadlospis
     public void SaveToJson()
     {
         string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string sanitizedFileName = string.Concat(Name.Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '.' : ch));
-        string targetFilePath = Path.Combine(documentsPath, "jadłospis", $"{Name}_{Data}.json");
+        string filePath = Path.Combine(documentsPath, "jadlospis.json");
         var options = new JsonSerializerOptions { WriteIndented = true };
         var json = JsonSerializer.Serialize(this, options);
-        File.WriteAllText(targetFilePath, json);
+        File.WriteAllText(filePath, json);
     }
 
 }

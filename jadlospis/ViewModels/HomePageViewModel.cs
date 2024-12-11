@@ -1,66 +1,66 @@
-
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using System.Text.Json;
+using jadlospis.Models;
+using jadlospis.Utils;
+
 
 namespace jadlospis.ViewModels;
 
-public partial class HomePageViewModel: ViewModelBase
+public partial class HomePageViewModel : ViewModelBase
 {
-    [ObservableProperty] private ViewModelBase _currentPage;
-    private LoadViewModel loader = new LoadViewModel();
-
-    // Pobierz ścieżkę do katalogu "Dokumenty" użytkownika
-    private static readonly string DocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-    // Utwórz podkatalog "jadlospisy"
-    private readonly string _targetDirectory = Path.Combine(DocumentsPath, "jadłospisy");
-
-    public ObservableCollection<WczytaneJadlospisyViewModel> Jadlospisy { get; set; } = new();
+    private ProduktLoader _loader = new ProduktLoader("mąka", 1, 5);
     
-    [ObservableProperty]
-    private bool _isVisible = false;
-    
+    // Konstruktor, który teraz obsługuje asynchroniczne operacje
     public HomePageViewModel()
     {
-        if (!Directory.Exists(_targetDirectory))
-        {
-            Directory.CreateDirectory(_targetDirectory);
-        }
-        
-        UpdateLoader();
-        CurrentPage = loader;
+        Initialize();
+        OpenJadlospis();
     }
 
-    private void LoadJadlospisy()
+    // Asynchroniczna metoda do inicjalizacji danych
+    private async void Initialize()
     {
-        //wczytanie plików json z katalogu jadlospisy
-        var files = Directory.GetFiles(_targetDirectory, "*.json");
-        foreach (var file in files)
-        {
-            JadlospisPageViewModel tempJadlospis = new JadlospisPageViewModel();
-            //tempJadlospis.LoadFromJson(file);
-            
-            //Jadlospisy.Add(new WczytaneJadlospisyViewModel(tempJadlospis, this, file));
-        }
-    }
+        Danie d1 = new Danie();
+        d1.Nazwa = "Danie 1";
 
-    public void UpdateLoader()
-    {
-        loader.Jadlospisy.Clear();
-        LoadJadlospisy();
-        loader.Jadlospisy = Jadlospisy;
-    }
+        // Czekamy na zakończenie pobierania produktów
+        await _loader.GetProducts();
 
-    [RelayCommand]
-    public void OopenLoadPage()
-    {
-        IsVisible = false;
-        UpdateLoader();
-        
-        CurrentPage = loader;
+        // Pobieramy listę produktów po zakończeniu pobierania
+        d1.Produkty = _loader.GetProductsList();
+
+        Jadlospis j1 = new Jadlospis();
+        j1.AddDanie(d1);
+        j1.ObliczSumaNutriments();
+        j1.SaveToJson();
     }
     
+    private void OpenJadlospis()
+    {
+        
+        string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string filePath = Path.Combine(documentsPath, "jadlospis.json");
+            
+        // Wczytanie zawartości pliku JSON
+        string jsonContent = File.ReadAllText(filePath);
+
+        // Deserializacja pliku JSON
+        Jadlospis? jadlospis = JsonSerializer.Deserialize<Jadlospis>(jsonContent);
+
+        // Wyświetlenie zawartości obiektu
+        Console.WriteLine($"Nazwa jadłospisu: {jadlospis.Name}");
+        Console.WriteLine($"Grupa docelowa: {jadlospis.TargetGroup}");
+        Console.WriteLine($"Liczba osób: {jadlospis.IloscOsob}");
+            
+        // Możesz teraz manipulować obiektami w jadlospisie, np. dodawać produkty do dania
+        foreach (var danie in jadlospis.Dania)
+        {
+            Console.WriteLine($"Danie: {danie.Nazwa}");
+            foreach (var produkt in danie.Produkty)
+            {
+                Console.WriteLine($"Produkt: {produkt.Name}, Energia: {produkt.Nutriments.EnergyKcal} kcal");
+            }
+        }
+    }
 }

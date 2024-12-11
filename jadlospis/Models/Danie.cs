@@ -23,6 +23,11 @@ public class Danie: IDanie
         _jadlospis = jadlospis;
         Produkty = new List<Products>();
     }
+    
+    public Danie()
+    {
+        Produkty = new List<Products>();
+    }
 
     public Danie(Danie danie)
     {

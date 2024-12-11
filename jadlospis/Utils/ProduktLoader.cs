@@ -10,36 +10,40 @@ using jadlospis.Models;
 
 namespace jadlospis.Utils;
 
-
 // Klasa odpowiedzialna za ładowanie produktów z zewnętrznego API (Open Food Facts)
 public class ProduktLoader
 {
-    private static readonly HttpClient Client = new HttpClient();
+    private  HttpClient _client = new HttpClient();
     private int _pageSize = 5;
     private int _currentPage = 1;
 
-    public int CurrentPage { get => _currentPage; set => _currentPage = value; }
-    private string _name = "";
+    public int CurrentPage 
+    { 
+        get => _currentPage; 
+        set => _currentPage = value; 
+    }
+
+    private string _name;
     public string Name
     {
         get => _name;
         set => _name = value;
     }
-    
+
     private Products _singleProduct = new Products();
     public Products GetSingleProduct() => _singleProduct;
 
     public double TotalProducts { get; set; }
 
-    private ObservableCollection<ProduktViewModel> _products = new();
-    public ObservableCollection<ProduktViewModel> GetProductsList() => _products;
+    private List<Products> _products = new();
+    public List<Products> GetProductsList() => _products;
 
     // Konstruktor, który przyjmuje nazwę produktu, numer strony i liczbę produktów na stronie
     public ProduktLoader(string produktName, int currentPage, int maxProductsOnPage)
     {
-        this._name = produktName;
-        this._currentPage = currentPage;
-        this._pageSize = maxProductsOnPage;
+        _name = produktName;
+        _currentPage = currentPage;
+        _pageSize = maxProductsOnPage;
     }
 
     public async void SingeProduct()
@@ -49,7 +53,7 @@ public class ProduktLoader
         try
         {
             // Wysyłamy zapytanie HTTP GET do API
-            HttpResponseMessage response = await Client.GetAsync(url);
+            HttpResponseMessage response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
             // Odczytujemy odpowiedź jako JSON i deserializujemy dane do obiektów
@@ -62,7 +66,7 @@ public class ProduktLoader
                 if (_currentPage > 1)
                 {
                     _currentPage = 1;
-                    response = await Client.GetAsync(url);
+                    response = await _client.GetAsync(url);
                     response.EnsureSuccessStatusCode();
                     responseBody = await response.Content.ReadAsStringAsync();
                     data = JsonSerializer.Deserialize<Root>(responseBody);
@@ -91,7 +95,6 @@ public class ProduktLoader
         }
     }
 
-
     // Asynchroniczna metoda do pobierania produktów z API
     public async Task GetProducts()
     {
@@ -103,17 +106,20 @@ public class ProduktLoader
         try
         {
             // Wysyłamy zapytanie HTTP GET do API
-            HttpResponseMessage response = await Client.GetAsync(url);
+            HttpResponseMessage response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
             // Odczytujemy odpowiedź jako JSON i deserializujemy dane do obiektów
             string responseBody = await response.Content.ReadAsStringAsync();
             Root? data = JsonSerializer.Deserialize<Root>(responseBody);
 
-            if (data?.Products == null) Console.WriteLine("No products found or invalid data returned.");
+            if (data?.Products == null) 
+                Console.WriteLine("No products found or invalid data returned.");
             
             // Dodajemy załadowane produkty do listy
-            else foreach (var product in data.Products) this._products.Add(new ProduktViewModel(product));
+            else 
+                foreach (var product in data.Products) 
+                    this._products.Add(product);
         }
         catch (HttpRequestException ex)
         {
@@ -126,9 +132,7 @@ public class ProduktLoader
             Console.WriteLine($"An error occurred while parsing the response: {ex.Message}");
         }
     }
-
 }
-
 
 // Klasa pomocnicza do deserializacji odpowiedzi API, zawierająca listę produktów
 public class Root
