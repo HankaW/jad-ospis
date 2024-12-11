@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -29,6 +30,7 @@ public partial class ProduktViewModel : ViewModelBase
     private string? _image;
 
     // Właściwość reprezentująca załadowany obraz produktu jako Bitmapę
+    [JsonIgnore]
     public Bitmap? ImageBitmap { get; private set; }
 
 

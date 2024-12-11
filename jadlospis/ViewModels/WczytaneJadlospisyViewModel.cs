@@ -28,6 +28,7 @@ public partial class WczytaneJadlospisyViewModel: ViewModelBase
     public void CopyJadlospis()
     {
         var newJadlospis = new JadlospisPageViewModel(_jadlospis);
+        
         newJadlospis.ZapiszJadlospis();
         _homePageViewModel.Jadlospisy.Add(new WczytaneJadlospisyViewModel(newJadlospis, _homePageViewModel, filePath));
         _homePageViewModel.UpdateLoader();
@@ -45,8 +46,6 @@ public partial class WczytaneJadlospisyViewModel: ViewModelBase
     [RelayCommand]
     public void OpenJadlospis()
     {
-        File.Delete(filePath);
-        _jadlospis.ZapiszJadlospis();
         _homePageViewModel.IsVisible = true;
         _homePageViewModel.CurrentPage = _jadlospis;
     }

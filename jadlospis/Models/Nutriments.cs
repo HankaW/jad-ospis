@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using jadlospis.interfaces;
@@ -48,11 +49,21 @@ public class Nutriments : INutrimesnt
         result.Add("saturatedFat", CalculateNutriment(productsGram, SaturatedFat));
         result.Add("protein", CalculateNutriment(productsGram, Protein));
         result.Add("salt", CalculateNutriment(productsGram, Salt));
+        
+        Carbs = result["carbs"];
+        Sugar = result["sugar"];
+        Energy = result["energy"];
+        EnergyKcal = result["energyKcal"];
+        Fat = result["fat"];
+        SaturatedFat = result["saturatedFat"];
+        Protein = result["protein"];
+        Salt = result["salt"];
         return result;
     }
 
     public double CalculateNutriment(double productGram, double nutrimentGram)
     {
-        return (nutrimentGram *productGram)/100;
+        var temp = (nutrimentGram *productGram)/100;
+        return Math.Round(temp, 2);
     }
 }

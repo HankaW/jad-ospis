@@ -224,7 +224,7 @@ namespace jadlospis.ViewModels
 
 
         [RelayCommand]
-        public void ZapiszJadlospis()
+        public async Task ZapiszJadlospis()
         {
             try
             {
@@ -281,8 +281,8 @@ namespace jadlospis.ViewModels
                 {
                     WriteIndented = true
                 });
-
-                File.WriteAllText(filePath, jsonData);
+                
+                await File.WriteAllTextAsync(filePath, jsonData);
             }
             catch (Exception ex)
             {
@@ -290,37 +290,23 @@ namespace jadlospis.ViewModels
             }
         }
 
-        // Konwersja Nutriments na ObservableCollection<KeyValuePair<string, double>>
-        ObservableCollection<KeyValuePair<string, double>> ConvertNutrimentsToCollection(Nutriments nutriments)
-        {
-            return new ObservableCollection<KeyValuePair<string, double>>
-            {
-                new KeyValuePair<string, double>("carbs", nutriments.Carbs),
-                new KeyValuePair<string, double>("sugar", nutriments.Sugar),
-                new KeyValuePair<string, double>("energy", nutriments.Energy),
-                new KeyValuePair<string, double>("energyKcal", nutriments.EnergyKcal),
-                new KeyValuePair<string, double>("fat", nutriments.Fat),
-                new KeyValuePair<string, double>("saturatedFat", nutriments.SaturatedFat),
-                new KeyValuePair<string, double>("protein", nutriments.Protein),
-                new KeyValuePair<string, double>("salt", nutriments.Salt)
-            };
-        }
+
 
         public void LoadFromJson(string filePath)
         {
             string jsonContent = File.ReadAllText(filePath);
+            File.WriteAllText(filePath, jsonContent);
             var deserializedData = JsonSerializer.Deserialize<DeserializedJadlospis>(jsonContent);
-
-            if (deserializedData == null)
-                throw new InvalidDataException("Nie udało się wczytać danych JSON.");
             
+
             this.Name = deserializedData.Name;
             this.Data = deserializedData.Data;
             this.IloscOsob = deserializedData.IloscOsob;
             this.SumaCeny = deserializedData.SumaCeny;
             this.TargetGroup = deserializedData.TargetGroup;
             this.Dania = new ObservableCollection<DanieViewModel>();
-
+            
+            
             int nrDania = 1;
             foreach (var danieData in deserializedData.Dania)
             {
@@ -365,9 +351,18 @@ namespace jadlospis.ViewModels
                 this.Dania.Add(danieViewModel);
                 nrDania++;
             }
-
-            this.ObliczSumaCeny();
-            this.ObliczSumaNutriments();
+            this.SumNutriments.Clear();
+            this.SumNutriments = new ObservableCollection<KeyValuePair<string, double>>
+            {
+                new("Węglowodany", deserializedData.SumNutriments.Węglowodany),
+                new("Cukier", deserializedData.SumNutriments.Cukier),
+                new("Energia", deserializedData.SumNutriments.Energia),
+                new("Kalorie", deserializedData.SumNutriments.Kalorie),
+                new("Tłuszcz", deserializedData.SumNutriments.Tłuszcz),
+                new("Tłuszcze nasycone", deserializedData.SumNutriments.TłuszczeNasycone),
+                new("Białko", deserializedData.SumNutriments.Białko),
+                new("Sól", deserializedData.SumNutriments.Sól)
+            };
         }
 
         [RelayCommand]
@@ -571,4 +566,6 @@ namespace jadlospis.ViewModels
             }
         }
     }
+    
+   
 }
