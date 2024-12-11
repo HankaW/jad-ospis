@@ -8,18 +8,20 @@ namespace jadlospis.interfaces;
 
 public interface IJadlospis
 {
-    ObservableCollection<KeyValuePair<string, double>> SumNutriments { get; set; } // <string, double>
-    ObservableCollection<KeyValuePair<string, double>> MinNutriments { get; set; } // <string, double>
-    ObservableCollection<DanieViewModel> Dania { get; set; }
+    Dictionary<string, double> SumNutriments { get; set; }
+    Dictionary<string, double> MinNutriments { get; set; }
+    List<Danie> Dania { get; set; }
     string TargetGroup { get; set; }
     int IloscOsob { get; set; }
     double SumaCeny { get; set; }
     string Name { get; set; }
-    DateTime Data { get; set; }
+    string Data { get; set; }
     
     void ObliczSumaCeny();
     void ObliczSumaNutriments();
     void UstawMinNutriments();
     
     void AddDanie();
+    void DeleteDanie(Danie danie);
+    void SaveToJson();
 }

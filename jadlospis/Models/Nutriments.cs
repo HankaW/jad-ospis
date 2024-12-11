@@ -37,22 +37,34 @@ public class Nutriments : INutrimesnt
     [JsonPropertyName("salt_100g")]
     [JsonConverter(typeof(StringToDoubleConverter))]
     public double Salt { get; set; } = 0; // Sól na 100g
-    public Dictionary<string, double> GetNutriment(double productsGram)
+    public Dictionary<string, double> GetNutriment()
     {
         Dictionary<string, double> result = new Dictionary<string, double>();
-        result.Add("carbs", CalculateNutriment(productsGram, Carbs));
-        result.Add("sugar", CalculateNutriment(productsGram, Sugar));
-        result.Add("energy", CalculateNutriment(productsGram, Energy));
-        result.Add("energyKcal", CalculateNutriment(productsGram, EnergyKcal));
-        result.Add("fat", CalculateNutriment(productsGram, Fat));
-        result.Add("saturatedFat", CalculateNutriment(productsGram, SaturatedFat));
-        result.Add("protein", CalculateNutriment(productsGram, Protein));
-        result.Add("salt", CalculateNutriment(productsGram, Salt));
+        result.Add("carbs",Carbs);
+        result.Add("sugar",  Sugar);
+        result.Add("energy", Energy);
+        result.Add("energyKcal",  EnergyKcal);
+        result.Add("fat",  Fat);
+        result.Add("saturatedFat", SaturatedFat);
+        result.Add("protein", Protein);
+        result.Add("salt", Salt);
         return result;
     }
 
     public double CalculateNutriment(double productGram, double nutrimentGram)
     {
         return (nutrimentGram *productGram)/100;
+    }
+
+    public void Update(double productGram)
+    {
+        Carbs = CalculateNutriment(productGram, Carbs);
+        Sugar = CalculateNutriment(productGram, Sugar);
+        Energy = CalculateNutriment(productGram, Energy);
+        EnergyKcal = CalculateNutriment(productGram, EnergyKcal);
+        Fat = CalculateNutriment(productGram, Fat);
+        SaturatedFat = CalculateNutriment(productGram, SaturatedFat);
+        Protein = CalculateNutriment(productGram, Protein);
+        Salt = CalculateNutriment(productGram,Protein);
     }
 }

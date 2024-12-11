@@ -41,9 +41,9 @@ public partial class HomePageViewModel: ViewModelBase
         foreach (var file in files)
         {
             JadlospisPageViewModel tempJadlospis = new JadlospisPageViewModel();
-            tempJadlospis.LoadFromJson(file);
+            //tempJadlospis.LoadFromJson(file);
             
-            Jadlospisy.Add(new WczytaneJadlospisyViewModel(tempJadlospis, this, file));
+            //Jadlospisy.Add(new WczytaneJadlospisyViewModel(tempJadlospis, this, file));
         }
     }
 

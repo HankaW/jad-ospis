@@ -14,7 +14,9 @@ public interface INutrimesnt
     double Protein { get; set; }
     double Salt { get; set; }
 
-    Dictionary<string, double> GetNutriment(double productsGram);
+    Dictionary<string, double> GetNutriment();
 
     double CalculateNutriment(double productGram, double nutrimentGram);
+
+    void Update(double productGram);
 }

@@ -7,7 +7,17 @@ namespace jadlospis.Models;
 public class Products: IProducts
 {
     public int Id { get; set; }
-    public double ProductsGram { get; set; } = 100;
+
+    private double _ProduktGram = 100;
+    public double ProductsGram
+    {
+        get => _ProduktGram;
+        set
+        {
+            _ProduktGram = value;
+            Nutriments.Update(value);
+        }
+    }
 
     [JsonPropertyName("product_name")] 
     public string Name { get; set; } = ""; // Nazwa produktu
@@ -22,11 +32,34 @@ public class Products: IProducts
         set; 
     } // Składniki odżywcze
 
- 
+    public Danie _danie { get; set; }
+
+    public Products(Products products)
+    {
+        this.ProductsGram = products.ProductsGram;
+        this.Name = products.Name;
+        this.ImageUrl = products.ImageUrl;
+        this.Nutriments = products.Nutriments;
+    }
+    public Products(Danie danie)
+    {
+        _danie = danie;
+    }
+
+    public Products()
+    {
+        Name = "";
+        Nutriments = new Nutriments();
+        ImageUrl = "";
+    }
 
     public Dictionary<string, double>? GetCalculatedNutriments(double produktProductsGram)
     {
-        return Nutriments?.GetNutriment(ProductsGram);
+        Nutriments?.Update(produktProductsGram);
+        return Nutriments?.GetNutriment();
     }
-    
+    public void removeProduct()
+    {
+        _danie.removeProduct(this);
+    }
 }

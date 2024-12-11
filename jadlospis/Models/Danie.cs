@@ -6,37 +6,59 @@ using jadlospis.ViewModels;
 
 namespace jadlospis.Models;
 
-public class Danie : IDanie
+public class Danie: IDanie
 {
     public string Nazwa { get; set; }
-    public double Cena { get; set; } = 0;
-    public ObservableCollection<ProduktWDaniuViewModel> Products { get; set; }
-
-    public DanieViewModel DanieViewModel
+    public double Cena { get; set; }
+    public List<Products> Produkty { get; set; }
+    public void AddProduct(Products produkt)
     {
-        get => default;
-        set
+        Produkty.Add(produkt);
+    }
+
+    public Jadlospis _jadlospis { get; set; }
+    
+    public Danie(Jadlospis jadlospis)
+    {
+        _jadlospis = jadlospis;
+        Produkty = new List<Products>();
+    }
+
+    public Danie(Danie danie)
+    {
+        _jadlospis = danie._jadlospis;
+        Nazwa = danie.Nazwa;
+        Cena = danie.Cena;
+        Produkty = new List<Products>();
+    }
+
+    public Dictionary<string, double> GetNutrimeftFromProducts()
+    {
+        Dictionary<string, double> result = new Dictionary<string, double>();
+        result.Add("carbs",0);
+        result.Add("sugar",  0);
+        result.Add("energy", 0);
+        result.Add("energyKcal",  0);
+        result.Add("fat",  0);
+        result.Add("saturatedFat", 0);
+        result.Add("protein", 0);
+        result.Add("salt", 0);
+        foreach (var produkt in Produkty)
         {
+           var tem = produkt.GetCalculatedNutriments(produkt.ProductsGram);
+           foreach (var key in tem) result[key.Key] += key.Value;
         }
+
+        return result;
     }
 
-    public JadlospisPageViewModel JadlospisPageViewModel
+    public void removeProduct(Products produkt)
     {
-        get => default;
-        set
-        {
-        }
+        Produkty.Remove(produkt);
     }
 
-    public Danie(int nrDania)
+    public void removeDanie()
     {
-        this.Products = new ObservableCollection<ProduktWDaniuViewModel>();
-        Nazwa = $"Danie {nrDania}";
-        Cena = 1;
-    }
-
-    public void AddProduct(ProduktWDaniuViewModel product)
-    {
-        this.Products?.Add(product);
+        _jadlospis.DeleteDanie(this);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices.JavaScript;
 using jadlospis.Models;
 using jadlospis.ViewModels;
 
@@ -10,6 +11,13 @@ public interface IDanie
     
     string Nazwa { get; set; }
     double Cena { get; set; }
-    ObservableCollection<ProduktWDaniuViewModel> Products { get; set; }
-    void AddProduct(ProduktWDaniuViewModel product);
+    List<Products> Produkty { get; set; }
+    void AddProduct(Products produkt);
+    
+    Jadlospis _jadlospis { get; set; }
+
+    Dictionary<string, double> GetNutrimeftFromProducts();
+    
+    void removeProduct(Products produkt);
+    void removeDanie();
 }
