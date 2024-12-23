@@ -9,8 +9,8 @@ namespace jadlospis.Models;
 
 public class Jadlospis: IJadlospis
 {
-    public Dictionary<string, double> SumNutriments { get; set; }
-    public Dictionary<string, double> MinNutriments { get; set; }
+    public Dictionary<string, double>? SumNutriments { get; set; }
+    public Dictionary<string, double>? MinNutriments { get; set; }
     public List<Danie> Dania { get; set; }
     private string? _targetGroup;
 
@@ -26,7 +26,7 @@ public class Jadlospis: IJadlospis
     public int IloscOsob { get; set; }
     public double SumaCeny { get; set; }
     public string Name { get; set; }
-    public string Data { get; set; }
+    public string FileName { get; set; }
 
     public Jadlospis()
     {
@@ -36,8 +36,8 @@ public class Jadlospis: IJadlospis
         TargetGroup = "Młodzieży (11-19 lat)";
         IloscOsob = 1;
         SumaCeny = 0;
-        Name = "Jadłospis";
-        Data = DateTime.Now.ToString("dd-MM-yy-HH-mm");
+        Name = $"Jadłospis {DateTime.Now.ToString("dd-MM-yyyy-HH-mm")}" ;
+        FileName = Name+ ".json";
         
         UstawMinNutriments();
     }
@@ -51,12 +51,12 @@ public class Jadlospis: IJadlospis
         IloscOsob = jadlospis.IloscOsob;
         SumaCeny = jadlospis.SumaCeny;
         Name = jadlospis.Name;
-        Data = jadlospis.Data;
+        FileName = jadlospis.FileName;
     }
 
-    private Dictionary<string,double> InitDictionary()
+    private Dictionary<string, double>? InitDictionary()
     {
-        Dictionary<string, double> result = new Dictionary<string, double>();
+        Dictionary<string, double>? result = new Dictionary<string, double>();
         result.Add("carbs",0);
         result.Add("sugar",  0);
         result.Add("energy", 0);
@@ -75,6 +75,8 @@ public class Jadlospis: IJadlospis
         {
             SumaCeny += danie.Cena;
         }
+        SumaCeny *= IloscOsob;
+        SumaCeny = Math.Round(SumaCeny);
     }
 
     public void ObliczSumaNutriments()
@@ -85,7 +87,7 @@ public class Jadlospis: IJadlospis
             var temp = danie.GetNutrimeftFromProducts();
             foreach (var key in temp)
             {
-                SumNutriments[key.Key] += key.Value;
+                SumNutriments[key.Key] += Math.Round( key.Value, 2);
             }
         }
     }
@@ -103,8 +105,12 @@ public class Jadlospis: IJadlospis
 
         var keys = MinNutriments.Select(kv => kv.Key).ToList();
 
-        for (int i = 0; i < keys.Count; i++) MinNutriments[keys[i]] = values[i];
-        
+        for (int i = 0; i < keys.Count; i++)
+        {
+            var key = keys[i];
+            MinNutriments[key] = values[i];
+        }
+
     }
 
     public void AddDanie()
@@ -125,8 +131,17 @@ public class Jadlospis: IJadlospis
 
     public void SaveToJson()
     {
+        // Pobierz ścieżkę do katalogu "Dokumenty" użytkownika
         string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string filePath = Path.Combine(documentsPath, "jadlospis.json");
+
+        // Utwórz podkatalog "jadlospisy"
+        string targetDirectory = Path.Combine(documentsPath, "jadłospisy");
+        if (!Directory.Exists(targetDirectory))
+        {
+            Directory.CreateDirectory(targetDirectory);
+        }
+        
+        string filePath = Path.Combine(targetDirectory, FileName);
         var options = new JsonSerializerOptions { WriteIndented = true };
         var json = JsonSerializer.Serialize(this, options);
         File.WriteAllText(filePath, json);

@@ -8,14 +8,13 @@ namespace jadlospis.interfaces;
 
 public interface IJadlospis
 {
-    Dictionary<string, double> SumNutriments { get; set; }
-    Dictionary<string, double> MinNutriments { get; set; }
+    Dictionary<string, double>? SumNutriments { get; set; }
+    Dictionary<string, double>? MinNutriments { get; set; }
     List<Danie> Dania { get; set; }
     string? TargetGroup { get; set; }
     int IloscOsob { get; set; }
     double SumaCeny { get; set; }
     string Name { get; set; }
-    string Data { get; set; }
     
     void ObliczSumaCeny();
     void ObliczSumaNutriments();

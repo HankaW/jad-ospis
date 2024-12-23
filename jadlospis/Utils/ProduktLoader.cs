@@ -46,7 +46,7 @@ public class ProduktLoader
         _pageSize = maxProductsOnPage;
     }
 
-    public async void SingeProduct()
+    public async Task SingeProduct()
     {
         string url = $"https://world.openfoodfacts.org/cgi/search.pl?search_terms={_name}&search_simple=1&action=process&json=1&page_size={_pageSize}&page={_currentPage}";
 
