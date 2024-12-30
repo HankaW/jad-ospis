@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 using jadlospis.interfaces;
 using jadlospis.ViewModels;
 
@@ -16,20 +17,24 @@ public class Danie: IDanie
         Produkty.Add(produkt);
     }
 
+   [JsonIgnore]
     public Jadlospis _jadlospis { get; set; }
     
-    public Danie(Jadlospis jadlospis)
+    public Danie(Jadlospis jadlospis, string nazwa)
     {
         _jadlospis = jadlospis;
+        Nazwa = nazwa;
         Produkty = new List<Products>();
     }
     
-    public Danie()
+    public Danie(string nazwa)
     {
+        _jadlospis = null;
+        Nazwa = nazwa;
         Produkty = new List<Products>();
     }
 
-    public Danie(Danie danie)
+    public Danie(Danie danie, string nazwa)
     {
         _jadlospis = danie._jadlospis;
         Nazwa = danie.Nazwa;
@@ -50,8 +55,10 @@ public class Danie: IDanie
         result.Add("salt", 0);
         foreach (var produkt in Produkty)
         {
-           var tem = produkt.GetCalculatedNutriments(produkt.ProductsGram);
-           foreach (var key in tem) result[key.Key] += key.Value;
+            var tem = produkt.GetCalculatedNutriments(produkt.ProductsGram);
+            if (tem != null)
+                foreach (var key in tem)
+                    result[key.Key] += key.Value;
         }
 
         return result;
@@ -60,10 +67,12 @@ public class Danie: IDanie
     public void removeProduct(Products produkt)
     {
         Produkty.Remove(produkt);
+        _jadlospis.ObliczSumaCeny();
     }
 
     public void removeDanie()
     {
         _jadlospis.DeleteDanie(this);
+        _jadlospis.ObliczSumaCeny();
     }
 }

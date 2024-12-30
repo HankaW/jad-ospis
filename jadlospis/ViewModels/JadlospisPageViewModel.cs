@@ -33,7 +33,7 @@ namespace jadlospis.ViewModels
         
         private Timer _timer;
 
-        public ObservableCollection<Danie> Dania { get; set; }
+        public ObservableCollection<DanieViewModel> Dania { get; set; }
         public ObservableCollection<KeyValuePair<string, double>> SumNutriment { get; set; }
         public ObservableCollection<KeyValuePair<string, double>>? MinNutriment { get; set; }
 
@@ -78,17 +78,21 @@ namespace jadlospis.ViewModels
             
             _jadlospis = new Jadlospis();
             TargetGroup = _jadlospis.TargetGroup;
-            Dania = new ObservableCollection<Danie>(_jadlospis.Dania);
+            Dania = new ObservableCollection<DanieViewModel>(); 
             SumNutriment = new ObservableCollection<KeyValuePair<string, double>>();
             MinNutriment = new ObservableCollection<KeyValuePair<string, double>>();
-            foreach (var item in _jadlospis.SumNutriments)
-            {
-                SumNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
-            }
-            foreach (var item in _jadlospis.MinNutriments)
-            {
-                MinNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
-            }
+            if (_jadlospis.SumNutriments != null)
+                foreach (var item in _jadlospis.SumNutriments)
+                {
+                    SumNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
+                }
+
+            if (_jadlospis.MinNutriments != null)
+                foreach (var item in _jadlospis.MinNutriments)
+                {
+                    MinNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
+                }
+
             SumaCeny = _jadlospis.SumaCeny;
             IloscOsob = _jadlospis.IloscOsob;
             Name = _jadlospis.Name;
@@ -105,7 +109,7 @@ namespace jadlospis.ViewModels
         {
             _jadlospis = jadlospis;
             TargetGroup = _jadlospis.TargetGroup;
-            Dania = new ObservableCollection<Danie>(_jadlospis.Dania);
+            Dania = new ObservableCollection<DanieViewModel>();
             SumNutriment = new ObservableCollection<KeyValuePair<string, double>>();
             MinNutriment = new ObservableCollection<KeyValuePair<string, double>>();
             
@@ -131,7 +135,17 @@ namespace jadlospis.ViewModels
             _timer.Start();
         }
         
+        public void ObliczSumaCeny()
+        {
+            _jadlospis.ObliczSumaCeny();
+            SumaCeny = _jadlospis.SumaCeny;
+        }
         
+        public void ObliczSumaNutriments()
+        {
+            _jadlospis.ObliczSumaNutriments();
+            UpdateDictionary(this.SumNutriment, _jadlospis.SumNutriments);
+        }
 
         [RelayCommand]
         public void SaveJadlospis()
@@ -145,13 +159,19 @@ namespace jadlospis.ViewModels
             _jadlospis.AddDanie();
             ReadDania();
         }
+        
+        public void DeleteDanie(Danie danie)
+        {
+            _jadlospis.DeleteDanie(danie);
+            ReadDania();
+        }
 
         void ReadDania()
         {
+            this.Dania.Clear();
             foreach (var d in _jadlospis.Dania)
             {
-                this.Dania.Clear();
-                this.Dania.Add(d);
+                this.Dania.Add(new DanieViewModel(d, this));
             }
         }
         
@@ -266,7 +286,7 @@ namespace jadlospis.ViewModels
                 paragraph.Format.SpaceAfter = "10pt"; // Większy odstęp między szczegółami a produktami
         
                 // Iteracja przez produkty w daniu
-                if (danie.Produkty != null && danie.Produkty.Any())
+                if (danie.Produkty.Any())
                 {
                     foreach (var product in danie.Produkty)
                     {

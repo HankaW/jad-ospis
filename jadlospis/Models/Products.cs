@@ -8,14 +8,14 @@ public class Products: IProducts
 {
     public int Id { get; set; }
 
-    private double _ProduktGram = 100;
+    private double _produktGram = 100;
     public double ProductsGram
     {
-        get => _ProduktGram;
+        get => _produktGram;
         set
         {
-            _ProduktGram = value;
-            Nutriments.Update(value);
+            _produktGram = value;
+            Nutriments?.Update(value);
         }
     }
 
@@ -32,10 +32,12 @@ public class Products: IProducts
         set; 
     } // Składniki odżywcze
 
+    [JsonIgnore]
     public Danie _danie { get; set; }
 
     public Products(Products products)
     {
+        _danie = products._danie;
         this.ProductsGram = products.ProductsGram;
         this.Name = products.Name;
         this.ImageUrl = products.ImageUrl;
@@ -48,6 +50,7 @@ public class Products: IProducts
 
     public Products()
     {
+        _danie = new Danie("");
         Name = "";
         Nutriments = new Nutriments();
         ImageUrl = "";

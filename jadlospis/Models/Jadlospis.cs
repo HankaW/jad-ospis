@@ -76,7 +76,7 @@ public class Jadlospis: IJadlospis
             SumaCeny += danie.Cena;
         }
         SumaCeny *= IloscOsob;
-        SumaCeny = Math.Round(SumaCeny);
+        SumaCeny = Math.Round(SumaCeny, 2);
     }
 
     public void ObliczSumaNutriments()
@@ -87,7 +87,7 @@ public class Jadlospis: IJadlospis
             var temp = danie.GetNutrimeftFromProducts();
             foreach (var key in temp)
             {
-                SumNutriments[key.Key] += Math.Round( key.Value, 2);
+                if (SumNutriments != null) SumNutriments[key.Key] += Math.Round(key.Value, 2);
             }
         }
     }
@@ -103,26 +103,24 @@ public class Jadlospis: IJadlospis
             _ => throw new InvalidOperationException()
         };
 
-        var keys = MinNutriments.Select(kv => kv.Key).ToList();
-
-        for (int i = 0; i < keys.Count; i++)
+        if (MinNutriments != null)
         {
-            var key = keys[i];
-            MinNutriments[key] = values[i];
-        }
+            var keys = MinNutriments.Select(kv => kv.Key).ToList();
 
+            for (int i = 0; i < keys.Count; i++)
+            {
+                var key = keys[i];
+                MinNutriments[key] = values[i];
+            }
+        }
     }
 
     public void AddDanie()
     {
-        Danie danie = new Danie(this);
+        Danie danie = new Danie(this, $"Danie {Dania.Count + 1}");
         Dania.Add(danie);
     }
     
-    public void AddDanie(Danie danie)
-    {
-        Dania.Add(danie);
-    }
 
     public void DeleteDanie(Danie danie)
     {
