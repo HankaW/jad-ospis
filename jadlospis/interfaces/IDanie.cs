@@ -11,12 +11,10 @@ public interface IDanie
     
     string Nazwa { get; set; }
     double Cena { get; set; }
-    List<Products> Produkty { get; set; }
+    List<Products>? Produkty { get; set; }
     void AddProduct(Products produkt);
     
-    Jadlospis _jadlospis { get; set; }
-
-    Dictionary<string, double> GetNutrimeftFromProducts();
+    Jadlospis? _jadlospis { get; set; }
     
     void removeProduct(Products produkt);
     void removeDanie();

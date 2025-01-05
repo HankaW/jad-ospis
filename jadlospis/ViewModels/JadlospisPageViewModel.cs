@@ -173,6 +173,15 @@ namespace jadlospis.ViewModels
             {
                 this.Dania.Add(new DanieViewModel(d, this));
             }
+
+            foreach (var d in Dania)
+            {
+                if (d.Produkty != null)
+                    foreach (var p in d.Produkty)
+                    {
+                        p.Wyszukaj();
+                    }
+            }
         }
         
         void UpdateDictionary( 

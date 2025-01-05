@@ -11,14 +11,14 @@ public class Danie: IDanie
 {
     public string Nazwa { get; set; }
     public double Cena { get; set; }
-    public List<Products> Produkty { get; set; }
+    public List<Products>? Produkty { get; set; }
     public void AddProduct(Products produkt)
     {
-        Produkty.Add(produkt);
+        Produkty?.Add(produkt);
     }
 
    [JsonIgnore]
-    public Jadlospis _jadlospis { get; set; }
+    public Jadlospis? _jadlospis { get; set; }
     
     public Danie(Jadlospis jadlospis, string nazwa)
     {
@@ -42,37 +42,15 @@ public class Danie: IDanie
         Produkty = new List<Products>();
     }
 
-    public Dictionary<string, double> GetNutrimeftFromProducts()
-    {
-        Dictionary<string, double> result = new Dictionary<string, double>();
-        result.Add("carbs",0);
-        result.Add("sugar",  0);
-        result.Add("energy", 0);
-        result.Add("energyKcal",  0);
-        result.Add("fat",  0);
-        result.Add("saturatedFat", 0);
-        result.Add("protein", 0);
-        result.Add("salt", 0);
-        foreach (var produkt in Produkty)
-        {
-            var tem = produkt.GetCalculatedNutriments(produkt.ProductsGram);
-            if (tem != null)
-                foreach (var key in tem)
-                    result[key.Key] += key.Value;
-        }
-
-        return result;
-    }
-
     public void removeProduct(Products produkt)
     {
-        Produkty.Remove(produkt);
-        _jadlospis.ObliczSumaCeny();
+        Produkty?.Remove(produkt);
+        _jadlospis?.ObliczSumaCeny();
     }
 
     public void removeDanie()
     {
-        _jadlospis.DeleteDanie(this);
-        _jadlospis.ObliczSumaCeny();
+        _jadlospis?.DeleteDanie(this);
+        _jadlospis?.ObliczSumaCeny();
     }
 }

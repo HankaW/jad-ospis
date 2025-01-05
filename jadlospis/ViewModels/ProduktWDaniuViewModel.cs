@@ -10,9 +10,14 @@ namespace jadlospis.ViewModels;
 
 public partial class ProduktWDaniuViewModel: ViewModelBase
 {
-   private DanieViewModel _danieViewModel;
-   private Products _produkty;
-   private ProduktLoader _loader = new ProduktLoader("", 1, 1);
+   private int _index = 0;
+   public int Index { get => _index; set => _index = value; }
+   private DanieViewModel _danieViewModel = null!;
+   public DanieViewModel DanieViewModel { get => _danieViewModel;  set => _danieViewModel = value; }
+   private Products _produkty = null!;
+   public Products Produkty { get => _produkty; set => _produkty = value; }
+   private ProduktLoader _loader = null!;
+   public ProduktLoader Loader { get => _loader; set => _loader = value; }
    
    [ObservableProperty]
    private bool _isVisible = false;
@@ -26,7 +31,7 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
          if (_name != value)
          {
             _name = value;
-            _loader.CurrentPage = 1;
+            Loader.CurrentPage = 1;
          }
       }
    }
@@ -42,12 +47,13 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
             _gramatura = value;
             if (double.TryParse(value, out double gramatura))
             {
-               _produkty.ProductsGram = gramatura;
+               Produkty.ProductsGram = gramatura;
                foreach (var p in ProduktView)
                {
-                  p.UpdateNtriments(_produkty);
+                  p.UpdateNtriments(Produkty);
                }
             }
+            _danieViewModel.JadlospisPageViewModel.ObliczSumaNutriments();
          }
       }
    }
@@ -55,13 +61,15 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
    public ObservableCollection<ProduktWJadlospisViewModel> ProduktView { get; set; }
    public object? ProductView { get; }
 
-   public ProduktWDaniuViewModel(Products produkt, DanieViewModel danieViewModel)
+   public ProduktWDaniuViewModel(DanieViewModel danieViewModel, int index = 0)
    {
-      _ = _loader.SingeProduct();
-      _produkty = _loader.GetSingleProduct();
-      _danieViewModel = danieViewModel;
+      Loader = new ProduktLoader("", 1, 1);
+      Index = index;
+      _ = Loader.SingeProduct();
+      Produkty = Loader.GetSingleProduct();
+      DanieViewModel = danieViewModel;
       ProduktView = new ObservableCollection<ProduktWJadlospisViewModel>();
-
+      
       OnPageChange += Wyszukaj;
    }
    
@@ -72,27 +80,26 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
    [RelayCommand]
    public void UsunProdukt()
    {
-      _danieViewModel.DeleteProduct(_produkty);
+      IsVisible = false;
+      _danieViewModel.DeleteProduct(_index);
    }
    
    public void Wyszukaj()
    {
-      if(_danieViewModel.Danie.Produkty.Count > 0) _danieViewModel.Danie.Produkty.Remove(_produkty);
-      _loader.Name = Name;
-      _ = _loader.SingeProduct();
-      _produkty = _loader.GetSingleProduct();
+      Loader.Name = Name;
+      _ = Loader.SingeProduct();
+      Produkty = Loader.GetSingleProduct();
       ProduktView.Clear();
-      ProduktView.Add(new ProduktWJadlospisViewModel(_produkty));
-      
-      
-      if(_loader.Name != "")_danieViewModel.Danie.AddProduct(_produkty);
+      ProduktView.Add(new ProduktWJadlospisViewModel(Produkty));
       IsVisible = true;
+      if (_danieViewModel.Danie.Produkty != null) _danieViewModel.Danie.Produkty[_index] = Produkty;
       _danieViewModel.JadlospisPageViewModel.ObliczSumaNutriments();
+      
    }
 
    public void Nastepny()
    {
-      _loader.CurrentPage++;
+      Loader.CurrentPage++;
       Gramatura = "100";
       OnPropertyChanged(nameof(Gramatura));
 
@@ -102,7 +109,7 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
 
    public void Poprzenie()
    {
-      _loader.CurrentPage--;
+      Loader.CurrentPage--;
       Gramatura = "100";
       OnPropertyChanged(nameof(Gramatura));
 

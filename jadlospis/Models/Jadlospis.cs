@@ -84,11 +84,23 @@ public class Jadlospis: IJadlospis
         SumNutriments = InitDictionary();
         foreach (var danie in Dania)
         {
-            var temp = danie.GetNutrimeftFromProducts();
-            foreach (var key in temp)
+            if (danie.Produkty != null)
             {
-                if (SumNutriments != null) SumNutriments[key.Key] += Math.Round(key.Value, 2);
+                foreach (var produkt in danie.Produkty)
+                {
+                    var nutriments = produkt.Nutriments?.GetNutriment();
+
+                    if (nutriments != null)
+                        foreach (var nutriment in nutriments)
+                        {
+                            if (SumNutriments != null) SumNutriments[nutriment.Key] += Math.Round(nutriment.Value, 2);
+                        }
+                    else
+                        Console.WriteLine("Brak nutrimentów w produkcie");
+                }
             }
+            else
+                Console.WriteLine("Brak produktów w daniu");
         }
     }
 

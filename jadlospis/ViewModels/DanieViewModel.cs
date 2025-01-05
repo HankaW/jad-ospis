@@ -1,19 +1,20 @@
+using System;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using jadlospis.interfaces;
+using jadlospis.Models;
 
 namespace jadlospis.ViewModels;
-using jadlospis.Models;
-public partial class DanieViewModel: ViewModelBase
-{
 
+public partial class DanieViewModel : ViewModelBase
+{
     public Danie Danie;
     public JadlospisPageViewModel JadlospisPageViewModel;
-    
+
     [ObservableProperty]
     private string _nazwa;
-    
+
     private double? _cena;
     public double? Cena
     {
@@ -25,9 +26,7 @@ public partial class DanieViewModel: ViewModelBase
             JadlospisPageViewModel.ObliczSumaCeny();
         }
     }
-    public ObservableCollection<ProduktWDaniuViewModel> Produkty { get; set; }
-
-
+    public ObservableCollection<ProduktWDaniuViewModel>? Produkty { get; set; }
 
     public DanieViewModel(Danie danie, JadlospisPageViewModel j)
     {
@@ -36,33 +35,41 @@ public partial class DanieViewModel: ViewModelBase
         Produkty = new ObservableCollection<ProduktWDaniuViewModel>();
         Nazwa = danie.Nazwa;
         Cena = danie.Cena;
-        
+
         ReadProdukty();
     }
-    
-    private void ReadProdukty()
+
+    public void ReadProdukty()
     {
-        foreach (var produkt in Danie.Produkty)
+        Produkty?.Clear();
+        if (Danie.Produkty != null)
         {
-            Produkty.Add(new ProduktWDaniuViewModel(produkt, this));
+            int i = 0;
+            foreach (var produkt in Danie.Produkty)
+            {
+                Produkty?.Add(new ProduktWDaniuViewModel(this, i));
+                i++;
+                JadlospisPageViewModel.ObliczSumaNutriments();
+            }
         }
     }
 
     [RelayCommand]
     public void AddProduct()
     {
-        Danie.AddProduct(new Products(Danie));
-        JadlospisPageViewModel.ObliczSumaNutriments();
-        ReadProdukty();
+        var newProduct = new Products(Danie);
+        Danie.AddProduct(newProduct);
+        Produkty?.Add(new ProduktWDaniuViewModel(this, Danie.Produkty.Count - 1));
     }
-    
-    public void DeleteProduct(Products p)
+
+    public void DeleteProduct(int p)
     {
-        Danie.removeProduct(p);
-        JadlospisPageViewModel.ObliczSumaNutriments();
+        Console.WriteLine(Danie.Produkty?.Count);
+        Danie.Produkty?.RemoveAt(p);
+        Console.WriteLine(Danie.Produkty?.Count);
         ReadProdukty();
     }
-    
+
     [RelayCommand]
     public void UsuwDanie()
     {
