@@ -60,7 +60,7 @@ namespace jadlospis.ViewModels
             set
             {
                 _iloscOsob = value;
-                _jadlospis.ObliczSumaCeny();
+                ObliczSumaCeny();
             }
         }
         
@@ -77,15 +77,11 @@ namespace jadlospis.ViewModels
             MinNutriment = new ObservableCollection<KeyValuePair<string, double>>();
             if (_jadlospis.SumNutriments != null)
                 foreach (var item in _jadlospis.SumNutriments)
-                {
                     SumNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
-                }
 
             if (_jadlospis.MinNutriments != null)
                 foreach (var item in _jadlospis.MinNutriments)
-                {
                     MinNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
-                }
 
             SumaCeny = _jadlospis.SumaCeny;
             IloscOsob = _jadlospis.IloscOsob;
@@ -109,15 +105,11 @@ namespace jadlospis.ViewModels
             
             if (_jadlospis.SumNutriments != null)
                 foreach (var item in _jadlospis.SumNutriments)
-                {
                     SumNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
-                }
-
             if (_jadlospis.MinNutriments != null)
                 foreach (var item in _jadlospis.MinNutriments)
-                {
                     MinNutriment.Add(new KeyValuePair<string, double>(item.Key, item.Value));
-                }
+                
 
             SumaCeny = _jadlospis.SumaCeny;
             IloscOsob = _jadlospis.IloscOsob;
@@ -127,6 +119,8 @@ namespace jadlospis.ViewModels
             _timer = new Timer(300000);
             _timer.Elapsed += (sender, e) => SaveJadlospis();
             _timer.Start();
+            
+            ReadDania();
         }
         
         public void ObliczSumaCeny()

@@ -20,12 +20,29 @@ public class Danie: IDanie
    [JsonIgnore]
     public Jadlospis? _jadlospis { get; set; }
     
+    public Danie()
+    {
+        _jadlospis = null;
+        Nazwa = "";
+        Cena = 0;
+        Produkty = new List<Products>();
+    }
+    
+    [JsonConstructor]
+    public Danie(string nazwa, double cena, List<Products>? produkty)
+    {
+        Nazwa = nazwa;
+        Cena = cena;
+        Produkty = produkty;
+    }
+    
     public Danie(Jadlospis jadlospis, string nazwa)
     {
         _jadlospis = jadlospis;
         Nazwa = nazwa;
         Produkty = new List<Products>();
     }
+    
     
     public Danie(string nazwa)
     {

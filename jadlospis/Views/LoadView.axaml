@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:jadlospis.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="jadlospis.Views.LoadView"
+             x:DataType="vm:LoadViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" /> <!-- Pasek wyszukiwania i przyciski -->
+            <RowDefinition Height="Auto" /> <!-- Przyciski nawigacyjne -->
+            <RowDefinition Height="*" />    <!-- Obszar wyświetlania produktów -->
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0">
+            <ItemsControl ItemsSource="{Binding Jadlospisy}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#72c896" BorderBrush="#19a47c" BorderThickness="3" Padding="10" CornerRadius="5" Margin="10" Width="310" Height="105">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+                                <!-- Nazwa z zawijaniem tekstu -->
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="70">
+                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Foreground="black" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,0,0,10" />
+                                </ScrollViewer>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+                                    <Button Command="{Binding OpenJadlospis}" Background="#19a47c" Foreground="white" Width="70" Height="30" HorizontalAlignment="Center" >Wczytaj</Button>
+                                    <Button Command="{Binding CopyJadlospis}" Background="DimGray" Foreground="white" Width="60" Height="30" HorizontalAlignment="Center">Kopiuj</Button>
+                                    <Button Command="{Binding DeleteJadlospis}" Background="#c34444" Foreground="white" Width="53" Height="30" HorizontalAlignment="Center">Usuń</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

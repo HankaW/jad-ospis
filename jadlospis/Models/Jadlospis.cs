@@ -73,9 +73,8 @@ public class Jadlospis: IJadlospis
         SumaCeny = 0;
         foreach (var danie in Dania)
         {
-            SumaCeny += danie.Cena;
+            SumaCeny += danie.Cena*IloscOsob;
         }
-        SumaCeny *= IloscOsob;
         SumaCeny = Math.Round(SumaCeny, 2);
     }
 

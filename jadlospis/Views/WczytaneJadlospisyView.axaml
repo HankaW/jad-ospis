@@ -4,13 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:jadlospis.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="jadlospis.Views.HomePageView"
-             x:DataType="vm:HomePageViewModel">
+             x:Class="jadlospis.Views.WczytaneJadlospisyView"
+             x:DataType="vm:WczytaneJadlospisyViewModel">
     
-    <ScrollViewer>
-        <StackPanel>
-            <Button Command="{Binding OpenLoadPage}" IsVisible="{Binding IsVisible}" Background="#23b08b" Margin="10"> Strona główna </Button>
-            <TransitioningContentControl Content="{Binding CurrentPage}" />
-        </StackPanel>
-    </ScrollViewer>
 </UserControl>
