@@ -3,23 +3,17 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Timers;
-using jadlospis.interfaces;
 using jadlospis.Models;
-using jadlospis.Utils;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
-using MigraDoc.DocumentObjectModel;
-using MigraDoc.Rendering;
+
 
 
 namespace jadlospis.ViewModels
@@ -163,6 +157,7 @@ namespace jadlospis.ViewModels
         public void DeleteDanie(Danie danie)
         {
             _jadlospis.DeleteDanie(danie);
+            
             ReadDania();
         }
 
@@ -171,16 +166,22 @@ namespace jadlospis.ViewModels
             this.Dania.Clear();
             foreach (var d in _jadlospis.Dania)
             {
-                this.Dania.Add(new DanieViewModel(d, this));
-            }
-
-            foreach (var d in Dania)
-            {
-                if (d.Produkty != null)
-                    foreach (var p in d.Produkty)
-                    {
-                        p.Wyszukaj();
-                    }
+                DanieViewModel danieModel = new DanieViewModel(d, this);
+                danieModel.Produkty?.Clear();
+                int i = 0;
+                foreach (var p in d.Produkty)
+                {
+                    ProduktWDaniuViewModel temp = new ProduktWDaniuViewModel(danieModel, i);
+                    temp.Produkty = p;
+                    temp.ProduktView.Add(new ProduktWJadlospisViewModel(p));
+                    temp.Name = p.Name;
+                    temp.Gramatura = p.ProductsGram.ToString();
+                    temp.IsVisible = true;
+                    danieModel.Produkty?.Add(temp);
+                    i++;
+                }
+                this.Dania.Add(danieModel);
+                
             }
         }
         
@@ -192,7 +193,7 @@ namespace jadlospis.ViewModels
             collection.Clear();
             foreach (var item in dictionary)
             {
-                collection.Add(new KeyValuePair<string, double>(item.Key, item.Value));
+                collection.Add(new KeyValuePair<string, double>(item.Key, Math.Round(item.Value,2)));
             }
         }
 
@@ -212,6 +213,7 @@ namespace jadlospis.ViewModels
         
         private void BuildDocument(Document document)
         {
+
             // Dodanie sekcji
             Section section = document.AddSection();
         
@@ -366,24 +368,17 @@ namespace jadlospis.ViewModels
             {
                 var document = GetInvoce();
         
-                // Pobierz ścieżkę do katalogu "Dokumenty" użytkownika
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        
-                // Zastąp niedozwolone znaki w nazwie pliku
-                string sanitizedFileName =
-                    string.Concat(Name.Select(ch => Path.GetInvalidFileNameChars().Contains(ch) ? '.' : ch));
-        
-                // Dodaj datę do nazwy pliku w formacie: "yyyy-MM-dd_HH-mm-ss"
-                string datePart = DateTime.Now.ToString("yyyy.MM.dd H-mm-ss");
-                string targetFilePath = Path.Combine(documentsPath, $"jadlospis {datePart}.pdf");
+                string pdfName = Name + ".pdf";
+                string targetDirectory = Path.Combine(documentsPath, pdfName);
         
                 // Zapisz dokument PDF
-                document.Save(targetFilePath);
-                Debug.WriteLine($"Plik PDF zapisano pomyślnie pod ścieżką: {targetFilePath}");
+                document.Save(targetDirectory);
+                Console.WriteLine($"Plik PDF zapisano pomyślnie pod ścieżką: {targetDirectory}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Błąd podczas zapisywania pliku PDF: {ex.Message}");
+                Console.WriteLine($"Błąd podczas zapisywania pliku PDF: {ex.Message}");
             }
         }
     }

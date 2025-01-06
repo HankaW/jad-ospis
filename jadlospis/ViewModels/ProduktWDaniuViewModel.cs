@@ -14,8 +14,8 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
    public int Index { get => _index; set => _index = value; }
    private DanieViewModel _danieViewModel = null!;
    public DanieViewModel DanieViewModel { get => _danieViewModel;  set => _danieViewModel = value; }
-   private Products _produkty = null!;
-   public Products Produkty { get => _produkty; set => _produkty = value; }
+   public Products Produkty = null!;
+   // public Products Produkty { get => _produkty; set => _produkty = value; }
    private ProduktLoader _loader = null!;
    public ProduktLoader Loader { get => _loader; set => _loader = value; }
    
@@ -92,7 +92,11 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
       ProduktView.Clear();
       ProduktView.Add(new ProduktWJadlospisViewModel(Produkty));
       IsVisible = true;
-      if (_danieViewModel.Danie.Produkty != null) _danieViewModel.Danie.Produkty[_index] = Produkty;
+      if (_danieViewModel.Danie.Produkty != null)
+      {
+         _danieViewModel.Danie.Produkty[_index] = Produkty;
+      }
+
       _danieViewModel.JadlospisPageViewModel.ObliczSumaNutriments();
       
    }
