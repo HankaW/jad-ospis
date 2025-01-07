@@ -33,9 +33,9 @@ namespace jadlospis.ViewModels
 
         public ObservableCollection<string> AvailableMealsFor { get; } = new()
         {
-            "Dorosłych (19-59 lat)",
-            "Młodzieży (11-19 lat)",
             "Dzieci (do 11 r.ż)",
+            "Młodzieży (11-19 lat)",
+            "Dorosłych (19-59 lat)",
             "Seniorów (60+)"
         };
         
@@ -175,7 +175,6 @@ namespace jadlospis.ViewModels
                     i++;
                 }
                 this.Dania.Add(danieModel);
-                
             }
         }
         
@@ -243,7 +242,7 @@ namespace jadlospis.ViewModels
         
             // Dodanie nazwy jadłospisu na środku strony pod tytułem
             Paragraph nameParagraph = section.AddParagraph();
-            nameParagraph.AddFormattedText($",, {_jadlospis.Name.ToUpper()} ''", TextFormat.Italic);
+            nameParagraph.AddFormattedText($"\"{_jadlospis.Name.ToUpper()}\"", TextFormat.Italic);  
             nameParagraph.Format.Font = new MigraDoc.DocumentObjectModel.Font("Arial", 16);
             nameParagraph.Format.Alignment = ParagraphAlignment.Center;
             nameParagraph.Format.SpaceAfter = "20pt";

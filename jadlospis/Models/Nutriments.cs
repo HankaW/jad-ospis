@@ -63,12 +63,13 @@ public class Nutriments : INutrimesnt
         set => _saturatedFat = Math.Round(value, 2);
     } // Tłuszcze nasycone na 100g
 
+    private double _protein;
     [JsonPropertyName("proteins_100g")]
     [JsonConverter(typeof(StringToDoubleConverter))]
     public double Protein
     {
-        get => _saturatedFat;
-        set => _saturatedFat = Math.Round(value, 2);
+        get => _protein;
+        set => _protein = Math.Round(value, 2);
     }  // Białko na 100g
     
     private double _salt;
@@ -86,14 +87,14 @@ public class Nutriments : INutrimesnt
     public Dictionary<string, double> GetNutriment()
     {
         Dictionary<string, double> result = new Dictionary<string, double>();
-        result.Add("carbs",Carbs);
-        result.Add("sugar",  Sugar);
-        result.Add("energy", Energy);
-        result.Add("energyKcal",  EnergyKcal);
-        result.Add("fat",  Fat);
-        result.Add("saturatedFat", SaturatedFat);
-        result.Add("protein", Protein);
-        result.Add("salt", Salt);
+        result.Add("Węglowodany",Carbs);
+        result.Add("Cukier",  Sugar);
+        result.Add("Energia", Energy);
+        result.Add("Kalorie",  EnergyKcal);
+        result.Add("Tłuszcz",  Fat);
+        result.Add("Tłuszcze nasycone", SaturatedFat);
+        result.Add("Białko", Protein);
+        result.Add("Sól", Salt);
         return result;
     }
 

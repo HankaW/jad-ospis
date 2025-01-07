@@ -57,14 +57,14 @@ public class Jadlospis: IJadlospis
     private Dictionary<string, double>? InitDictionary()
     {
         Dictionary<string, double>? result = new Dictionary<string, double>();
-        result.Add("carbs",0);
-        result.Add("sugar",  0);
-        result.Add("energy", 0);
-        result.Add("energyKcal",  0);
-        result.Add("fat",  0);
-        result.Add("saturatedFat", 0);
-        result.Add("protein", 0);
-        result.Add("salt", 0);
+        result.Add("Węglowodany",0);
+        result.Add("Cukier",  0);
+        result.Add("Energia", 0);
+        result.Add("Kalorie",  0);
+        result.Add("Tłuszcz",  0);
+        result.Add("Tłuszcze nasycone", 0);
+        result.Add("Białko", 0);
+        result.Add("Sól", 0);
         return result;
     }
 
@@ -107,10 +107,10 @@ public class Jadlospis: IJadlospis
     {
         var values = TargetGroup switch
         {
-            "Dzieci (do 11 r.ż)" => new[] { 200, 40, 0, 1500, 50, 15, 30, 3 },
-            "Młodzieży (11-19 lat)" => new[] { 260, 50, 0, 2500, 70, 25, 60, 5 },
-            "Dorosłych (19-59 lat)" => new[] { 260, 50, 0, 2000, 60, 20, 50, 5 },
-            "Seniorów (60+)" => new[] { 200, 40, 0, 1500, 50, 15, 30, 3 },
+            "Dzieci (do 11 r.ż)" => new[] { 200, 40, 1800, 1800, 50, 15, 30, 3 },
+            "Młodzieży (11-19 lat)" => new[] { 260, 50, 9000, 2500, 80, 25, 60, 5 },
+            "Dorosłych (19-59 lat)" => new[] { 300, 50, 10000, 2200, 60, 20, 50, 5 },
+            "Seniorów (60+)" => new[] { 230, 40, 8000, 2000, 50, 15, 30, 3 },
             _ => throw new InvalidOperationException()
         };
 
@@ -146,9 +146,8 @@ public class Jadlospis: IJadlospis
         // Utwórz podkatalog "jadlospisy"
         string targetDirectory = Path.Combine(documentsPath, "jadłospisy");
         if (!Directory.Exists(targetDirectory))
-        {
             Directory.CreateDirectory(targetDirectory);
-        }
+        
         
         string filePath = Path.Combine(targetDirectory, FileName);
         var options = new JsonSerializerOptions { WriteIndented = true };
