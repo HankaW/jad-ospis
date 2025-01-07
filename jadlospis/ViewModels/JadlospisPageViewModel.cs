@@ -65,7 +65,18 @@ namespace jadlospis.ViewModels
         }
         
         [ObservableProperty] private double _sumaCeny;
-        public string Name { get; set; }
+        
+        private string _name;
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                _jadlospis.Name = value;
+            }
+        }
 
         public JadlospisPageViewModel()
         {
