@@ -59,6 +59,7 @@ namespace jadlospis.ViewModels
             set
             {
                 _iloscOsob = value;
+                _jadlospis.IloscOsob = value;
                 ObliczSumaCeny();
             }
         }
@@ -179,7 +180,7 @@ namespace jadlospis.ViewModels
                     temp.Produkty = p;
                     temp.ProduktView.Add(new ProduktWJadlospisViewModel(p));
                     temp.Name = p.Name;
-                    temp.Gramatura = p.ProductsGram.ToString();
+                    temp.Gramatura = p.ProductsGram;
                     temp.IsVisible = true;
                     danieModel.Produkty?.Add(temp);
                     i++;

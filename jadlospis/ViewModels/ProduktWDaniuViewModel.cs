@@ -36,25 +36,21 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
       }
    }
    
-   private string _gramatura = "100";
-   public string Gramatura
+   private double _gramatura = 100;
+   public double Gramatura
    {
       get => _gramatura;
       set
       {
          if (_gramatura != value)
          {
-            _gramatura = value;
-            if (double.TryParse(value, out double gramatura))
-            {
-               Produkty.ProductsGram = gramatura;
-               foreach (var p in ProduktView)
-               {
-                  p.UpdateNtriments(Produkty);
-               }
-            }
-            _danieViewModel.JadlospisPageViewModel.ObliczSumaNutriments();
+            if (value > 0) _gramatura = value;
+            else _gramatura = 1;
          }
+         Produkty.ProductsGram = value;
+         foreach (var p in ProduktView)
+            p.UpdateNtriments(Produkty);
+         _danieViewModel.JadlospisPageViewModel.ObliczSumaNutriments();
       }
    }
    
@@ -104,7 +100,7 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
    public void Nastepny()
    {
       Loader.CurrentPage++;
-      Gramatura = "100";
+      Gramatura = 100;
       OnPropertyChanged(nameof(Gramatura));
 
       // Wywołanie delegata dla zmiany strony
@@ -114,7 +110,7 @@ public partial class ProduktWDaniuViewModel: ViewModelBase
    public void Poprzenie()
    {
       Loader.CurrentPage--;
-      Gramatura = "100";
+      Gramatura = 100;
       OnPropertyChanged(nameof(Gramatura));
 
       // Wywołanie delegata dla zmiany strony

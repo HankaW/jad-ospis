@@ -32,7 +32,7 @@
 
             <StackPanel Orientation="Vertical" Margin="5">
                 <TextBlock Text="Gramatura [g]:" HorizontalAlignment="Center"/>
-                <NumericUpDown FormatString="0" Minimum="0" Value="{Binding Gramatura, Mode=TwoWay}" Width="150"/>
+                <NumericUpDown FormatString="0" Minimum="1" Value="{Binding Gramatura, Mode=TwoWay, TargetNullValue=1}" Width="150"/>
             </StackPanel>
 
             <Button Command="{Binding Wyszukaj}" Background="#23b08b" Foreground="Black" Padding="10,5" Margin="5,20,5,5">
