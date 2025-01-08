@@ -11,9 +11,18 @@ public partial class DanieViewModel : ViewModelBase
 {
     public Danie Danie;
     public JadlospisPageViewModel JadlospisPageViewModel;
-
-    [ObservableProperty]
+    
     private string _nazwa;
+
+    public string Nazwa
+    {
+        get { return _nazwa; }
+        set
+        {
+            _nazwa = value;
+            Danie.Nazwa = _nazwa;
+        }
+    }
 
     private double? _cena;
     public double? Cena
@@ -37,6 +46,7 @@ public partial class DanieViewModel : ViewModelBase
         Cena = danie.Cena;
 
         ReadProdukty();
+        
     }
 
     public void ReadProdukty()
@@ -52,6 +62,7 @@ public partial class DanieViewModel : ViewModelBase
                 JadlospisPageViewModel.ObliczSumaNutriments();
             }
         }
+
     }
 
     [RelayCommand]
@@ -63,11 +74,10 @@ public partial class DanieViewModel : ViewModelBase
     }
 
     public void DeleteProduct(int p)
-    {
-        Console.WriteLine(Danie.Produkty?.Count);
+    { 
         Danie.Produkty?.RemoveAt(p);
-        Console.WriteLine(Danie.Produkty?.Count);
         ReadProdukty();
+        JadlospisPageViewModel.ReadDania();
     }
 
     [RelayCommand]

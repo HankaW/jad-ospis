@@ -15,7 +15,6 @@ using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 
 
-
 namespace jadlospis.ViewModels
 {
     public partial class JadlospisPageViewModel : ViewModelBase
@@ -166,7 +165,7 @@ namespace jadlospis.ViewModels
             ReadDania();
         }
 
-        void ReadDania()
+        public void ReadDania()
         {
             this.Dania.Clear();
             foreach (var d in _jadlospis.Dania)
